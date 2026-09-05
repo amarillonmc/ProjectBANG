@@ -1,0 +1,130 @@
+{
+    "name": "雨城·循忆",
+    "character": {
+        "id": "archivist",
+        "name": "澄页",
+        "title": "雨城档案员",
+        "series": "雨城档案",
+        "color": "cool",
+        "hp": 6,
+        "art": 0,
+        "flipColor": "warm",
+        "skills": [
+            {
+                "name": "拾遗",
+                "trigger": "after_damage",
+                "condition": "always",
+                "cost": {
+                    "hand": 0,
+                    "mind": 0
+                },
+                "effects": [
+                    {
+                        "op": "draw",
+                        "target": "self",
+                        "amount": 1,
+                        "color": "neutral"
+                    }
+                ],
+                "limit": 1
+            },
+            {
+                "name": "校订",
+                "trigger": "active",
+                "condition": "always",
+                "cost": {
+                    "hand": 1,
+                    "mind": 0
+                },
+                "effects": [
+                    {
+                        "op": "recover_mind",
+                        "target": "self",
+                        "amount": 1,
+                        "color": "neutral"
+                    }
+                ],
+                "limit": 1
+            }
+        ]
+    },
+    "deck": [
+        {
+            "type": "attack_cool",
+            "rank": 1
+        },
+        {
+            "type": "attack_cool",
+            "rank": 2
+        },
+        {
+            "type": "attack_warm",
+            "rank": 3
+        },
+        {
+            "type": "attack_warm",
+            "rank": 4
+        },
+        {
+            "type": "custom",
+            "rank": 5,
+            "custom": {
+                "name": "记忆的索引",
+                "series": "雨城档案",
+                "fallback": "recover",
+                "effects": [
+                    {
+                        "op": "draw",
+                        "target": "self",
+                        "amount": 2,
+                        "color": "neutral"
+                    },
+                    {
+                        "op": "heal",
+                        "target": "self",
+                        "amount": 1,
+                        "color": "neutral"
+                    },
+                    {
+                        "op": "recover_mind",
+                        "target": "self",
+                        "amount": 1,
+                        "color": "neutral"
+                    }
+                ]
+            }
+        },
+        {
+            "type": "haste",
+            "rank": 6
+        },
+        {
+            "type": "evade",
+            "rank": 7
+        },
+        {
+            "type": "miracle",
+            "rank": 8
+        },
+        {
+            "type": "mana",
+            "rank": 9
+        },
+        {
+            "type": "life",
+            "rank": 10
+        },
+        {
+            "type": "amplify",
+            "rank": 11
+        },
+        {
+            "type": "energy",
+            "rank": 12
+        },
+        {
+            "type": "recover",
+            "rank": 13
+        }
+    ]
+}

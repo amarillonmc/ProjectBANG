@@ -1,0 +1,16 @@
+Options -Indexes
+DirectoryIndex index.html
+
+# Apache/FastCGI virtual hosts may otherwise omit the bearer header.
+SetEnvIf Authorization "(.+)" HTTP_AUTHORIZATION=$1
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set Referrer-Policy "same-origin"
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+    <Files "api.php">
+        Header always set Cache-Control "no-store, private"
+    </Files>
+</IfModule>
+

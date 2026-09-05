@@ -1,0 +1,5 @@
+Options -Indexes
+<FilesMatch "^(config(?:\.example)?\.php|\.env|\.git.*|.*\.sqlite(?:-wal|-shm)?)$">
+    Require all denied
+</FilesMatch>
+

@@ -1,0 +1,8 @@
+/config.php
+/var/*
+!/var/.htaccess
+!/var/.gitkeep
+/output/
+/tools/runtime/
+*.log
+

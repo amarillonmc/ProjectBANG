@@ -1,0 +1,106 @@
+{
+    "name": "测试·余温",
+    "character": {
+        "id": "custom",
+        "name": "暮灯",
+        "title": "纸城守夜人",
+        "series": "纸城",
+        "color": "warm",
+        "hp": 6,
+        "art": 1,
+        "flipColor": null,
+        "skills": [
+            {
+                "name": "拾光",
+                "trigger": "after_damage",
+                "condition": "always",
+                "cost": {
+                    "hand": 0,
+                    "mind": 0
+                },
+                "limit": 1,
+                "effects": [
+                    {
+                        "op": "draw",
+                        "target": "self",
+                        "amount": 1,
+                        "color": "neutral"
+                    }
+                ]
+            }
+        ]
+    },
+    "deck": [
+        {
+            "rank": 1,
+            "type": "attack_cool"
+        },
+        {
+            "rank": 2,
+            "type": "attack_cool"
+        },
+        {
+            "rank": 3,
+            "type": "mana"
+        },
+        {
+            "rank": 4,
+            "type": "attack_warm"
+        },
+        {
+            "rank": 5,
+            "type": "custom",
+            "custom": {
+                "name": "未寄出的信",
+                "series": "纸城",
+                "fallback": "recover",
+                "effects": [
+                    {
+                        "op": "draw",
+                        "target": "self",
+                        "amount": 2,
+                        "color": "neutral"
+                    },
+                    {
+                        "op": "recover_mind",
+                        "target": "self",
+                        "amount": 1,
+                        "color": "neutral"
+                    }
+                ]
+            }
+        },
+        {
+            "rank": 6,
+            "type": "haste"
+        },
+        {
+            "rank": 7,
+            "type": "evade"
+        },
+        {
+            "rank": 8,
+            "type": "miracle"
+        },
+        {
+            "rank": 9,
+            "type": "mana"
+        },
+        {
+            "rank": 10,
+            "type": "life"
+        },
+        {
+            "rank": 11,
+            "type": "amplify"
+        },
+        {
+            "rank": 12,
+            "type": "energy"
+        },
+        {
+            "rank": 13,
+            "type": "recover"
+        }
+    ]
+}

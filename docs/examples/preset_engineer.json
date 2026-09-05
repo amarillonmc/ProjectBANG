@@ -1,0 +1,124 @@
+{
+    "name": "庭园·预备",
+    "character": {
+        "id": "engineer",
+        "name": "苔序",
+        "title": "庭园机巧师",
+        "series": "庭园工房",
+        "color": "cool",
+        "hp": 6,
+        "art": 3,
+        "flipColor": null,
+        "skills": [
+            {
+                "name": "预装甲",
+                "trigger": "turn_start",
+                "condition": "always",
+                "cost": {
+                    "hand": 0,
+                    "mind": 0
+                },
+                "effects": [
+                    {
+                        "op": "shield",
+                        "target": "self",
+                        "amount": 1,
+                        "color": "neutral"
+                    }
+                ],
+                "limit": 1
+            },
+            {
+                "name": "超频",
+                "trigger": "active",
+                "condition": "always",
+                "cost": {
+                    "hand": 1,
+                    "mind": 0
+                },
+                "effects": [
+                    {
+                        "op": "attack_bonus",
+                        "target": "self",
+                        "amount": 1,
+                        "color": "neutral"
+                    }
+                ],
+                "limit": 1
+            }
+        ]
+    },
+    "deck": [
+        {
+            "type": "attack_cool",
+            "rank": 1
+        },
+        {
+            "type": "attack_cool",
+            "rank": 2
+        },
+        {
+            "type": "attack_warm",
+            "rank": 3
+        },
+        {
+            "type": "attack_warm",
+            "rank": 4
+        },
+        {
+            "type": "custom",
+            "rank": 5,
+            "custom": {
+                "name": "庭园蓄电池",
+                "series": "庭园工房",
+                "fallback": "recover",
+                "effects": [
+                    {
+                        "op": "range",
+                        "target": "self",
+                        "amount": 2,
+                        "color": "neutral"
+                    },
+                    {
+                        "op": "attack_bonus",
+                        "target": "self",
+                        "amount": 1,
+                        "color": "neutral"
+                    }
+                ]
+            }
+        },
+        {
+            "type": "haste",
+            "rank": 6
+        },
+        {
+            "type": "evade",
+            "rank": 7
+        },
+        {
+            "type": "miracle",
+            "rank": 8
+        },
+        {
+            "type": "mana",
+            "rank": 9
+        },
+        {
+            "type": "life",
+            "rank": 10
+        },
+        {
+            "type": "amplify",
+            "rank": 11
+        },
+        {
+            "type": "energy",
+            "rank": 12
+        },
+        {
+            "type": "recover",
+            "rank": 13
+        }
+    ]
+}

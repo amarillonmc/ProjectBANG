@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f4f2ed">
+  <meta name="description" content="时空并错：围绕十三张心象展开的卡牌对战与角色创作实验室。">
+  <title>时空并错 · 心象实验室</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="assets/app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="主导航">
+      <a class="brand" href="#home"><span class="brand-mark" aria-hidden="true">✳</span><span>时空并错<small>心象实验室</small></span></a>
+      <div class="edition">PLAYTEST EDITION <b>01</b></div>
+      <nav>
+        <button data-nav="home" class="nav-item active"><span aria-hidden="true">◫</span> 实验大厅</button>
+        <button data-nav="workshop" class="nav-item"><span aria-hidden="true">◇</span> 角色工坊</button>
+        <button data-nav="reference" class="nav-item"><span aria-hidden="true">▤</span> 规则与牌库</button>
+        <button data-nav="room" class="nav-item" id="room-nav" hidden><span aria-hidden="true">◎</span> 当前对局</button>
+      </nav>
+      <div class="sidebar-note"><span class="tiny-label">一副心象，一个世界。</span><p>十三张牌的次序，<br>由你来决定。</p><div class="mini-ranks">A <i>2</i> <i>3</i> ··· Q K</div></div>
+      <button class="feedback-link" data-action="feedback">↗ 记录内测反馈</button>
+      <div class="sidebar-bottom"><span class="status-dot"></span> 私人房间 · 邀请测试 <small>ALPHA / 固定规则 v1</small></div>
+    </aside>
+    <div class="workspace">
+      <header class="topbar"><div class="breadcrumb" id="breadcrumb">工作台 <span>/</span> 实验大厅</div><div class="header-right"><span class="network-status" id="network-status">正在连接</span><button class="identity" data-action="identity"><span id="avatar-initial">旅</span><span id="identity-name">未登记旅人</span></button></div></header>
+      <main id="main" tabindex="-1"><div class="loading-state"><span class="loading-ring"></span><p>正在整理心象牌库…</p></div></main>
+      <footer class="main-footer"><span>时空并错 · 心象实验室</span><span>构筑 / 相遇 / 重新想象</span></footer>
+    </div>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <dialog id="modal" aria-labelledby="modal-title"><div id="modal-content"></div></dialog>
+  <noscript>本游戏需要启用 JavaScript。请在浏览器设置中启用后刷新页面。</noscript>
+</body>
+</html>

@@ -1,0 +1,124 @@
+{
+    "name": "落日·追焰",
+    "character": {
+        "id": "wanderer",
+        "name": "烬途",
+        "title": "落日信使",
+        "series": "落日邮局",
+        "color": "warm",
+        "hp": 6,
+        "art": 1,
+        "flipColor": null,
+        "skills": [
+            {
+                "name": "余焰",
+                "trigger": "after_attack",
+                "condition": "always",
+                "cost": {
+                    "hand": 0,
+                    "mind": 1
+                },
+                "effects": [
+                    {
+                        "op": "damage",
+                        "target": "target",
+                        "amount": 1,
+                        "color": "warm"
+                    }
+                ],
+                "limit": 1
+            },
+            {
+                "name": "远行",
+                "trigger": "turn_start",
+                "condition": "always",
+                "cost": {
+                    "hand": 0,
+                    "mind": 0
+                },
+                "effects": [
+                    {
+                        "op": "range",
+                        "target": "self",
+                        "amount": 1,
+                        "color": "neutral"
+                    }
+                ],
+                "limit": 1
+            }
+        ]
+    },
+    "deck": [
+        {
+            "type": "attack_cool",
+            "rank": 1
+        },
+        {
+            "type": "attack_cool",
+            "rank": 2
+        },
+        {
+            "type": "attack_warm",
+            "rank": 3
+        },
+        {
+            "type": "attack_warm",
+            "rank": 4
+        },
+        {
+            "type": "custom",
+            "rank": 5,
+            "custom": {
+                "name": "落日余温",
+                "series": "落日邮局",
+                "fallback": "recover",
+                "effects": [
+                    {
+                        "op": "damage",
+                        "target": "target",
+                        "amount": 1,
+                        "color": "warm"
+                    },
+                    {
+                        "op": "draw",
+                        "target": "self",
+                        "amount": 1,
+                        "color": "neutral"
+                    }
+                ]
+            }
+        },
+        {
+            "type": "haste",
+            "rank": 6
+        },
+        {
+            "type": "evade",
+            "rank": 7
+        },
+        {
+            "type": "miracle",
+            "rank": 8
+        },
+        {
+            "type": "mana",
+            "rank": 9
+        },
+        {
+            "type": "life",
+            "rank": 10
+        },
+        {
+            "type": "amplify",
+            "rank": 11
+        },
+        {
+            "type": "energy",
+            "rank": 12
+        },
+        {
+            "type": "recover",
+            "rank": 13
+        }
+    ]
+}
