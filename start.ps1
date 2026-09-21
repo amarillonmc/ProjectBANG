@@ -1,4 +1,4 @@
-param([int]$Port = 8080)
+param([int]$Port = 17777)
 $ErrorActionPreference = 'Stop'
 if ($Port -lt 1024 -or $Port -gt 65535) { throw 'Port must be between 1024 and 65535.' }
 $projectDirectory = $PSScriptRoot
