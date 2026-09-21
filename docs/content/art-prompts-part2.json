@@ -1,0 +1,155 @@
+{
+  "tool": "built-in image_gen",
+  "status": "complete",
+  "count": 12,
+  "images": [
+    {
+      "id": 42,
+      "prompt": "Use case: stylized-concept. Asset type: one collectible character-card illustration for a web card game. Create ONE finished vertical 2:3 anime illustration. The input image is an identity and default-outfit reference, not an edit target: draw a completely new pose and a fully painted new scene. Delicate ink lines, soft painted colors, ivory highlights, light teal shadows, small coral accents and warm golden rim light, polished friendly adventure illustration, cohesive collectible card series. Keep the reference identity, hair, animal ears and default outfit recognizable and accurate. Three-quarter or full-body composition, face in upper central third, both complete ears and head safely inside the frame with generous top margin. One character only. No text, captions, card border, frame, logo or watermark. Do not copy the source's standing pose or transparent background. Scene: 朱鹮 Toki: a sincere, enthusiastic singer with far-carrying voice. She stands on a sunlit wetland reed-bank singing earnestly, one feathered sleeve arm extended in a graceful welcoming gesture, pale pink feathers drifting through the air, soft marsh reflections. Retain white and coral hair, tall white/coral feather crests, red ribbon, cream feather-sleeved top, coral skirt and stockings from the identity reference. Do not add actual musical notation.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/42.png",
+      "generatedSource": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b5-0675-70b1-8d9e-0ab510c0dd57\\exec-dcb8abb4-0ad5-494f-9aff-cd78d48d5ce1.png",
+      "outputPath": "D:/Github/ProjectBANG/public/assets/characters/kf3_0042.png",
+      "iterations": [
+        {
+          "prompt": "Use case: stylized-concept. Asset type: one collectible character-card illustration for a web card game. Create ONE finished vertical 2:3 anime illustration. The input image is an identity and default-outfit reference, not an edit target: draw a completely new pose and a fully painted new scene. Delicate ink lines, soft painted colors, ivory highlights, light teal shadows, small coral accents and warm golden rim light, polished friendly adventure illustration, cohesive collectible card series. Keep the reference identity, hair, animal ears and default outfit recognizable and accurate. Three-quarter or full-body composition, face in upper central third, both complete ears and head safely inside the frame with generous top margin. One character only. No text, captions, card border, frame, logo or watermark. Do not copy the source's standing pose or transparent background. Scene: 朱鹮 Toki: a sincere, enthusiastic singer with far-carrying voice. She stands on a sunlit wetland reed-bank singing earnestly, one feathered sleeve arm extended in a graceful welcoming gesture, pale pink feathers drifting through the air, soft marsh reflections. Retain white and coral hair, tall white/coral feather crests, red ribbon, cream feather-sleeved top, coral skirt and stockings from the identity reference. Do not add actual musical notation.",
+          "generatedSource": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b5-0675-70b1-8d9e-0ab510c0dd57\\exec-967d38a6-7a17-45ab-8437-0e93ec2bdccd.png",
+          "reason": "Top ear or feather tip too close to canvas boundary."
+        }
+      ],
+      "revisionPrompt": "Use case: precise-object-edit. Image 1 is the existing finished card illustration to revise; image 2 is identity reference only. Make exactly one composition correction: zoom the view out sufficiently so the ENTIRE character, including the complete tips of BOTH tall animal ear/feather crests, fits inside the 2:3 canvas, with a very clear empty SKY margin of at least 10% of canvas height above the highest ear/feather tip. The current image clips the top ear/feather. Make the whole character approximately 15% smaller within the canvas and extend the painted background naturally around the scene. Preserve the same face, eyes, hair, expression, outfit, pose, scene and polished anime painted illustration style; do not redesign the character, do not change the scene. Both ear/feather tips must terminate well below the top image boundary. No text, border, logo or watermark.",
+      "review": "Viewed original default outfit and generated result; identity, new scene, complete head/ears and no text reviewed. PNG 1024×1536.",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "693f7876ea35b939c4b1cda75fd242915f029c162530532cb001c34eb8e9a1e8"
+    },
+    {
+      "id": 44,
+      "prompt": "Use case: stylized-concept. Asset type: one collectible character-card illustration for a web card game. Create ONE finished vertical 2:3 anime illustration. The input image is an identity and default-outfit reference, not an edit target: draw a completely new pose and a fully painted new scene. Delicate ink lines, soft painted colors, ivory highlights, light teal shadows, small coral accents and warm golden rim light, polished friendly adventure illustration, cohesive collectible card series. Keep the reference identity, hair, animal ears and default outfit recognizable and accurate. Three-quarter or full-body composition, face in upper central third, both complete ears and head safely inside the frame with generous top margin. One character only. No text, captions, card border, frame, logo or watermark. Do not copy the source's standing pose or transparent background. Scene: 沙丘猫 Sand Cat: quietly curious, hospitable expert of the desert. She crouches gracefully beside a newly dug cool sandstone shelter, offering a friendly open hand, delicate wind-blown sand, desert plants and a small shaded oasis in the distance. Retain sandy short hair, huge sand cat ears, green eyes, cream dress and striped sleeves, stockings and striped tail from the identity reference.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/44.png",
+      "generatedSource": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b5-0675-70b1-8d9e-0ab510c0dd57\\exec-e3cbaf88-33d4-4875-82dd-efd8980ebd34.png",
+      "outputPath": "D:/Github/ProjectBANG/public/assets/characters/kf3_0044.png",
+      "review": "Viewed original default outfit and generated result; identity, new scene, complete head/ears and no text reviewed. PNG 1024×1536.",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "d714a5c7e586a1839703cb7a333e8d6475b0d3c45b7a1bb5f457cba054b8737d"
+    },
+    {
+      "id": 45,
+      "prompt": "Use case: stylized-concept. Asset type: one collectible character-card illustration for a web card game. Create ONE finished vertical 2:3 anime illustration. The input image is an identity and default-outfit reference, not an edit target: draw a completely new pose and a fully painted new scene. Delicate ink lines, soft painted colors, ivory highlights, light teal shadows, small coral accents and warm golden rim light, polished friendly adventure illustration, cohesive collectible card series. Keep the reference identity, hair, animal ears and default outfit recognizable and accurate. Three-quarter or full-body composition, face in upper central third, both complete ears and head safely inside the frame with generous top margin. One character only. No text, captions, card border, frame, logo or watermark. Do not copy the source's standing pose or transparent background. Scene: 野槌蛇 Tsuchinoko: a shy but knowledgeable ruins explorer. She studies an ancient stone passage in a mossy cavern, holding an unlettered rolled map partly open and glancing sideways with thoughtful curiosity, warm shafts of light revealing the safe path. Retain teal hair partially covering one eye, brown snake hood/hat, striped brown coat, pale yellow front and magenta ribbon, plus thick snake tail when visible. Follow the identity reference rather than any variant costume.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/45.png",
+      "generatedSource": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b5-0675-70b1-8d9e-0ab510c0dd57\\exec-dde39b3b-dc06-4215-836a-b2db28a698f7.png",
+      "outputPath": "D:/Github/ProjectBANG/public/assets/characters/kf3_0045.png",
+      "review": "Viewed original default outfit and generated result; identity, new scene, complete head/ears and no text reviewed. PNG 1024×1536.",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "8154185df7bbabc4f72ed0f719823264902cd04a77836c404c5aadffa266dfc4"
+    },
+    {
+      "id": 46,
+      "prompt": "Use case: stylized-concept. Asset type: one collectible character-card illustration for a web card game. Create ONE finished vertical 2:3 anime illustration. The input image is an identity and default-outfit reference, not an edit target: draw a completely new pose and a fully painted new scene. Delicate ink lines, soft painted colors, ivory highlights, light teal shadows, small coral accents and warm golden rim light, polished friendly adventure illustration, cohesive collectible card series. Keep the reference identity, hair, animal ears and default outfit recognizable and accurate. Three-quarter or full-body composition, face in upper central third, both complete ears and head safely inside the frame with generous top margin. One character only. No text, captions, card border, frame, logo or watermark. Do not copy the source's standing pose or transparent background. Scene: 美洲河狸 American Beaver: a responsible, practical builder. She kneels beside a carefully fitted wooden dam in a clear forest stream, one hand resting on a timber joint while inspecting her handiwork with a quietly pleased smile. Retain round ears, brown short hair, soft fur collar, work outfit, gloves, boots and broad paddle tail. No power tools or modern logos.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/46.png",
+      "generatedSource": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b5-0675-70b1-8d9e-0ab510c0dd57\\exec-09282cb3-6ca9-473c-90da-927b6ea859bc.png",
+      "outputPath": "D:/Github/ProjectBANG/public/assets/characters/kf3_0046.png",
+      "review": "Viewed original default outfit and generated result; identity, new scene, complete head/ears and no text reviewed. PNG 1024×1536.",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "693dad7192e9d92e60f4a8256974f97840c9766697fe1575e347648ac4819722"
+    },
+    {
+      "id": 47,
+      "prompt": "Use case: stylized-concept. Asset type: one collectible character-card illustration for a web card game. Create ONE finished vertical 2:3 anime illustration. The input image is an identity and default-outfit reference, not an edit target: draw a completely new pose and a fully painted new scene. Delicate ink lines, soft painted colors, ivory highlights, light teal shadows, small coral accents and warm golden rim light, polished friendly adventure illustration, cohesive collectible card series. Keep the reference identity, hair, animal ears and default outfit recognizable and accurate. Three-quarter or full-body composition, face in upper central third, both complete ears and head safely inside the frame with generous top margin. One character only. No text, captions, card border, frame, logo or watermark. Do not copy the source's standing pose or transparent background. Scene: 黑尾草原犬鼠 Black-tailed Prairie Dog: an energetic family-minded tunnel builder. She emerges at a grassy burrow entrance carrying a small neat wooden digging spade, raising a cheerful hand in greeting, multiple little tunnel paths visible through flower-dotted grass. Match the identity reference exactly: light orange short bob hair, very small round animal ears, warm brown eyes, camel-colored long-sleeved top with pale fluffy collar and green ribbon, bright green checked skirt, tan stockings, white green-accented shoes and dark-tipped thick tail. Do not substitute a sailor uniform.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/47.png",
+      "generatedSource": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b5-0675-70b1-8d9e-0ab510c0dd57\\exec-04239f20-84cf-4bff-98e0-3096cf1258ab.png",
+      "outputPath": "D:/Github/ProjectBANG/public/assets/characters/kf3_0047.png",
+      "review": "Viewed original default outfit and generated result; identity, new scene, complete head/ears and no text reviewed. PNG 1024×1536.",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "778fc9e361e9d7b6e070a138675f529802822a940a9c1c86cd4ddb87c83a527a"
+    },
+    {
+      "id": 51,
+      "prompt": "Use case: stylized-concept. Asset type: one collectible character-card illustration for a web card game. Create ONE finished vertical 2:3 anime illustration. The input image is an identity and default-outfit reference, not an edit target: draw a completely new pose and a fully painted new scene. Delicate ink lines, soft painted colors, ivory highlights, light teal shadows, small coral accents and warm golden rim light, polished friendly adventure illustration, cohesive collectible card series. Keep the reference identity, hair, animal ears and default outfit recognizable and accurate. Three-quarter or full-body composition, face in upper central third, both complete ears and head safely inside the frame with generous top margin. One character only. No text, captions, card border, frame, logo or watermark. Do not copy the source's standing pose or transparent background. Scene: 白犀 White Rhinoceros: a courteous but independent frontline knight. She stands protectively at a sunlit meadow path, a silver shield resting by her side and an open hand inviting companions forward, confident gentle expression. Match the identity reference: unobscured large pale rhinoceros ears, light taupe hair with a long braid over one shoulder and pale headband, complete silver-gray plate armor with broad segmented skirt plates, long dark sleeves, dark tights, armored boots and dark red center lining. Do not add a helmet or head horn; the image reference controls her identity. One character only, no combat victim.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/51.png",
+      "generatedSource": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b5-0675-70b1-8d9e-0ab510c0dd57\\exec-c3b63c93-927f-485f-acf0-68704260cd06.png",
+      "outputPath": "D:/Github/ProjectBANG/public/assets/characters/kf3_0051.png",
+      "review": "Viewed original default outfit and generated result; identity, new scene, complete head/ears and no text reviewed. PNG 1024×1536.",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "9beb82b99797517c5dba59a6916de181f7807eced76cc6b7a8284e6401139d0d"
+    },
+    {
+      "id": 52,
+      "prompt": "Use case: stylized-concept. Asset type: one collectible character-card illustration for a web card game. Create ONE finished vertical 2:3 anime illustration. The input image is an identity and default-outfit reference, not an edit target: draw a completely new pose and a fully painted new scene. Delicate ink lines, soft painted colors, ivory highlights, light teal shadows, small coral accents and warm golden rim light, polished friendly adventure illustration, cohesive collectible card series. Keep the reference identity, hair, animal ears and default outfit recognizable and accurate. Three-quarter or full-body composition, face in upper central third, both complete ears and head safely inside the frame with generous top margin. One character only. No text, captions, card border, frame, logo or watermark. Do not copy the source's standing pose or transparent background. Scene: 豹变色龙 Panther Chameleon: a diligent ninja who acts courageously despite nervousness. She perches lightly on a broad mossy branch in the forest canopy, holding a single small folded paper throwing star between gloved fingers, watching the path with focused red eyes. Preserve green chameleon hood, green hair, black ninja top, green pleated skirt, scaled arm coverings, bandaged lower legs and curled green tail. No blades or additional limbs. Her reference costume has a sleeveless black top with green sailor-like collar and pale throat bow, a green pleated overskirt above black fitted shorts, scaled wrist guards; retain this exact outfit and do not add exposed midriff.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/52.png",
+      "generatedSource": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b5-0675-70b1-8d9e-0ab510c0dd57\\exec-8d04a07e-1988-433d-b09b-da5c8e5a0536.png",
+      "outputPath": "D:/Github/ProjectBANG/public/assets/characters/kf3_0052.png",
+      "review": "Viewed original default outfit and generated result; identity, new scene, complete head/ears and no text reviewed. PNG 1024×1536.",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "ca7d1ef34bd1232521d996eed9a86d5818e0ff1639ca2dcdc7a744224f3cebf3"
+    },
+    {
+      "id": 53,
+      "prompt": "Use case: stylized-concept. Asset type: one collectible character-card illustration for a web card game. Create ONE finished vertical 2:3 anime illustration. The input image is an identity and default-outfit reference, not an edit target: draw a completely new pose and a fully painted new scene. Delicate ink lines, soft painted colors, ivory highlights, light teal shadows, small coral accents and warm golden rim light, polished friendly adventure illustration, cohesive collectible card series. Keep the reference identity, hair, animal ears and default outfit recognizable and accurate. Three-quarter or full-body composition, face in upper central third, both complete ears and head safely inside the frame with generous top margin. One character only. No text, captions, card border, frame, logo or watermark. Do not copy the source's standing pose or transparent background. Scene: 鲸头鹳 Shoebill: a quiet, watchful guardian. She stands motionless by a tall wetland lookout, one hand lightly shading her intense golden gaze, fine reeds and still blue water behind her, a calm reliable presence. Preserve the distinctive gray short hair and long dark side feather strands, gray uniform top and shorts, tights and black shoes, dark tail feathers. No weapon and no letters. Keep the large golden-ochre side feather/hair tuft visible on the viewer's right, the pale taupe necktie, short gray sleeves, long gray gloves and severe lowered eyebrows visible in the reference.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/53.png",
+      "generatedSource": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b5-0675-70b1-8d9e-0ab510c0dd57\\exec-457a1905-dd74-4019-87a0-3d95b079029a.png",
+      "outputPath": "D:/Github/ProjectBANG/public/assets/characters/kf3_0053.png",
+      "review": "Viewed original default outfit and generated result; identity, new scene, complete head/ears and no text reviewed. PNG 1024×1536.",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "f0577bed90232ccda590c566354fba9c07a4572bdc5b86847431d10fa613e667"
+    },
+    {
+      "id": 59,
+      "prompt": "Use case: stylized-concept. Asset type: one collectible character-card illustration for a web card game. Create ONE finished vertical 2:3 anime illustration. The input image is an identity and default-outfit reference, not an edit target: draw a completely new pose and a fully painted new scene. Delicate ink lines, soft painted colors, ivory highlights, light teal shadows, small coral accents and warm golden rim light, polished friendly adventure illustration, cohesive collectible card series. Keep the reference identity, hair, animal ears and default outfit recognizable and accurate. Three-quarter or full-body composition, face in upper central third, both complete ears and head safely inside the frame with generous top margin. One character only. No text, captions, card border, frame, logo or watermark. Do not copy the source's standing pose or transparent background. Scene: 灰狼 Gray Wolf: a warm mature coordinator of friends, skilled in communication and nighttime tracking. She stands on a grassy ridge at moonrise, one hand near her heart and the other raised in a gentle signal toward distant trails, attentive caring expression and drifting fireflies. Preserve long dark blue-black hair, gray wolf ears, one amber and one blue eye, dark short cape-top, dark plaid skirt, gray-black limb gradients and full wolf tail.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/59.png",
+      "generatedSource": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b5-0675-70b1-8d9e-0ab510c0dd57\\exec-7a3b1162-d8bc-4167-a387-f0126b7f9e17.png",
+      "outputPath": "D:/Github/ProjectBANG/public/assets/characters/kf3_0059.png",
+      "review": "Viewed original default outfit and generated result; identity, new scene, complete head/ears and no text reviewed. PNG 1024×1536.",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "4ff1acb8717f7a1106a180fa298b97ee74fef2fac49abf35854be9514e380b97"
+    },
+    {
+      "id": 61,
+      "prompt": "Use case: stylized-concept. Asset type: one collectible character-card illustration for a web card game. Create ONE finished vertical 2:3 anime illustration. The input image is an identity and default-outfit reference, not an edit target: draw a completely new pose and a fully painted new scene. Delicate ink lines, soft painted colors, ivory highlights, light teal shadows, small coral accents and warm golden rim light, polished friendly adventure illustration, cohesive collectible card series. Keep the reference identity, hair, animal ears and default outfit recognizable and accurate. Three-quarter or full-body composition, face in upper central third, both complete ears and head safely inside the frame with generous top margin. One character only. No text, captions, card border, frame, logo or watermark. Do not copy the source's standing pose or transparent background. Scene: 非洲野犬 African Wild Dog: a responsible tactical planner who learns to trust her team. She kneels at a woodland trail fork, checking an unlettered map and pointing to a safe route, alert determined yet friendly expression. Preserve large round ears, black and sandy patterned short hair, pale fitted blouse, dark ribbon, denim shorts, mottled limbs and thin patterned tail. No printed text on map.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/61.png",
+      "generatedSource": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b5-0675-70b1-8d9e-0ab510c0dd57\\exec-f362db96-3f84-4df2-9ea1-5a9e7f73fcc7.png",
+      "outputPath": "D:/Github/ProjectBANG/public/assets/characters/kf3_0061.png",
+      "review": "Viewed original default outfit and generated result; identity, new scene, complete head/ears and no text reviewed. PNG 1024×1536.",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "cb3937e53a948e9cf78d897871cdf975a978d3c905b9c7a15ba3f66d33b5a375"
+    },
+    {
+      "id": 69,
+      "prompt": "Use case: stylized-concept. Asset type: one collectible character-card illustration for a web card game. Create ONE finished vertical 2:3 anime illustration. The input image is an identity and default-outfit reference, not an edit target: draw a completely new pose and a fully painted new scene. Delicate ink lines, soft painted colors, ivory highlights, light teal shadows, small coral accents and warm golden rim light, polished friendly adventure illustration, cohesive collectible card series. Keep the reference identity, hair, animal ears and default outfit recognizable and accurate. Three-quarter or full-body composition, face in upper central third, both complete ears and head safely inside the frame with generous top margin. One character only. No text, captions, card border, frame, logo or watermark. Do not copy the source's standing pose or transparent background. Scene: 猎豹 Cheetah: a proud explosive sprinter learning the value of teamwork. Show her in a graceful accelerating stride across golden savanna grass, looking forward confidently, soft dust and curved grass convey a swift turn while face remains crisp and recognizable. Match the provided default-outfit reference exactly: golden-brown hair with longer rear hair strands, rounded spotted ears, dark facial tear marks, yellow eyes, pale short-sleeved collared top with a spotted necktie, short spotted skirt, long spotted gloves and stockings, long patterned tail and yellow-black shoes. No invented scarf, keep default hairstyle and outfit.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/69.png",
+      "generatedSource": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b5-0675-70b1-8d9e-0ab510c0dd57\\exec-22dad4b7-3f12-4267-976d-103272f8ec9c.png",
+      "outputPath": "D:/Github/ProjectBANG/public/assets/characters/kf3_0069.png",
+      "review": "Viewed original default outfit and generated result; identity, new scene, complete head/ears and no text reviewed. PNG 1024×1536.",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "04758402ac3f12c0b76f2c9025a323d891c4a2b8eb97e7e77c670d97264b44be"
+    },
+    {
+      "id": 322,
+      "prompt": "Use case: stylized-concept. Asset type: one collectible character-card illustration for a web card game. Create ONE finished vertical 2:3 anime illustration. The input image is an identity and default-outfit reference, not an edit target: draw a completely new pose and a fully painted new scene. Delicate ink lines, soft painted colors, ivory highlights, light teal shadows, small coral accents and warm golden rim light, polished friendly adventure illustration, cohesive collectible card series. Keep the reference identity, hair, animal ears and default outfit recognizable and accurate. Three-quarter or full-body composition, face in upper central third, both complete ears and head safely inside the frame with generous top margin. One character only. No text, captions, card border, frame, logo or watermark. Do not copy the source's standing pose or transparent background. Scene: 薮猫 Serval: optimistic, curious and eager to make everyone smile. She makes a joyful light leap between two small savanna rocks, one hand lifted in an inviting wave, sunlit grass and distant acacia trees, dynamic but balanced pose. Preserve huge serval ears, orange short hair with black forehead markings, amber eyes, white sleeveless blouse, spotted bow, buff spotted skirt and spotted arm covers, legs and tail, pale shoes. Base Serval only: no dragon, monkey, deity, doll or collaboration transformation.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/322.png",
+      "generatedSource": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b5-0675-70b1-8d9e-0ab510c0dd57\\exec-8668c0dc-6cb6-4e58-9cd2-0475cb391754.png",
+      "outputPath": "D:/Github/ProjectBANG/public/assets/characters/kf3_0322.png",
+      "iterations": [
+        {
+          "prompt": "Use case: stylized-concept. Asset type: one collectible character-card illustration for a web card game. Create ONE finished vertical 2:3 anime illustration. The input image is an identity and default-outfit reference, not an edit target: draw a completely new pose and a fully painted new scene. Delicate ink lines, soft painted colors, ivory highlights, light teal shadows, small coral accents and warm golden rim light, polished friendly adventure illustration, cohesive collectible card series. Keep the reference identity, hair, animal ears and default outfit recognizable and accurate. Three-quarter or full-body composition, face in upper central third, both complete ears and head safely inside the frame with generous top margin. One character only. No text, captions, card border, frame, logo or watermark. Do not copy the source's standing pose or transparent background. Scene: 薮猫 Serval: optimistic, curious and eager to make everyone smile. She makes a joyful light leap between two small savanna rocks, one hand lifted in an inviting wave, sunlit grass and distant acacia trees, dynamic but balanced pose. Preserve huge serval ears, orange short hair with black forehead markings, amber eyes, white sleeveless blouse, spotted bow, buff spotted skirt and spotted arm covers, legs and tail, pale shoes. Base Serval only: no dragon, monkey, deity, doll or collaboration transformation.",
+          "generatedSource": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b5-0675-70b1-8d9e-0ab510c0dd57\\exec-80b83072-e21f-4550-9ea9-9827db147f53.png",
+          "reason": "Top ear or feather tip too close to canvas boundary."
+        }
+      ],
+      "revisionPrompt": "Use case: precise-object-edit. Image 1 is the existing finished card illustration to revise; image 2 is identity reference only. Make exactly one composition correction: zoom the view out sufficiently so the ENTIRE character, including the complete tips of BOTH tall animal ear/feather crests, fits inside the 2:3 canvas, with a very clear empty SKY margin of at least 10% of canvas height above the highest ear/feather tip. The current image clips the top ear/feather. Make the whole character approximately 15% smaller within the canvas and extend the painted background naturally around the scene. Preserve the same face, eyes, hair, expression, outfit, pose, scene and polished anime painted illustration style; do not redesign the character, do not change the scene. Both ear/feather tips must terminate well below the top image boundary. No text, border, logo or watermark.",
+      "review": "Viewed original default outfit and generated result; identity, new scene, complete head/ears and no text reviewed. PNG 1024×1536.",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "db4b802279595c856ca8e75b94fe6a970ffa7bad6eef6d930149aec0e2a999d8"
+    }
+  ]
+}

@@ -1,6 +1,9 @@
 <?php
 namespace Imaginary;
 
+require_once __DIR__ . '/SkillBlocks.php';
+require_once __DIR__ . '/ContentPack.php';
+
 /** The ordinary pool and mode rules are server-owned, never part of a submitted build. */
 final class Catalog
 {
@@ -102,19 +105,17 @@ final class Catalog
             $deck[4]=['type'=>'custom','rank'=>5,'custom'=>['name'=>$customNames[$i],'series'=>$c['series'],'fallback'=>'recover','effects'=>$effects[$i]]];
             $out[]=['id'=>'preset_'.$c['id'],'name'=>$names[$i],'character'=>$c,'deck'=>$deck];
         }
-        return $out;
+        return array_merge($out, ContentPack::data()['presets']);
     }
 
     public static function all(): array
     {
         $p=self::presets();
-        return ['rulesVersion'=>'0.1.0-alpha','cards'=>self::cards(),'mindOptions'=>self::mindOptions(),'characters'=>array_column($p,'character'),'presets'=>$p,
-            'blocks'=>[
-                'triggers'=>['active'=>'出牌阶段主动','turn_start'=>'自己的回合开始','after_damage'=>'受到伤害后','after_attack'=>'攻击造成伤害后','on_defend'=>'防御成功后'],
-                'conditions'=>['always'=>'总是','wounded'=>'体力受损','hand_low'=>'手牌不超过 2 张'],
-                'effects'=>['draw'=>'摸普通牌','heal'=>'回复体力','damage'=>'造成伤害','recover_mind'=>'回收已耗心象到底部','shield'=>'本轮护盾','range'=>'本回合攻击范围增加','attack_bonus'=>'本回合攻击伤害增加'],
-                'targets'=>['self'=>'自己','target'=>'指定角色 / 触发关联角色'],
-            ],
+        $content=ContentPack::data();
+        return ['rulesVersion'=>SkillBlocks::VERSION,'cards'=>self::cards(),'mindOptions'=>self::mindOptions(),'characters'=>array_column($p,'character'),'presets'=>$p,
+            'blocks'=>SkillBlocks::metadata(),
+            'contentPacks'=>$content['contentPacks'],'skillTemplates'=>$content['skillTemplates'],
+            'mindTemplates'=>$content['mindTemplates'],'arts'=>$content['arts'],'characterNotes'=>$content['characterNotes'],
             'limits'=>['skills'=>2,'effects'=>3,'customCards'=>4,'characterBudget'=>18,'customBudget'=>24,'customCardBudget'=>12],
             'modes'=>['color'=>'冷暖对抗','series'=>'系列对抗'],
         ];

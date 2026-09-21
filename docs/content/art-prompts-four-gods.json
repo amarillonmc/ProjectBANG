@@ -1,0 +1,32 @@
+{
+  "tool": "built-in image_gen",
+  "purpose": "白虎与朱雀补齐四神；参考默认立绘与ProjectK人设重绘",
+  "records": [
+    {
+      "pageId": "100",
+      "id": "kf3_0100",
+      "name": "白虎",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/100.png",
+      "outputPath": "D:/Github/ProjectBANG/public/assets/characters/kf3_0100.png",
+      "prompt": "Use case: stylized-concept. Asset type: one finished vertical 2:3 collectible anime character-card illustration, no card border or text. Reference image 1 is the exact character identity and default costume reference for Byakko / 白虎 (ビャッコ) from Kemono Friends 3, not an edit target. Redraw her completely in a new pose and new painted setting. Preserve the reference's short pale pink-white hair, soft striped tiger ears, long pale striped tiger tail, heterochromia (viewer-left eye blue, viewer-right eye golden), white collar and pale dusty pink school-uniform-style fitted top and pleated skirt, pale striped stockings, flat light shoes, asymmetric golden and blue wrist and upper-leg ornaments. Follow the reference image for all colors and anatomy. Character: outgoing confident western guardian, proud martial artist, friendly reliable energy; controls rushing wind and fights with rapid successive punches, opening paths through rock while protecting others. Scene: she springs forward on a high rocky grassland path, one fist poised for a precise martial strike, the other open for balance; elegant pale turquoise wind currents and a few leaves trace the motion around her, distant sunlit mountains behind. No opponent or other figure. Clearly readable face and hands, natural anatomy, tasteful fully clothed adventure pose, skirt lies naturally and modestly. Entire head and ear tips fully visible with at least 8% breathing space above, character from head to at least shins, face in upper central third. Match the existing gentle polished card series: delicate fine ink lines, soft painterly natural color, ivory light, teal shadows, muted coral accents, gold afternoon light. Rich but quiet background, beautiful cohesive illustration. No letters, words, watermarks, logos, UI, card frame or extra characters.",
+      "generatedSource": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b4-54c5-71b1-bb92-8de84ccdf3bc\\exec-6f20eab6-ae3c-4f1b-a171-f5b00c2f3cdb.png",
+      "width": 1024,
+      "height": 1536,
+      "review": "已对照默认立绘查看生成图：角色身份、异色瞳/羽冠、服装、完整耳尖或羽尖、自然构图与无文字均通过。",
+      "sha256": "869b9f093811ec55e1f24ba340cc207692ef4ce474e4339d615e36f829297524"
+    },
+    {
+      "pageId": "101",
+      "id": "kf3_0101",
+      "name": "朱雀",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/101.png",
+      "outputPath": "D:/Github/ProjectBANG/public/assets/characters/kf3_0101.png",
+      "prompt": "Use case: stylized-concept. Asset type: one finished vertical 2:3 collectible anime character-card illustration, no card border or text. Reference image 1 is the exact character identity and default costume reference for Suzaku / 朱雀 (スザク) from Kemono Friends 3, not an edit target. Redraw her completely in a new pose and new painted setting. Preserve the reference's bright scarlet short hair, vivid green eyes, distinctive long red and golden feather crests extending from the sides and top of her head, white-and-red uniform-style top with red feather shoulder and sleeve details, layered pink pleated skirt with dark lower trim, red opaque stockings, golden wrist ornaments, light pink flat shoes and feather tail. Follow the reference image; she is a single humanoid girl with bird features, not an actual bird or generic phoenix. Character: disciplined, proud southern guardian who prizes effort and trains companions; her apparently stern but caring manner shows in a small confident smile. She controls powerful purifying flame with precision. Scene: she stands firmly on a warm stone terrace above a green woodland and distant volcanic ridge, one open hand guiding a small graceful ribbon of golden scarlet cleansing fire that curves upward beside her, other hand resting near waist in a composed mentor stance. The controlled flame gives warm light, leaves surroundings unharmed and does not cover her face. No other figures. Entire head and ALL long feather tips fully within canvas with at least 10% sky margin above highest crest, three-quarter or full-body composition, face in upper central third. Natural readable hands and anatomy, tasteful fully clothed adventure portrait. Match the existing gentle polished card series: delicate fine ink lines, softly painted natural colors, ivory light, teal environmental shadows, muted coral and gold highlights, softly detailed landscape. No letters, words, watermarks, logos, UI, card frame or extra characters.",
+      "generatedSource": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b4-54c5-71b1-bb92-8de84ccdf3bc\\exec-f00c0db6-36b0-4920-8b6f-b29ba2427e1e.png",
+      "width": 1024,
+      "height": 1536,
+      "review": "已对照默认立绘查看生成图：角色身份、异色瞳/羽冠、服装、完整耳尖或羽尖、自然构图与无文字均通过。",
+      "sha256": "2c70ecea81e1652e7e02606b4d5d48e9cdae48df9c353cebb3c0c580b128c2f3"
+    }
+  ]
+}

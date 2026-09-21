@@ -32,6 +32,7 @@ function conservation($g) {
     foreach($g['players'] as $p) foreach(['hand','mind','spent','equipment','delayed'] as $zone) foreach($p[$zone] as $c) $uids[]=$c['uid'];
     foreach($g['queue'] as $e) if(($e['effect']??'')==='delayed') $uids[]=$e['card']['uid'];
     if(($g['pending']['event']['effect']??'')==='delayed') $uids[]=$g['pending']['event']['card']['uid'];
+    if(($g['pending']['kind']??'')==='scry') foreach($g['pending']['cards'] as $c) $uids[]=$c['uid'];
     return [count($uids),count(array_unique($uids))];
 }
 

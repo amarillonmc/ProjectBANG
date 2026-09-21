@@ -1,0 +1,197 @@
+{
+  "generator": "built-in image_gen",
+  "status": "complete",
+  "records": [
+    {
+      "pageId": 1,
+      "id": "kf3_0001",
+      "prompt": "Use case: illustration-story. Create ONE finished vertical 2:3 collectible character-card illustration for an anime animal-friends tabletop game, no card frame, no lettering or logos. Reference image role: design reference for the same fictional Kemono Friends 3 character 豺狗 / Dhole. Preserve recognizable animal ears, auburn bob hair, warm brown eyes, fluffy tail, pale pink-white sleeveless zipped top with white fluffy collar, brown pleated skirt, white ankle boots. New scene and pose: eager expedition team guide, smiling gently, one open hand inviting her friends forward, other hand holding a small trail map, sunlit Japari grasslands and softly glowing floating seed motes. Personality is curious, energetic, learns cooperation and values her expedition pack; keen scent tracker and whistling communicator. Polished Japanese anime illustration, delicate ink lines and softly painted color, natural anatomy, tasteful fully clothed adventure portrait. Frame head and ears completely, three-quarter body, face in upper central third; background softly detailed, generous breathing space. Consistent series palette: ivory light, teal shadows, warm coral highlights, gold afternoon sun. Only one character, no text, no watermark; use reference to preserve character identity while redrawing the entire scene.",
+      "source": "Generated images are saved to C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b4-54c5-71b1-bb92-8de84ccdf3bc as C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b4-54c5-71b1-bb92-8de84ccdf3bc\\exec-a0adcb23-0ad9-4c64-ae2f-47477f113913.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "output": "public/assets/characters/kf3_0001.png"
+    },
+    {
+      "pageId": 3,
+      "id": "kf3_0003",
+      "prompt": "Use case: illustration-story. Create ONE finished vertical 2:3 collectible anime character-card illustration, no card frame or text. Input image is a character design reference for 耳廓狐 (フェネック) from Kemono Friends 3. Preserve reference identity, animal traits, ears/hair/eyes, signature outfit silhouette and colors. Redraw completely with a new pose and scene: quiet desert lookout, listening attentively with hand near ear, dusk oasis. Appearance: 浅金奶油色短发两侧伸出极宽大的淡色狐耳，耳内呈粉色，眼睛为柔和的粉红色。她穿灰粉色短袖上衣和同色百褶裙，手脚为白粉渐变并带蓬松腕口与踝口，身后拖着一条浅奶油色大尾巴。. Personality: 看似懒散随和，实则观察细致、临危不乱，常在浣熊一头热时负责判断环境与收拾局面。她不会用强硬方式否定伙伴，而是以陪伴、提醒和实际行动守住对方；浣熊中暑或失去记忆时，她都会优先寻水、求援并耐心守候。她把两人的关系视作长久约定，也愿意让新朋友按自己的节奏成长。. Abilities, for characterization not literal text: 巨大耳朵兼具散热与精密听觉作用，剧情中能隔着很远听见铃声、天蓝怪动静乃至细微生命声；她还擅长在沙漠判断方向、寻找水源与安全路线，对高温和干燥环境有很强适应力。. Polished Japanese anime illustration, delicate fine ink lines, softly painted natural color and lighting; consistent series ivory light, teal shadows, warm coral highlights and subtle gold sun. One fully clothed character, tasteful adventurous portrait, safe natural anatomy. Head and ears entirely in frame with breathing space, three-quarter or full body, face upper central third, detailed yet unobtrusive environment. No text, logos, UI, borders, watermarks or second character.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/3.png",
+      "source": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b4-54c5-71b1-bb92-8de84ccdf3bc\\exec-a3e959a8-694a-4a18-9eb4-efaca218f22a.png",
+      "output": "D:/Github/ProjectBANG/public/assets/characters/kf3_0003.png"
+    },
+    {
+      "pageId": 4,
+      "id": "kf3_0004",
+      "prompt": "Use case: illustration-story. Create ONE finished vertical 2:3 collectible anime character-card illustration, no card frame or text. Input image is a character design reference for 浣熊 (アライグマ) from Kemono Friends 3. Preserve reference identity, animal traits, ears/hair/eyes, signature outfit silhouette and colors. Redraw completely with a new pose and scene: proud eager explorer pointing toward a distant park trail, riverbank. Appearance: 深灰色齐耳短发上有一对小圆耳，红褐色眼睛周围带较深色的面部纹样。她穿浅紫色短袖衬衫，胸前系宽大的黑色蝴蝶结，下配黑色百褶裙、黑手套与灰色连裤袜，身后是醒目的灰黑环纹长尾。. Personality: 自信旺盛，习惯自称“小浣（アライさん）”，总想率先发现大事并开创属于自己的时代；她容易被直觉带着跑，也会因急于证明自己而忽略耐心。经历种树与组建队伍后，她学会等待成长、按成员长处分工，并愿意把最危险的部分留给自己。夸张的自我宣传之下，是对耳廓狐和同伴极强的保护欲与责任感。. Abilities, for characterization not literal text: 前爪触觉灵敏，能在看不清的水中靠触摸判断物体；脚掌适合稳定行走，游泳和长时间奔走也很出色。她的真正强项是惊人的行动力与耐力，常能在队友疲惫时继续诱敌、搜索或正面迎战。. Polished Japanese anime illustration, delicate fine ink lines, softly painted natural color and lighting; consistent series ivory light, teal shadows, warm coral highlights and subtle gold sun. One fully clothed character, tasteful adventurous portrait, safe natural anatomy. Head and ears entirely in frame with breathing space, three-quarter or full body, face upper central third, detailed yet unobtrusive environment. No text, logos, UI, borders, watermarks or second character.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/4.png",
+      "source": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b4-54c5-71b1-bb92-8de84ccdf3bc\\exec-0349088a-77f8-4360-b64a-9804fff0f0f8.png",
+      "output": "D:/Github/ProjectBANG/public/assets/characters/kf3_0004.png"
+    },
+    {
+      "pageId": 6,
+      "id": "kf3_0006",
+      "prompt": "Use case: illustration-story. Create ONE finished vertical 2:3 collectible anime character-card illustration, no card frame or text. Input image is a character design reference for 小爪水獭 (コツメカワウソ) from Kemono Friends 3. Preserve reference identity, animal traits, ears/hair/eyes, signature outfit silhouette and colors. Redraw completely with a new pose and scene: playfully tossing smooth pebbles by a sparkling stream. Appearance: 灰紫色短发上有一对小圆耳，眼睛呈红褐色。她穿淡紫色无袖连体短装，领口、腰侧和裤脚带白色绒边，双臂套深色长手套，腿上穿深灰色过膝袜，身后伸出灰色水獭尾巴。. Personality: 天真外向，看到新鲜事就想玩，也很喜欢用不同声线逗大家开心。她把能发出十多种声音的天赋当成成为声优和表演者的起点，而不是炫耀的终点；制作木偶戏时会为观众反复练习。起初容易一个人兴奋地冲在前面，后来明白舞台效果来自分工，愿意听取伙伴意见并共同完成演出。. Abilities, for characterization not literal text: 游泳与潜水能力突出，能迅速下到河底取得黏土；小而灵活的手指适合抓握、制作和操纵木偶。她还能稳定模仿十多种不同声音，把发声控制发展成明确的表演专长。. Polished Japanese anime illustration, delicate fine ink lines, softly painted natural color and lighting; consistent series ivory light, teal shadows, warm coral highlights and subtle gold sun. One fully clothed character, tasteful adventurous portrait, safe natural anatomy. Head and ears entirely in frame with breathing space, three-quarter or full body, face upper central third, detailed yet unobtrusive environment. No text, logos, UI, borders, watermarks or second character.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/6.png",
+      "source": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b4-54c5-71b1-bb92-8de84ccdf3bc\\exec-f0d886b2-56fa-4473-a41c-b71e37c0a2d7.png",
+      "output": "D:/Github/ProjectBANG/public/assets/characters/kf3_0006.png"
+    },
+    {
+      "pageId": 8,
+      "id": "kf3_0008",
+      "prompt": "Use case: illustration-story. Create ONE finished vertical 2:3 collectible anime character-card illustration, no card frame or text. Input image is a character design reference for 苏利羊驼 (アルパカ・スリ) from Kemono Friends 3. Preserve reference identity, animal traits, ears/hair/eyes, signature outfit silhouette and colors. Redraw completely with a new pose and scene: welcoming cafe host serving a steaming cup at a grassy hilltop cafe. Appearance: 淡灰褐色长发卷曲成柔软发束并编在身侧，头顶露出小羊驼耳，眼睛为浅蓝色。她戴白色绒帽与厚绒领，穿米色无袖短上衣和短裤，胸前系粉色蝴蝶结，手腕及脚踝都有蓬松白毛装饰。. Personality: 审美自信、待人温和，是把理发与咖啡店都经营得井井有条的生活型专家。她尊重客人的意愿，不会为了迎合催促而草率剪发，也不把流行当成唯一标准；面对工作扩张的压力，她最终选择保留自己能认真照顾每位客人的节奏。她重视手艺、舒适感和相处过程，成熟而不张扬。. Abilities, for characterization not literal text: 苏利型羊驼特有的长而细密毛发能持续生长，可提供保暖材料；她又把触感、梳理与造型经验发展成高水平理发和编织技术。山区行动与耐寒属于其动物原型所体现的适应倾向。. Polished Japanese anime illustration, delicate fine ink lines, softly painted natural color and lighting; consistent series ivory light, teal shadows, warm coral highlights and subtle gold sun. One fully clothed character, tasteful adventurous portrait, safe natural anatomy. Head and ears entirely in frame with breathing space, three-quarter or full body, face upper central third, detailed yet unobtrusive environment. No text, logos, UI, borders, watermarks or second character.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/8.png",
+      "source": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b4-54c5-71b1-bb92-8de84ccdf3bc\\exec-dff185a4-8807-4c63-b33b-9c255f86cd42.png",
+      "output": "D:/Github/ProjectBANG/public/assets/characters/kf3_0008.png"
+    },
+    {
+      "pageId": 10,
+      "id": "kf3_0010",
+      "prompt": "Use case: illustration-story. Create ONE finished vertical 2:3 collectible anime character-card illustration, no card frame or text. Input image is a character design reference for 驼鹿 (ヘラジカ) from Kemono Friends 3. Preserve reference identity, animal traits, ears/hair/eyes, signature outfit silhouette and colors. Redraw completely with a new pose and scene: bold friendly challenger striding through a forest clearing. Appearance: 深棕色短发上方展开一对宽大的掌状鹿角，灰褐色长耳从角下伸出，眼睛为棕色。她以黑色围巾式短披肩搭配灰褐色上衣和黑色百褶裙，双腿穿深色长袜，脚上是简洁黑鞋。. Personality: 沉稳寡言，习惯先观察再行动，不会因为被称作“森林之王”便自我膨胀，反而强调自己只是在做巡逻职责。她责任心强，遇到住处修建或安全问题会默默承担大量工作；故事中也逐渐明白可靠并不等于独自包办，愿意把任务交给同伴并接受帮助。她看重秩序、承诺和让所有人平安返回。. Abilities, for characterization not literal text: 体格巨大、力量与耐力都很出众，宽大鹿角适合正面阻挡和冲击；听觉能在来人现身前捕捉脚步。她还继承驼鹿善于长距离游泳和在森林湿地稳定行进的能力倾向。. Polished Japanese anime illustration, delicate fine ink lines, softly painted natural color and lighting; consistent series ivory light, teal shadows, warm coral highlights and subtle gold sun. One fully clothed character, tasteful adventurous portrait, safe natural anatomy. Head and ears entirely in frame with breathing space, three-quarter or full body, face upper central third, detailed yet unobtrusive environment. No text, logos, UI, borders, watermarks or second character.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/10.png",
+      "source": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b4-54c5-71b1-bb92-8de84ccdf3bc\\exec-4c52b444-f3ee-4d84-85a1-b0895a90bf99.png",
+      "output": "D:/Github/ProjectBANG/public/assets/characters/kf3_0010.png"
+    },
+    {
+      "pageId": 7,
+      "id": "kf3_0007",
+      "prompt": "Use case: illustration-story. Create ONE finished vertical 2:3 collectible anime character-card illustration, no card frame or text. Input image is a character design reference for 美洲豹 (ジャガー) from Kemono Friends 3. Preserve reference identity, animal traits, ears/hair/eyes, signature outfit silhouette and colors. Redraw completely with a new pose and scene: reliable strong river guide helping from a wooden raft. Appearance: 沙金色齐颈短发上长有黑色圆耳，黄绿色眼睛锐利。她穿白色短袖上衣和短裙，衣料布满黑褐色玫瑰斑，肩臂披着同纹样毛皮，颈口有深色绒领，双腿也覆盖斑纹长袜。. Personality: 认真寡言，把超越姐姐黑美洲豹当作长期目标，相信反复锻炼和不断出拳终会带来进步。她其实十分乐于助人，会主动搬运货物、下水救援，却不擅长面对感谢，常用冷淡语气遮掩害羞。成长形态的故事中，她不再只追求蛮力，而是学习精确、节奏与体力分配，把“变强”理解为能更可靠地帮助别人。. Abilities, for characterization not literal text: 身体力量强大，能搬运重物并长时间近身作战；游泳、潜水和攀爬都很熟练，可在水陆与树间快速转换位置。经过训练后，她还能连续打出兼顾速度与准确度的猛击。. Polished Japanese anime illustration, delicate fine ink lines, softly painted natural color and lighting; consistent series ivory light, teal shadows, warm coral highlights and subtle gold sun. One fully clothed character, tasteful adventurous portrait, safe natural anatomy. Head and ears entirely in frame with breathing space, three-quarter or full body, face upper central third, detailed yet unobtrusive environment. No text, logos, UI, borders, watermarks or second character.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/7.png",
+      "source": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b4-54c5-71b1-bb92-8de84ccdf3bc\\exec-070e6cc3-06c4-41fe-b0cd-349be708c6b6.png",
+      "output": "D:/Github/ProjectBANG/public/assets/characters/kf3_0007.png"
+    },
+    {
+      "pageId": 9,
+      "id": "kf3_0009",
+      "prompt": "Use case: illustration-story. Create ONE finished vertical 2:3 collectible anime character-card illustration, no card frame or text. Input image is a character design reference for 狮子 (ライオン) from Kemono Friends 3. Preserve reference identity, animal traits, ears/hair/eyes, signature outfit silhouette and colors. Redraw completely with a new pose and scene: relaxed but commanding guardian resting beneath a savanna acacia. Appearance: 金黄色蓬松短发向外展开，像一圈小型鬃毛，头顶有圆耳，眼睛为金色。她穿白色贴身上衣，配红色饰边、格纹领带和红黑格短裙，颈口及腕部有浅棕绒毛，戴橙色手套与短靴，身后是黄褐色长尾。. Personality: 平时慵懒嗜睡，讲话也不紧不慢，容易让人误以为她凡事不上心；实际上她会在无人注意时训练，并以维护“王者”与警备队的威信为己任。她善于读懂战况和成员状态，不用高压命令带队，而是提醒大家冷静、协作并保留体力。面对年轻狮类又像成熟前辈，愿意悄悄照顾对方的自尊与成长。. Abilities, for characterization not literal text: 拥有大型猫科的爆发力、耐力和威慑性吼声，近身战斗能力很强；她也善于在休息时节省体力、在夜间保持警戒。剧情尤其强调其战场判断与统率能力，能迅速识别队伍疲劳和敌方节奏。. Polished Japanese anime illustration, delicate fine ink lines, softly painted natural color and lighting; consistent series ivory light, teal shadows, warm coral highlights and subtle gold sun. One fully clothed character, tasteful adventurous portrait, safe natural anatomy. Head and ears entirely in frame with breathing space, three-quarter or full body, face upper central third, detailed yet unobtrusive environment. No text, logos, UI, borders, watermarks or second character.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/9.png",
+      "source": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b4-54c5-71b1-bb92-8de84ccdf3bc\\exec-079b1788-eba9-498b-9427-316a16833b18.png",
+      "output": "D:/Github/ProjectBANG/public/assets/characters/kf3_0009.png"
+    },
+    {
+      "pageId": 11,
+      "id": "kf3_0011",
+      "prompt": "Use case: illustration-story. Create ONE finished vertical 2:3 collectible anime character-card illustration, no card frame or text. Input image is a character design reference for 白脸角鸮 (アフリカオオコノハズク) from Kemono Friends 3. Preserve reference identity, animal traits, ears/hair/eyes, signature outfit silhouette and colors. Redraw completely with a new pose and scene: thoughtful little professor studying an open field notebook in a tree library. Appearance: 银灰色齐耳短发上竖着黑色耳羽，金黄色圆眼醒目。她穿多层灰色羽片状短斗篷和外套，颈部围着白色羽绒领，袖口与裙摆呈深浅灰条纹，腿穿灰色长袜，身后可见带横纹的尾羽。. Personality: 自称博士，十分确信自己聪明又伟大，喜欢让别人礼貌尊敬，受到惊吓时却会立刻暴露猫头鹰胆小的一面。她的研究动机常被美食牵着走，偶尔显得贪吃和强词夺理，但确实擅长整理线索、设计验证方法并找到答案。成长故事让她重新理解熟悉食物在不同环境中的意义，也表现出对知识应不断更新的认真态度。. Abilities, for characterization not literal text: 羽色与树皮相近，能在林间收拢身体形成很强的伪装；作为夜行鸮类，具有优秀夜视、听觉与安静飞行倾向。剧情中她更常把这些观察力转化为情报分析、敌情判断和作战方案。. Polished Japanese anime illustration, delicate fine ink lines, softly painted natural color and lighting; consistent series ivory light, teal shadows, warm coral highlights and subtle gold sun. One fully clothed character, tasteful adventurous portrait, safe natural anatomy. Head and ears entirely in frame with breathing space, three-quarter or full body, face upper central third, detailed yet unobtrusive environment. No text, logos, UI, borders, watermarks or second character.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/11.png",
+      "source": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b4-54c5-71b1-bb92-8de84ccdf3bc\\exec-33988358-7e70-43b9-9d1f-98385503b306.png",
+      "output": "D:/Github/ProjectBANG/public/assets/characters/kf3_0011.png"
+    },
+    {
+      "pageId": 12,
+      "id": "kf3_0012",
+      "prompt": "Use case: illustration-story. Create ONE finished vertical 2:3 collectible anime character-card illustration, no card frame or text. Input image is a character design reference for 雕鸮 (ワシミミズク) from Kemono Friends 3. Preserve reference identity, animal traits, ears/hair/eyes, signature outfit silhouette and colors. Redraw completely with a new pose and scene: calm observant assistant organizing illustrated notes in a tree library. Appearance: 栗棕色短发两侧竖起长角般的深色耳羽，橙红色大眼十分醒目。她穿黄褐色羽片状斗篷和短外套，颈部有白色羽绒领，袖子颜色较深，裙摆与身后尾羽带黑褐色横斑，腿上穿棕灰长袜。. Personality: 以科诺哈博士的助手自居，对搭档既忠诚又骄傲，并认为身为猛禽的自己同样应当受人尊敬。她比博士更务实，能迅速执行调查、收集材料和战斗任务，也会在博士得意忘形时补足漏洞；两人相似的自负与不同的行动方式形成互补。她重视职责和搭档默契，同时也有好胜、爱吃和不愿被轻视的一面。. Abilities, for characterization not literal text: 体格与翼力在鸮类中格外强大，具备强劲飞行、抓握和近战能力；夜行性的视觉、听觉与静音接近也适合侦察。剧情中她常把猛禽身体素质与冷静执行力用于护卫、搜寻和战术落实。. Polished Japanese anime illustration, delicate fine ink lines, softly painted natural color and lighting; consistent series ivory light, teal shadows, warm coral highlights and subtle gold sun. One fully clothed character, tasteful adventurous portrait, safe natural anatomy. Head and ears entirely in frame with breathing space, three-quarter or full body, face upper central third, detailed yet unobtrusive environment. No text, logos, UI, borders, watermarks or second character.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/12.png",
+      "source": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b4-54c5-71b1-bb92-8de84ccdf3bc\\exec-0ee58bf2-2e35-4c6e-8286-f9b07596f5bc.png",
+      "output": "D:/Github/ProjectBANG/public/assets/characters/kf3_0012.png"
+    },
+    {
+      "pageId": 13,
+      "id": "kf3_0013",
+      "prompt": "Use case: illustration-story. Create ONE finished vertical 2:3 collectible anime character-card illustration, no card frame or text. Input image is a character design reference for 北狐 (キタキツネ) from Kemono Friends 3. Preserve reference identity, animal traits, ears/hair/eyes, signature outfit silhouette and colors. Redraw completely with a new pose and scene: shy focused puzzle enthusiast with a handheld game device beside snowy forest. Appearance: 橙红色齐耳短发上竖着一对黑尖狐耳，琥珀色眼睛柔和。她穿橙色翻领短外套与白色百褶裙，双手戴黑色手套，腕口有深色绒边，脚穿深色短靴，身后是一条粗大的橙色黑尖狐尾。. Personality: 怕生而内向，早期更习惯一个人打游戏，不知道该怎样自然地交朋友；熟悉以后会露出贪玩、爱吐槽和关心同伴的一面。她不把游戏仅当逃避现实的地方，而是在成长故事中主动设计捉迷藏玩法、邀请大家同乐，并发现自己练出的反应和规律判断能在危险中保护伙伴。她逐渐从被照顾者成长为愿意照顾新人的前辈。. Abilities, for characterization not literal text: 具备狐类敏锐听觉、嗅觉与寒地适应力，能在雪地察觉细小动静并辨认路线；体力测定还显示她在狐狸朋友中也有格外突出的跳跃力。长期游戏训练使她反应迅速、善于识别重复模式，剧情中能预判伏击与天蓝怪移动并及时闪避。. Polished Japanese anime illustration, delicate fine ink lines, softly painted natural color and lighting; consistent series ivory light, teal shadows, warm coral highlights and subtle gold sun. One fully clothed character, tasteful adventurous portrait, safe natural anatomy. Head and ears entirely in frame with breathing space, three-quarter or full body, face upper central third, detailed yet unobtrusive environment. No text, logos, UI, borders, watermarks or second character.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/13.png",
+      "source": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b4-54c5-71b1-bb92-8de84ccdf3bc\\exec-5a1a4f2a-a6c5-4bdd-ac6d-47c1f1a64d04.png",
+      "output": "D:/Github/ProjectBANG/public/assets/characters/kf3_0013.png"
+    },
+    {
+      "pageId": 14,
+      "id": "kf3_0014",
+      "prompt": "Use case: illustration-story. Create ONE finished vertical 2:3 collectible anime character-card illustration, no card frame or text. Input image is a character design reference for 银狐 (ギンギツネ) from Kemono Friends 3. Preserve reference identity, animal traits, ears/hair/eyes, signature outfit silhouette and colors. Redraw completely with a new pose and scene: thoughtful inventor examining a small harmless gadget in a cozy snowy lodge. Appearance: 黑白相间的长发在脸侧形成银色挑染，头顶有高大的黑色狐耳，眼睛为琥珀色。她穿深蓝色双排扣短外套和同色短裙，配深色手套、连裤袜与短靴，身后垂着黑银渐变的长尾与长发束。. Personality: 理性、负责，记忆力强，喜欢用逻辑拆解问题并立即制作相应装置；她也很保护北狐，常替怕生的搭档处理对外交涉。过度投入发明时，她会忘记休息并执着于一次成功，成长故事让她接受试作品失败和用途改变也有价值。她并非没有玩心，面对游戏会认真较劲，输掉时同样会显出不服气的一面。. Abilities, for characterization not literal text: 记忆力异常出色，能牢牢记住路线、物品位置和旧资料；狐类嗅觉使她擅长追踪气味。她还具备把观察转化为机械装置的工程能力，能临场改造失败发明，使其用于通信、治疗或救援。. Polished Japanese anime illustration, delicate fine ink lines, softly painted natural color and lighting; consistent series ivory light, teal shadows, warm coral highlights and subtle gold sun. One fully clothed character, tasteful adventurous portrait, safe natural anatomy. Head and ears entirely in frame with breathing space, three-quarter or full body, face upper central third, detailed yet unobtrusive environment. No text, logos, UI, borders, watermarks or second character.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/14.png",
+      "source": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b4-54c5-71b1-bb92-8de84ccdf3bc\\exec-6ed18e67-e841-41ba-91ad-069aa8be4fba.png",
+      "output": "D:/Github/ProjectBANG/public/assets/characters/kf3_0014.png"
+    },
+    {
+      "pageId": 15,
+      "id": "kf3_0015",
+      "prompt": "Use case: illustration-story. Create ONE finished vertical 2:3 collectible anime character-card illustration, no card frame or text. Input image is a character design reference for 金丝猴 (キンシコウ) from Kemono Friends 3. Preserve reference identity, animal traits, ears/hair/eyes, signature outfit silhouette and colors. Redraw completely with a new pose and scene: graceful martial explorer practicing balanced stance in a mountain forest. Appearance: 亮橙金色短发配一对小圆耳，粉红色眼睛醒目。她身穿黄白相间的武术式紧身短装，腰腿两侧垂着白色百褶片，双手戴橙色护腕手套，脚穿橙黄色短靴，身后有细长的橙色尾巴。. Personality: 礼貌自律，把武艺修行视为终身道路，对师父和传统抱有深厚敬意。预知可能落败时，她没有回避或怨怼，而是加倍训练、认真研究对手；真正失败后也能承认不足，把败北当作下一次进步的起点。她尊重不同的变强方法，既有武者的好胜和骄傲，也有愿意保护弱者、与同伴并肩承担危险的稳重。. Abilities, for characterization not literal text: 拥有经过长期修炼的棍术、拳脚与身法，能利用灵活四肢、长尾平衡和连续跳跃进行高速近战。其强项属于磨炼出的武艺与灵长类敏捷性，并非剧情确认的法术；她也有良好警戒和持久作战能力。. Polished Japanese anime illustration, delicate fine ink lines, softly painted natural color and lighting; consistent series ivory light, teal shadows, warm coral highlights and subtle gold sun. One fully clothed character, tasteful adventurous portrait, safe natural anatomy. Head and ears entirely in frame with breathing space, three-quarter or full body, face upper central third, detailed yet unobtrusive environment. No text, logos, UI, borders, watermarks or second character.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/15.png",
+      "source": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b4-54c5-71b1-bb92-8de84ccdf3bc\\exec-b95b9df0-18b3-4645-88a6-653ec2019de0.png",
+      "output": "D:/Github/ProjectBANG/public/assets/characters/kf3_0015.png"
+    },
+    {
+      "pageId": 16,
+      "id": "kf3_0016",
+      "prompt": "Use case: illustration-story. Create ONE finished vertical 2:3 collectible anime character-card illustration, no card frame or text. Input image is a character design reference for 棕熊 (ヒグマ) from Kemono Friends 3. Preserve reference identity, animal traits, ears/hair/eyes, signature outfit silhouette and colors. Redraw completely with a new pose and scene: protective powerful hunter standing watch beside rocky woods. Appearance: 深棕色短发上露出一对圆熊耳，眼睛为棕色。她穿白灰色户外风短上衣，胸前系蓝色带饰，下配灰褐短裤和多条深色腰带，腿上穿深色长袜，脚踏带绒口的深色短靴，身后有棕色短尾。. Personality: 爽朗自信，自称最强，听到挑战或力量比试便会兴奋接受，行动速度也远超外表给人的笨重印象。她有时会因好奇或执着于闪亮物件而忽略轻重，但在伙伴遇险时会立刻舍弃私欲、用身体挡在前面，并能坦率承认优先顺序错了。熊本熊联动形态中，她又热情接纳地方文化，愿意为公园景点和同伴带来活力。. Abilities, for characterization not literal text: 力量极大，能以熊掌和全身体重压制强敌、搬开障碍并救出同伴；奔跑速度可达到很高水平，嗅觉能追到自己遗失物的气味，也擅长爬树。熊本熊联动变身会获得额外活力与强化，但仅限该联动形态。. Polished Japanese anime illustration, delicate fine ink lines, softly painted natural color and lighting; consistent series ivory light, teal shadows, warm coral highlights and subtle gold sun. One fully clothed character, tasteful adventurous portrait, safe natural anatomy. Head and ears entirely in frame with breathing space, three-quarter or full body, face upper central third, detailed yet unobtrusive environment. No text, logos, UI, borders, watermarks or second character.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/16.png",
+      "source": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b4-54c5-71b1-bb92-8de84ccdf3bc\\exec-72c55589-065c-440d-a76e-da19d0da0c68.png",
+      "output": "D:/Github/ProjectBANG/public/assets/characters/kf3_0016.png"
+    },
+    {
+      "pageId": 21,
+      "id": "kf3_0021",
+      "prompt": "Use case: illustration-story. Create ONE finished vertical 2:3 collectible anime character-card illustration, no card frame or text. Input image is a character design reference for 桃红豹 (ピーチパンサー) from Kemono Friends 3. Preserve reference identity, animal traits, ears/hair/eyes, signature outfit silhouette and colors. Redraw completely with a new pose and scene: gentle caretaker bringing first-aid supplies in warm park cafe. Appearance: 鲜粉色齐耳短发上长着同色圆耳，眼睛为明亮绿色。她穿浅粉色荷叶边女仆裙和白色围裙，胸前与裙摆层叠蝴蝶结和褶边，双腿穿粉色长袜，脚踏粉色鞋，身后有一条细长粉红尾巴。. Personality: 举止温柔周到，把让客人和朋友露出笑容视为最重要的工作，擅长经营店铺、泡茶和按摩。她会为了服务别人连续工作到透支，也曾相信新工具能取代亲手照顾；后来明白真正的服务来自观察对方反应、及时调整。面对偶像邀请，她仍选择自己热爱的店务，同时也愿意通过商品、采访和活动把其他人的优点介绍出去。. Abilities, for characterization not literal text: 她的稳定专长是精确按摩、放松与恢复技巧，以及对茶饮、商品和顾客需求的敏锐判断；春季大武斗会又显示，野性兴奋时会爆发远超平日的怪力，同时保持豹类的敏捷与耐力，决战中能高速腾跃并从空中命中真·青龙。这是情境触发的身体爆发，并非独立法术。. Polished Japanese anime illustration, delicate fine ink lines, softly painted natural color and lighting; consistent series ivory light, teal shadows, warm coral highlights and subtle gold sun. One fully clothed character, tasteful adventurous portrait, safe natural anatomy. Head and ears entirely in frame with breathing space, three-quarter or full body, face upper central third, detailed yet unobtrusive environment. No text, logos, UI, borders, watermarks or second character.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/21.png",
+      "source": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b4-54c5-71b1-bb92-8de84ccdf3bc\\exec-9e09c6ad-e332-402a-b545-048ecbdf8610.png",
+      "output": "D:/Github/ProjectBANG/public/assets/characters/kf3_0021.png"
+    },
+    {
+      "pageId": 24,
+      "id": "kf3_0024",
+      "prompt": "Use case: illustration-story. Create ONE finished vertical 2:3 collectible anime character-card illustration, no card frame or text. Input image is a character design reference for 皇家企鹅 (ロイヤルペンギン) from Kemono Friends 3. Preserve reference identity, animal traits, ears/hair/eyes, signature outfit silhouette and colors. Redraw completely with a new pose and scene: regal yet earnest idol rehearsing on a sunlit seaside stage. Appearance: 浅灰偏粉的短发上方展开黑黄相间的长冠羽，眼睛为洋红色。她穿浅灰色无袖连帽短上衣与短裤，双臂套深紫色鳍翼状长袖，腿穿白色过膝袜，脚踏粉色短鞋，整体像轻便的舞台运动装。. Personality: 认真、勇敢又容易自我怀疑，为加入企鹅偶像团持续练习，珍惜与四位前辈同台的梦想。伙伴失忆后，她明知危险仍坚持随探险队寻找，并用熟悉歌曲唤起大家；面对帝企鹅认为自己已不配当偶像，她提出“那就一起重新成为偶像”。成长故事中她不再强求夸张的独特标签，而是接受笨拙和紧张也能成为与观众相连的真实魅力。. Abilities, for characterization not literal text: 拥有企鹅类优秀游泳、潜水和耐寒倾向，鳍翼与腿部适合水中高速推进；作为偶像，她又能熟记整团歌曲与舞步，用歌唱、舞蹈和临场表演鼓舞同伴、吸引注意并维持团队节奏。. Polished Japanese anime illustration, delicate fine ink lines, softly painted natural color and lighting; consistent series ivory light, teal shadows, warm coral highlights and subtle gold sun. One fully clothed character, tasteful adventurous portrait, safe natural anatomy. Head and ears entirely in frame with breathing space, three-quarter or full body, face upper central third, detailed yet unobtrusive environment. No text, logos, UI, borders, watermarks or second character.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/24.png",
+      "source": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b4-54c5-71b1-bb92-8de84ccdf3bc\\exec-bf459afb-c352-4e1b-a4d1-9f83b6302cfd.png",
+      "output": "D:/Github/ProjectBANG/public/assets/characters/kf3_0024.png"
+    },
+    {
+      "pageId": 22,
+      "id": "kf3_0022",
+      "prompt": "Use case: illustration-story. Create ONE finished vertical 2:3 collectible anime character-card illustration, no card frame or text. Input image is a character design reference for 狐獴 (ミーアキャット) from Kemono Friends 3. Preserve reference identity, animal traits, ears/hair/eyes, signature outfit silhouette and colors. Redraw completely with a new pose and scene: meticulous bespectacled expedition mentor pointing out a map in camp. Appearance: 灰褐色齐耳短发配一对小圆耳，棕色眼睛前戴黑框眼镜。她穿米色针织长袖上衣，露出白色衬衫领并别绿色徽章，下配棕色长袜与深色短靴，双手戴露指手套，身后伸出细长灰褐尾巴。. Personality: 严格、能干且以老师身份为荣，布置作业毫不手软，也会因学生进步过快而担心自己失去价值。她并非固守权威：教朱鹭唱歌失败后，会反省教学是否符合学习者的节奏，并承认乐趣和鼓励同样重要。成长故事中她进一步理解，老师不是永远站在完成状态的人，而应和学生一起继续成长、保持警觉与好奇。. Abilities, for characterization not literal text: 能长时间直立观察并以敏锐视听维持警戒，擅长快速发现周围变化；狐獴群体传授幼崽技能的习性，在她身上表现为分步骤教学、分析错误和组织队伍。其优势主要是观察与教育，不是法术。. Polished Japanese anime illustration, delicate fine ink lines, softly painted natural color and lighting; consistent series ivory light, teal shadows, warm coral highlights and subtle gold sun. One fully clothed character, tasteful adventurous portrait, safe natural anatomy. Head and ears entirely in frame with breathing space, three-quarter or full body, face upper central third, detailed yet unobtrusive environment. No text, logos, UI, borders, watermarks or second character.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/22.png",
+      "source": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b4-54c5-71b1-bb92-8de84ccdf3bc\\exec-2fca611b-56d9-4389-924d-a71053c9f0e1.png",
+      "output": "D:/Github/ProjectBANG/public/assets/characters/kf3_0022.png"
+    },
+    {
+      "pageId": 26,
+      "id": "kf3_0026",
+      "prompt": "Use case: illustration-story. One finished vertical 2:3 anime collectible character-card illustration. Reference role: character design for 洪堡企鹅 (フンボルトペンギン) from Kemono Friends 3. Preserve default outfit and colors, hairstyle, animal traits and all characteristic facial features. Completely redraw new pose and scene: relaxed gentle penguin idol enjoying a quiet waterside picnic. Character notes: 呼噜噜平时松弛、嗜睡又贪吃，只要环境温暖安全，站着也能睡着；她很依赖PPP同伴，却认真想成为能够独当一面的人。Friends Story里，她为了打造舒适睡床反复尝试，真正珍视的住处和伙伴遭到威胁时又会立刻振作，表现出慢性子外表下的韧劲与责任感。. Ability notes: 她继承洪堡企鹅适应温暖沿岸环境的体质，并有站立入睡、随地休息的特殊本领；水中推进速度也很出色，桂滨水族馆体力测定里，饲养员判断她是红海龟、小爪水獭和洪堡企鹅三者中最快者。战斗时虽常显得懒洋洋，却能为守护栖身之所和伙伴爆发出持续行动力。. Delicate fine ink lines, softly painted natural colors, ivory light teal shadows warm coral and golden highlights. Fully clothed, natural unexaggerated proportions, wholesome adventure story framing at eye-level. Three-quarter or full body, whole head and ears inside frame with generous space above, face upper central third. One character only. No text, logos, card frame, UI or watermark.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/26.png",
+      "source": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b4-54c5-71b1-bb92-8de84ccdf3bc\\exec-75fd44db-ef4f-4ad6-9382-3509c99ac67d.png",
+      "output": "D:/Github/ProjectBANG/public/assets/characters/kf3_0026.png"
+    },
+    {
+      "pageId": 25,
+      "id": "kf3_0025",
+      "prompt": "Use case: illustration-story. One finished vertical 2:3 anime collectible character-card illustration. Reference role: character design for 帝企鹅 (コウテイペンギン) from Kemono Friends 3. Preserve default outfit and colors, hairstyle, animal traits and all characteristic facial features. Completely redraw new pose and scene: earnest penguin idol rehearsing dance on a bright seaside stage. Character notes: 沉着稳重，是能包容成员不同性格的企鹅偶像团领队，习惯先处理团队问题再考虑自己。失去与粉丝相处的记忆后，她因无法回应大家的爱而否定偶像资格，却仍选择向观众坦白而非敷衍登台；在伙伴和粉丝接纳后，她愿意以普通朋友身份从头开始。她珍视共同梦想，相信成员不是被统一塑造，而是要一起朝同一方向飞。. Ability notes: 具备帝企鹅顶尖的深潜和憋气能力，原型纪录可在水下停留二十分钟以上并潜至五百米级深度；剧情还展示她能辨太阳方向、组织同伴靠紧密围聚保存体温，并以领队经验临场补位。. Delicate fine ink lines, softly painted natural colors, ivory light teal shadows warm coral and golden highlights. Fully clothed, natural unexaggerated proportions, wholesome adventure story framing at eye-level. Three-quarter or full body, whole head and ears inside frame with generous space above, face upper central third. One character only. No text, logos, card frame, UI or watermark.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/25.png",
+      "source": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b4-54c5-71b1-bb92-8de84ccdf3bc\\exec-b8e3f242-2672-4265-97c8-1858fcdae51e.png",
+      "output": "D:/Github/ProjectBANG/public/assets/characters/kf3_0025.png"
+    },
+    {
+      "pageId": 28,
+      "id": "kf3_0028",
+      "prompt": "Use case: illustration-story. One finished vertical 2:3 anime collectible character-card illustration. Reference role: character design for 巴布亚企鹅 (ジェンツーペンギン) from Kemono Friends 3. Preserve default outfit and colors, hairstyle, animal traits and all characteristic facial features. Completely redraw new pose and scene: polite hardworking penguin idol practicing a graceful dance turn on seaside stage. Character notes: 小巴礼貌、认真而富有服务精神，即使休息日遇上送错的物资，也会主动把东西逐一送回。她把唱歌、跳舞和团队练习都当成需要踏实磨炼的工作，教人时耐心温柔，但并不软弱；伙伴陷入危险时，她会毫不犹豫穿水救援并与天蓝怪战斗。. Ability notes: 巴布亚企鹅是游速突出的企鹅，小巴明确展现了高速游泳和长时间潜水能力，能越过水域运送物品或救援同伴。她还具备稳定的耐力、节奏感与团队协作能力，可在舞台表演和实战之间迅速切换。. Delicate fine ink lines, softly painted natural colors, ivory light teal shadows warm coral and golden highlights. Fully clothed, natural unexaggerated proportions, wholesome adventure story framing at eye-level. Three-quarter or full body, whole head and ears inside frame with generous space above, face upper central third. One character only. No text, logos, card frame, UI or watermark.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/28.png",
+      "source": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b4-54c5-71b1-bb92-8de84ccdf3bc\\exec-59e95b8b-d4fd-46e0-98eb-3e48f6a157b4.png",
+      "output": "D:/Github/ProjectBANG/public/assets/characters/kf3_0028.png"
+    },
+    {
+      "pageId": 27,
+      "id": "kf3_0027",
+      "prompt": "Use case: illustration-story. One finished vertical 2:3 anime collectible character-card illustration. Reference role: character design for 跳岩企鹅 (イワトビペンギン) from Kemono Friends 3. Preserve default outfit and colors, hairstyle, animal traits and all characteristic facial features. Completely redraw new pose and scene: energetic rock penguin idol in a lively dance pose on a seaside stage. Character notes: 小岩是PPP中热情直率的“摇滚女孩”，精力旺盛、戒心强，听到求救便会抢先冲上去。她一度为帮助巴布亚企鹅而刻意模仿对方的温柔作风，最后理解到伙伴不必变成彼此，每个人以自己的方式发光才最重要；粗犷言行之下，她其实十分细心护短。. Ability notes: 跳岩企鹅擅长在崎岖岩地以连续跳跃迅速移动，小岩也因此拥有出色的弹跳、脚力和敏捷性。她反应快、行动积极，面对天蓝怪时常率先近身迎击，并能凭旺盛体力保护较温和的同伴。. Delicate fine ink lines, softly painted natural colors, ivory light teal shadows warm coral and golden highlights. Fully clothed, natural unexaggerated proportions, wholesome adventure story framing at eye-level. Three-quarter or full body, whole head and ears inside frame with generous space above, face upper central third. One character only. No text, logos, card frame, UI or watermark.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/27.png",
+      "source": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b4-54c5-71b1-bb92-8de84ccdf3bc\\exec-4d7c27bf-faf5-4bfc-a1a2-5a853d0249a6.png",
+      "output": "D:/Github/ProjectBANG/public/assets/characters/kf3_0027.png"
+    },
+    {
+      "pageId": 31,
+      "id": "kf3_0031",
+      "prompt": "Use case: illustration-story. One finished vertical 2:3 anime collectible character-card illustration. Reference role: character design for 河马 (カバ) from Kemono Friends 3. Preserve default outfit and colors, hairstyle, animal traits and all characteristic facial features. Completely redraw new pose and scene: calm reliable hippo protector standing at a tranquil riverbank. Character notes: 她待人温柔从容，像可靠的大姐姐，却绝不把溺爱当成照顾。Friends Story中，她借茶会开导总想保护白犀的黑犀，指出真正的关心也包括严格要求和尊重对方独立；一旦领地或伙伴受威胁，她会显露极强压迫感，温和与严厉始终服务于保护他人。. Ability notes: 河马拥有远超外表印象的爆发力，短距离可高速冲刺，并凭强悍体格、咬合与冲撞压制天蓝怪。她也非常适应水域，能把水边环境变成自己的防卫主场，是兼具耐久与破坏力的重型战士。. Delicate fine ink lines, softly painted natural colors, ivory light teal shadows warm coral and golden highlights. Fully clothed, natural unexaggerated proportions, wholesome adventure story framing at eye-level. Three-quarter or full body, whole head and ears inside frame with generous space above, face upper central third. One character only. No text, logos, card frame, UI or watermark.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/31.png",
+      "source": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b4-54c5-71b1-bb92-8de84ccdf3bc\\exec-60e4cffc-4014-492f-9259-0dfa1c03bb1a.png",
+      "output": "D:/Github/ProjectBANG/public/assets/characters/kf3_0031.png"
+    },
+    {
+      "pageId": 98,
+      "id": "kf3_0098",
+      "prompt": "Use case: illustration-story. One finished vertical 2:3 anime collectible character-card illustration. Reference role: character design for 玄武 (ゲンブ) from Kemono Friends 3. Preserve default outfit and colors, hairstyle, animal traits and all characteristic facial features. Completely redraw new pose and scene: composed guardian by a misty pool with subtle geometric water reflections. Character notes: 她以古雅自称和沉稳语气行事，重视自然秩序、职责与时间，却不会把自己摆成没有感情的神像。她愿意与普通朋友共享喜怒哀乐，判断谨慎、耐心听取方案；其守护观念是为生命提供安全基础，而不是替生命做完所有选择。. Ability notes: 她能操纵岩土与水势，展开多重玄武结界、竖起岩柱，并以近乎山体般的稳定性加固地下通道；龟蛇意象还体现防护、耐久和长时间维持力量。主线明确展示过她负责通风、支撑地层和抗喷发。. Delicate fine ink lines, softly painted natural colors, ivory light teal shadows warm coral and golden highlights. Fully clothed, natural unexaggerated proportions, wholesome adventure story framing at eye-level. Three-quarter or full body, whole head and ears inside frame with generous space above, face upper central third. One character only. No text, logos, card frame, UI or watermark.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/98.png",
+      "source": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b4-54c5-71b1-bb92-8de84ccdf3bc\\exec-5ca4be23-bbaa-457c-83bb-89a6852e5cbb.png",
+      "output": "D:/Github/ProjectBANG/public/assets/characters/kf3_0098.png"
+    },
+    {
+      "pageId": 99,
+      "id": "kf3_0099",
+      "prompt": "Use case: illustration-story. One finished vertical 2:3 anime collectible character-card illustration. Reference role: character design for 青龙 (セイリュウ) from Kemono Friends 3. Preserve default outfit and colors, hairstyle, animal traits and all characteristic facial features. Completely redraw new pose and scene: dignified blue dragon guardian with gentle swirling water and clouds at a tranquil park shrine. Character notes: 她自认救济万物是职责，对能自行解决问题的人要求严格，表面显得高傲苛刻；实际非常看重生命能否凭自身意志继续前进。五龙神篇揭示她也会因被当妹妹而害羞、焦躁，觉醒真形态后变得更能接纳成长需要时间，是严格而有温度的守护者。. Ability notes: 她能操纵清水与水流、净化和救援，并以龙尾与结界干涉大规模环境；觉醒“真·青龙”后，守护与水龙力量显著提升。她还具备感知古老天蓝物质、解释大王起源的知识，但后者是经验与职责，不应混同为读心。. Delicate fine ink lines, softly painted natural colors, ivory light teal shadows warm coral and golden highlights. Fully clothed, natural unexaggerated proportions, wholesome adventure story framing at eye-level. Three-quarter or full body, whole head and ears inside frame with generous space above, face upper central third. One character only. No text, logos, card frame, UI or watermark.",
+      "reference": "D:/ProjectK/data/friend_dossiers/assets/outfit_first/99.png",
+      "source": "C:\\Users\\mapodoufu\\.codex\\generated_images\\01a0c1b4-54c5-71b1-bb92-8de84ccdf3bc\\exec-73bf0bde-72fb-4eeb-a60b-880ccb69f8ea.png",
+      "output": "D:/Github/ProjectBANG/public/assets/characters/kf3_0099.png"
+    }
+  ]
+}

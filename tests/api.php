@@ -248,6 +248,26 @@ try {
     $practice = request('start', ['code' => $practice['code']], $alice['token']);
     check($practice['status'] === 'playing', 'Series practice starts');
 
+    // A turn-start scry is already a response when create() returns, even in a 120-second room.
+    $owlPreset = null;
+    foreach ($presets as $candidate) {
+        if ($candidate['character']['id'] === 'kf3_0011') {
+            $owlPreset = $candidate;
+            break;
+        }
+    }
+    check($owlPreset !== null && $owlPreset['id'] === 'preset_kf3_0011', 'Catalog exposes the white-faced owl turn-start scry build');
+    $scryRoom = request('create_room', ['name' => '开局观星时限', 'mode' => 'series', 'presetId' => $owlPreset['id'], 'turnSeconds' => 120], $alice['token']);
+    request('add_bot', ['code' => $scryRoom['code']], $alice['token']);
+    $scryRoom = request('start', ['code' => $scryRoom['code']], $alice['token']);
+    check($scryRoom['game']['phase'] === 'response' && $scryRoom['game']['pending']['kind'] === 'scry', 'Starting the owl room waits for a private scry response');
+    check($scryRoom['game']['pending']['player'] === $alice['user']['id'], 'Opening scry belongs to the human host');
+    check($scryRoom['turnSeconds'] === 120 && $scryRoom['game']['deadline'] > time() && $scryRoom['game']['deadline'] - time() <= 45, 'Room turn budget must not overwrite the 45-second opening response deadline');
+    $scryStored = $store->one('SELECT data FROM ' . $store->table('rooms') . ' WHERE code = ?', [$scryRoom['code']]);
+    $scryState = json_decode($scryStored['data'], true, 64, JSON_THROW_ON_ERROR);
+    check($scryState['game']['rulesVersion'] === $catalog['rulesVersion'] && $scryRoom['game']['rulesVersion'] === $scryState['game']['rulesVersion'], 'Actual stored game and view both carry the current rules version');
+    check($scryState['game']['pending']['kind'] === 'scry' && $scryState['game']['deadline'] === $scryRoom['game']['deadline'], 'Opening response and its deadline are persisted intact');
+
     $lobby = request('create_room', ['name' => '关闭测试', 'presetId' => $first['id']], $alice['token']);
     request('join_room', ['code' => $lobby['code'], 'presetId' => $opponent['id']], $bob['token']);
     request('leave_room', ['code' => $lobby['code']], $bob['token']);

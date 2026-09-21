@@ -22,12 +22,15 @@ function physicalCards(array $game): array {
             $cards = array_merge($cards, $player[$zone]);
         }
     }
-    // Only placement events hold an in-transit card. Judge events contain references.
+    // Placement events and private scry choices hold in-transit physical cards. Judges contain references.
     foreach ($game['queue'] as $event) {
         if (($event['effect'] ?? '') === 'delayed') { $cards[] = $event['card']; }
     }
     if (($game['pending']['event']['effect'] ?? '') === 'delayed') {
         $cards[] = $game['pending']['event']['card'];
+    }
+    if (($game['pending']['kind'] ?? '') === 'scry') {
+        $cards = array_merge($cards, $game['pending']['cards']);
     }
     return $cards;
 }

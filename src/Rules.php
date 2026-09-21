@@ -2,6 +2,7 @@
 namespace Imaginary;
 
 use InvalidArgumentException;
+require_once __DIR__.'/SkillBlocks.php';
 
 /** Small, total, whitelisted effect language. No executable text or recursion. */
 final class Rules
@@ -31,16 +32,18 @@ final class Rules
         foreach($effects as $e) {
             if(!is_array($e)) self::fail('效果结构不正确');
             self::keys($e,['op','target','amount','color']);
-            $op=self::choice($e['op']??null,['draw','heal','damage','recover_mind','shield','range','attack_bonus'],'效果积木');
+            $meta=SkillBlocks::metadata()['effectMeta'];
+            $op=self::choice($e['op']??null,array_keys($meta),'效果积木');
             $target=self::choice($e['target']??'self',['self','target'],'目标');
-            if(in_array($op,['range','attack_bonus','recover_mind'],true)&&$target!=='self') self::fail('范围、增伤和回收心象积木仅允许以自己为目标');
-            $out[]=['op'=>$op,'target'=>$target,'amount'=>self::number($e['amount']??null,1,3,'效果数值'),'color'=>self::choice($e['color']??'neutral',['cool','warm','neutral'],'伤害颜色')];
+            if(!in_array($target,$meta[$op]['targets'],true)) self::fail('该积木不支持这个目标');
+            $out[]=['op'=>$op,'target'=>$target,'amount'=>self::number($e['amount']??null,$meta[$op]['min'],$meta[$op]['max'],'效果数值'),'color'=>self::choice($e['color']??'neutral',['cool','warm','neutral'],'伤害颜色')];
         }
         return $out;
     }
     public static function validateBuild(array $b): array
     {
-        self::keys($b,['id','name','character','deck','budget','createdAt','updatedAt']);
+        self::keys($b,['id','name','character','deck','budget','createdAt','updatedAt','rulesVersion']);
+        if(array_key_exists('rulesVersion',$b)) self::choice($b['rulesVersion'],['0.1.0-alpha',SkillBlocks::VERSION],'规则版本');
         if(!is_array($b['character']??null)) self::fail('缺少人物'); $c=$b['character'];
         self::keys($c,['id','name','title','series','color','hp','art','flipColor','skills']);
         $skills=$c['skills']??[];
@@ -48,19 +51,33 @@ final class Rules
         $normalized=[];
         foreach($skills as $s) {
             if(!is_array($s)) self::fail('技能结构不正确');
-            self::keys($s,['name','trigger','condition','cost','effects','limit']);
+            self::keys($s,['name','trigger','condition','cost','effects','limit','conversion']);
             $cost=$s['cost']??['hand'=>0,'mind'=>0];
             if(!is_array($cost)) self::fail('技能费用不正确'); self::keys($cost,['hand','mind']);
-            $normalized[]=['name'=>self::text($s['name']??null,'技能名称'),'trigger'=>self::choice($s['trigger']??null,['active','turn_start','after_damage','after_attack','on_defend'],'触发时机'),
-                'condition'=>self::choice($s['condition']??'always',['always','wounded','hand_low'],'条件'),
+            $meta=SkillBlocks::metadata(); $trigger=self::choice($s['trigger']??null,array_keys($meta['triggers']),'触发时机');
+            $ns=['name'=>self::text($s['name']??null,'技能名称'),'trigger'=>$trigger,
+                'condition'=>self::choice($s['condition']??'always',array_keys($meta['conditions']),'条件'),
                 'cost'=>['hand'=>self::number($cost['hand']??0,0,2,'手牌费用'),'mind'=>self::number($cost['mind']??0,0,2,'心象费用')],
-                'effects'=>self::effects($s['effects']??null),'limit'=>self::number($s['limit']??1,1,1,'次数上限')];
+                'effects'=>[],'limit'=>self::number($s['limit']??1,1,2,'次数上限')];
+            if($trigger==='convert') {
+                if(isset($s['effects'])&&$s['effects']!==[]) self::fail('转化技能不能同时携带效果积木');
+                if(!is_array($s['conversion']??null)) self::fail('缺少转化定义');
+                self::keys($s['conversion'],['from','to']);
+                $ns['conversion']=['from'=>self::choice($s['conversion']['from']??null,array_keys($meta['conversions']['from']),'转化来源'),'to'=>self::choice($s['conversion']['to']??null,array_keys($meta['conversions']['to']),'转化结果')];
+            } else {
+                if(isset($s['conversion'])) self::fail('只有转化技能允许转化定义');
+                $ns['effects']=self::effects($s['effects']??null);
+            }
+            $normalized[]=$ns;
         }
         $color=self::choice($c['color']??null,['cool','warm','neutral'],'人物颜色');
         $flip=$c['flipColor']??null;
         if($flip!==null) { self::choice($flip,['cool','warm'],'翻面颜色'); if($flip===$color||$color==='neutral') self::fail('仅允许冷暖之间翻面'); }
+        $art=$c['art']??0;
+        if(is_string($art)) { if(!preg_match('/\A[a-z][a-z0-9_]{0,63}\z/D',$art)) self::fail('插图编号不合法'); }
+        else $art=self::number($art,0,3,'插图');
         $nc=['id'=>self::text($c['id']??'custom','人物编号'),'name'=>self::text($c['name']??null,'人物名称'),'title'=>self::text($c['title']??null,'人物称号'),
-            'series'=>self::text($c['series']??null,'系列'),'color'=>$color,'hp'=>self::number($c['hp']??null,4,7,'初始体力'),'art'=>self::number($c['art']??0,0,3,'插图'),'flipColor'=>$flip,'skills'=>$normalized];
+            'series'=>self::text($c['series']??null,'系列'),'color'=>$color,'hp'=>self::number($c['hp']??null,4,7,'初始体力'),'art'=>$art,'flipColor'=>$flip,'skills'=>$normalized];
         if(!is_array($b['deck']??null)||count($b['deck'])!==13||array_keys($b['deck'])!==range(0,12)) self::fail('心象必须恰好 13 张，按列表顺序从顶到底');
         $deck=[]; $ranks=[]; $cards=Catalog::cards(); $customCount=0;
         foreach($b['deck'] as $entry) {
@@ -68,14 +85,15 @@ final class Rules
             $r=self::number($entry['rank']??null,1,13,'点数'); if(isset($ranks[$r])) self::fail('心象点数 A～K 必须各一张'); $ranks[$r]=true;
             $type=self::choice($entry['type']??null,array_merge(Catalog::mindOptions()[$r],['custom']),'该点数心象牌类型'); $d=['type'=>$type,'rank'=>$r];
             if($type==='custom') {
-                $customCount++; $x=$entry['custom']??null; if(!is_array($x)) self::fail('缺少限定牌定义'); self::keys($x,['name','series','fallback','effects']);
+                $customCount++; $x=$entry['custom']??null; if(!is_array($x)) self::fail('缺少限定牌定义'); self::keys($x,['name','series','fallback','effects','characterId']);
                 $d['custom']=['name'=>self::text($x['name']??null,'限定牌名称'),'series'=>self::text($x['series']??null,'限定系列'),
                     'fallback'=>self::choice($x['fallback']??null,array_keys($cards),'非限定系列替代牌'),'effects'=>self::effects($x['effects']??null)];
+                if(isset($x['characterId'])) $d['custom']['characterId']=self::text($x['characterId'],'限定角色编号');
             } elseif(isset($entry['custom'])) self::fail('普通牌不能携带自定义效果');
             $deck[]=$d;
         }
         if($customCount>4) self::fail('内测每副心象最多 4 张限定牌');
-        $result=['name'=>self::text($b['name']??null,'构筑名称'),'character'=>$nc,'deck'=>$deck];
+        $result=['rulesVersion'=>SkillBlocks::VERSION,'name'=>self::text($b['name']??null,'构筑名称'),'character'=>$nc,'deck'=>$deck];
         if(isset($b['id'])) $result['id']=self::text($b['id'],'构筑编号');
         $budget=self::budget($result);
         if($budget['character']>18) self::fail('人物预算超限：'.$budget['character'].' / 18');
@@ -85,30 +103,31 @@ final class Rules
     }
     public static function effectCost(array $e): int
     {
-        $cost=['draw'=>2,'heal'=>2,'damage'=>4,'recover_mind'=>3,'shield'=>2,'range'=>1,'attack_bonus'=>3];
-        return $cost[$e['op']]*$e['amount']+(($e['op']==='damage'&&$e['color']==='neutral')?$e['amount']:0);
+        $cost=SkillBlocks::metadata()['effectMeta'][$e['op']]['cost'];
+        return $cost*$e['amount']+((in_array($e['op'],['damage','attack'],true)&&($e['color']??'neutral')==='neutral')?$e['amount']:0);
     }
     public static function budget(array $b): array
     {
         $c=$b['character']; $sum=($c['hp']-4)*2+($c['flipColor']!==null?2:0); $cardCosts=[];
         foreach($c['skills'] as $s) {
-            $v=array_sum(array_map([self::class,'effectCost'],$s['effects']));
-            $v+=($s['trigger']!=='active'?2:0);
-            $sum+=max(1,$v-min(4,$s['cost']['hand']+$s['cost']['mind']*2));
+            $v=$s['trigger']==='convert'?(($s['conversion']['from']??'hand')==='hand'?4:3):array_sum(array_map([self::class,'effectCost'],$s['effects']));
+            $v+=(!in_array($s['trigger'],['active','convert'],true)?2:0);
+            $sum+=max(1,$v-min(4,$s['cost']['hand']+$s['cost']['mind']*2))*($s['limit']??1);
         }
         foreach($b['deck'] as $d) if($d['type']==='custom') $cardCosts[]=array_sum(array_map([self::class,'effectCost'],$d['custom']['effects']));
         return ['used'=>$sum+array_sum($cardCosts),'max'=>42,'character'=>$sum,'characterMax'=>18,'custom'=>array_sum($cardCosts),'customMax'=>24,'cards'=>$cardCosts,
-            'warnings'=>['预算是内测准入上限，并不证明强度相等。被动技能每个全局回合自动触发至多一次；费用自动从手牌左侧与心象顶支付。']];
+            'warnings'=>['预算是内测准入上限，并不证明强度相等。次数按全局回合限制；被动费用从手牌左侧与心象顶支付。转化另需消耗一张符合来源的实体手牌；花色转化只识别有花色的牌。']];
     }
     public static function describeSkill(array $s): string
     {
-        $meta=Catalog::all()['blocks'];
-        return $meta['triggers'][$s['trigger']].'，'.$meta['conditions'][$s['condition']].'；每个全局回合至多一次。弃 '.$s['cost']['hand'].' 手牌、'.$s['cost']['mind'].' 心象顶牌；'.self::describeEffects($s['effects']).'。';
+        $meta=SkillBlocks::metadata();
+        $effect=$s['trigger']==='convert'?'将一张'.$meta['conversions']['from'][$s['conversion']['from']].'作为'.$meta['conversions']['to'][$s['conversion']['to']].'使用或响应':self::describeEffects($s['effects']);
+        return $meta['triggers'][$s['trigger']].'，'.$meta['conditions'][$s['condition']].'；每个全局回合至多 '.($s['limit']??1).' 次。弃 '.$s['cost']['hand'].' 手牌、'.$s['cost']['mind'].' 心象顶牌；'.$effect.'。';
     }
     public static function describeEffects(array $effects): string
     {
-        $meta=Catalog::all()['blocks']; $bits=[];
-        foreach($effects as $e) $bits[]=($e['target']==='self'?'自己':'指定/关联角色').$meta['effects'][$e['op']].' '.$e['amount'].($e['op']==='damage'?'（'.['cool'=>'冷色','warm'=>'暖色','neutral'=>'无色'][$e['color']].'）':'');
+        $meta=SkillBlocks::metadata(); $bits=[];
+        foreach($effects as $e) $bits[]=($e['target']==='self'?'自己':'指定/关联角色').$meta['effects'][$e['op']].' '.$e['amount'].(in_array($e['op'],['damage','attack'],true)?'（'.['cool'=>'冷色','warm'=>'暖色','neutral'=>'无色'][$e['color']].'）':'');
         return implode('，',$bits);
     }
 }

@@ -160,7 +160,7 @@ final class Api
                 $room['game'] = Engine::create($room['players'], $room['mode']);
                 $room['game']['turnSeconds'] = $room['turnSeconds'];
                 if (isset($room['game']['deadline'])) {
-                    $room['game']['deadline'] = time() + $room['turnSeconds'];
+                    $room['game']['deadline'] = time() + ($room['game']['pending'] !== null ? min(45, $room['turnSeconds']) : $room['turnSeconds']);
                 }
                 $room['status'] = 'playing';
                 $this->persistRoom($room, 'start', ['rulesVersion' => Catalog::all()['rulesVersion'] ?? 'alpha']);
