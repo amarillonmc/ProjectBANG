@@ -7,5 +7,5 @@ $pdoDrivers = & $phpCommand.Source -r 'echo implode(",", PDO::getAvailableDriver
 $phpArguments = @()
 if ($pdoDrivers -notmatch 'sqlite') { $phpArguments += @('-d', 'extension=pdo_sqlite') }
 $phpArguments += @('-S', "127.0.0.1:$Port", '-t', (Join-Path $projectDirectory 'public'))
-Write-Host "时空并错 · http://127.0.0.1:$Port  (Ctrl+C 停止)"
+Write-Host "ProjectChronoBang http://127.0.0.1:$Port  (Ctrl+C to Stop)"
 & $phpCommand.Source @phpArguments
