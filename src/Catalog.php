@@ -105,14 +105,14 @@ final class Catalog
             $deck[4]=['type'=>'custom','rank'=>5,'custom'=>['name'=>$customNames[$i],'series'=>$c['series'],'fallback'=>'recover','effects'=>$effects[$i]]];
             $out[]=['id'=>'preset_'.$c['id'],'name'=>$names[$i],'character'=>$c,'deck'=>$deck];
         }
-        return array_merge($out, ContentPack::data()['presets']);
+        return array_merge($out, ContentPack::all()['presets']);
     }
 
     public static function all(): array
     {
         $p=self::presets();
-        $content=ContentPack::data();
-        return ['rulesVersion'=>SkillBlocks::VERSION,'cards'=>self::cards(),'mindOptions'=>self::mindOptions(),'characters'=>array_column($p,'character'),'presets'=>$p,
+        $content=ContentPack::all();
+        return ['rulesVersion'=>SkillBlocks::VERSION,'supportedRulesVersions'=>['0.1.0-alpha','0.2.0-alpha',SkillBlocks::VERSION],'cards'=>self::cards(),'mindOptions'=>self::mindOptions(),'characters'=>array_column($p,'character'),'presets'=>$p,
             'blocks'=>SkillBlocks::metadata(),
             'contentPacks'=>$content['contentPacks'],'skillTemplates'=>$content['skillTemplates'],
             'mindTemplates'=>$content['mindTemplates'],'arts'=>$content['arts'],'characterNotes'=>$content['characterNotes'],

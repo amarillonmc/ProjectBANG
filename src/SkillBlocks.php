@@ -4,7 +4,7 @@ namespace Imaginary;
 /** One server-owned vocabulary for validation, documentation and the visual editor. */
 final class SkillBlocks
 {
-    public const VERSION = '0.2.0-alpha';
+    public const VERSION = '0.3.0-alpha';
 
     public static function metadata(): array
     {
@@ -26,6 +26,10 @@ final class SkillBlocks
             'scry'=>['查看并重排普通牌顶',1,['self'],3,'私密查看普通牌池顶，响应时将全部查看牌按指定顺序放回顶，再继续后续效果。'],
             'draw_discard'=>['获得普通弃牌堆顶牌',2,['self','target'],3,'从普通弃牌堆顶依次获得，牌堆不足则取尽。'],
             'double_defense'=>['使自己的攻击须连续防御两次',4,['self'],1,'直到下次自己的回合开始；每次成功防御只抵消一次需求，全部抵消后才触发防御成功。'],
+            'sequester_hand'=>['随机暂置手牌至回合末',3,['target'],3,'必须选择他人；暂置牌本全局回合结束归还，角色出局时弃置，心象原归属保留。'],
+            'discard_equipment'=>['弃置装备',3,['self','target'],2,'按装备进入区域的顺序移除，保留宝藏卸除副作用；主动自弃必须有足量装备。'],
+            'damage_guard'=>['每次受到伤害减少',4,['self','target'],2,'减伤总上限 2，先于护盾计算，每次伤害都适用，下次自己的回合开始清空；不影响失去体力。'],
+            'hand_lock'=>['本回合不能使用或打出手牌',6,['target'],1,'必须选择他人；本全局回合结束解除，仍可弃牌、赠牌、支付技能费用及使用已装备回避。'],
         ];
         $effects=[]; $effectMeta=[];
         foreach($rows as $op=>$r) {
@@ -33,8 +37,8 @@ final class SkillBlocks
             $effectMeta[$op]=['targets'=>$r[2],'min'=>1,'max'=>$r[3],'description'=>$r[4],'cost'=>$r[1]];
         }
         return [
-            'triggers'=>['active'=>'出牌阶段主动','turn_start'=>'自己的回合开始','turn_end'=>'自己的回合结束（弃牌后）','after_damage'=>'受到伤害后','after_attack'=>'攻击造成伤害后','on_defend'=>'防御成功后','after_play_attack'=>'使用攻击牌后（等待防御前）','after_play_event'=>'使用事件牌后','hand_empty'=>'行动及即时效果结算后失去最后手牌','convert'=>'将一张手牌转化使用 / 响应'],
-            'conditions'=>['always'=>'总是','wounded'=>'体力受损','hand_low'=>'手牌不超过 2 张','hand_empty'=>'没有手牌','hand_full'=>'手牌不少于有效体力','healthy'=>'有效体力未受损'],
+            'triggers'=>['active'=>'出牌阶段主动','turn_start'=>'自己的回合开始','turn_end'=>'自己的回合结束（弃牌后）','after_damage'=>'受到伤害后','after_attack'=>'攻击造成伤害后','on_defend'=>'防御成功后','after_play_attack'=>'使用攻击牌后（等待防御前）','after_play_event'=>'使用事件牌后','hand_empty'=>'行动及即时效果结算后失去最后手牌','convert'=>'将一张手牌转化使用 / 响应','on_targeted'=>'自己成为攻击目标时（关联攻击者）','ally_targeted'=>'距离 1 内其他同阵营角色成为攻击目标时（关联受攻者）','after_play_card'=>'主动使用实体手牌后','after_lose_equipment'=>'失去装备结算后（关联移除者）'],
+            'conditions'=>['always'=>'总是','wounded'=>'体力受损','hand_low'=>'手牌不超过 2 张','hand_empty'=>'没有手牌','hand_full'=>'手牌不少于有效体力','healthy'=>'有效体力未受损','played_two'=>'本全局回合已主动使用至少 2 张手牌','played_three'=>'本全局回合已主动使用至少 3 张手牌','played_hp'=>'本全局回合主动用牌数不少于有效体力','first_card'=>'本全局回合主动使用的第一张手牌','same_rank_or_suit'=>'最近两张主动使用手牌点数或花色相同','first_damage'=>'本全局回合第一次实际受到伤害后','repeat_damage'=>'本全局回合已实际受到至少两次伤害','has_equipment'=>'装备区至少有一张牌','hand_same_color'=>'至少两张手牌且均为同一红黑花色颜色'],
             'effects'=>$effects,'effectMeta'=>$effectMeta,
             'targets'=>['self'=>'自己','target'=>'指定角色 / 触发关联角色'],
             'conversions'=>['from'=>['attack'=>'攻击牌','defense'=>'防御牌','red'=>'红桃 / 方块手牌','black'=>'黑桃 / 梅花手牌','hand'=>'任意手牌'],'to'=>['attack_neutral'=>'无色攻击','defense'=>'防御']],

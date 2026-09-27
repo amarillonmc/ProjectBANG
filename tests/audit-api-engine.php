@@ -60,6 +60,7 @@ function audit_cards(array $game): array
         }
     }
     foreach ($game['players'] as $player) {
+        foreach ($player['sequestered'] ?? [] as $held) { $uids[] = $held['card']['uid']; }
         foreach (['hand', 'mind', 'spent', 'equipment', 'delayed'] as $zone) {
             foreach ($player[$zone] as $card) {
                 $uids[] = $card['uid'];

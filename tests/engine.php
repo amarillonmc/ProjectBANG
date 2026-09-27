@@ -30,6 +30,7 @@ function response(&$g,$id,$choice,$extra=[]) {Engine::act($g,$id,array_merge(['t
 function conservation($g) {
     $uids=[]; foreach(['deck','discard','draft'] as $zone) foreach($g[$zone]??[] as $c) $uids[]=$c['uid'];
     foreach($g['players'] as $p) foreach(['hand','mind','spent','equipment','delayed'] as $zone) foreach($p[$zone] as $c) $uids[]=$c['uid'];
+    foreach($g['players'] as $p) foreach($p['sequestered']??[] as $held) $uids[]=$held['card']['uid'];
     foreach($g['queue'] as $e) if(($e['effect']??'')==='delayed') $uids[]=$e['card']['uid'];
     if(($g['pending']['event']['effect']??'')==='delayed') $uids[]=$g['pending']['event']['card']['uid'];
     if(($g['pending']['kind']??'')==='scry') foreach($g['pending']['cards'] as $c) $uids[]=$c['uid'];

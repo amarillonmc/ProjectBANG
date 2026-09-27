@@ -13,6 +13,7 @@ function contentCheck($ok,string $why): void {global $checks;$checks++;if(!$ok)t
 function contentCards(array $g): array {
     $cards=array_merge($g['deck'],$g['discard'],$g['draft']??[]);
     foreach($g['players'] as $p)foreach(['hand','mind','spent','equipment','delayed'] as $z)$cards=array_merge($cards,$p[$z]);
+    foreach($g['players'] as $p)foreach($p['sequestered']??[] as $entry)$cards[]=$entry['card'];
     foreach($g['queue'] as $e)if(($e['effect']??'')==='delayed')$cards[]=$e['card'];
     if(($g['pending']['event']['effect']??'')==='delayed')$cards[]=$g['pending']['event']['card'];
     if(($g['pending']['kind']??'')==='scry')$cards=array_merge($cards,$g['pending']['cards']);
@@ -32,11 +33,13 @@ function contentInvariant(array $g,int $count): void {
     }
 }
 $pack=ContentPack::data();$all=Catalog::presets();
-contentCheck(count($all)===42&&count($pack['presets'])===38,'42 presets including 38 friends');
+contentCheck(count($all)>=42&&count($pack['presets'])===38,'catalog retains the four originals and 38 friends');
+contentCheck(array_column(array_slice($all,0,4),'id')===['preset_archivist','preset_wanderer','preset_performer','preset_engineer'],'original examples retain their order');
+contentCheck(array_column(array_slice($all,4,38),'id')===array_column($pack['presets'],'id'),'KF3 remains in its original catalog order');
 contentCheck(count($pack['mindTemplates'])===76&&count($pack['skillTemplates'])===35,'76 cards and 35 templates');
 $bound=0;$ids=[];
 foreach($all as $b){$n=Rules::validateBuild($b);contentCheck(Rules::validateBuild($n)===$n,'normalization idempotent');contentCheck(count($n['deck'])===13,'13 slots');$ids[]=$n['character']['id'];foreach($n['character']['skills'] as $s)contentCheck(Rules::describeSkill($s)!=='','generated skill prose');}
-contentCheck(count(array_unique($ids))===42,'distinct character identities');
+contentCheck(count(array_unique($ids))===count($all),'distinct character identities across all installed packs');
 foreach($pack['arts'] as $art){$file=__DIR__.'/../public/'.$art['url'];contentCheck(is_file($file),'missing artwork '.$art['id']);$size=getimagesize($file);contentCheck($size&&$size[0]>=512&&$size[1]>$size[0],'usable portrait '.$art['id']);}
 $base=$all[0];unset($base['id']);$base['character']['hp']=4;$base['character']['flipColor']=null;$base['character']['skills']=[];
 foreach($pack['skillTemplates'] as $t){$b=$base;$b['character']['skills']=[$t['skill']];Rules::validateBuild($b);contentCheck(!empty($t['description'])&&!empty($t['reference']),'template adaptation documented');}

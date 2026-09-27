@@ -1,5 +1,27 @@
 # 内测版验证记录
 
+## 2026-09-27：魔法纪录与一将成名 / SP / 阴 / 雷创作拼图
+
+运行环境为 Windows / PHP 7.4.33 / PDO SQLite / Node.js 及内置 Chromium。规则版本为 `0.3.0-alpha`，保留旧版构筑和对局迁移。新增 36 位角色、72 张 IP 心象（其中 10 张额外绑定角色）、30 个可编辑技能模板，以及 36 张参考原游戏卡图重新生成的 1024×1536 卡面。
+
+| 测试 | 最终结果 |
+| --- | --- |
+| `php tests/magireco-content.php` | 36 场完整对局、10,678 次操作、1,897,340 项断言；未跳过卡图检查，覆盖全角色、模板、费用预算、绑定与实体牌守恒 |
+| `php tests/content-pack.php` | 原动物朋友包 38 场完整回归、8,681 次操作、1,474,305 项断言 |
+| `php tests/engine.php` | 原角色 8 场完整对局、8,903 项断言 |
+| `php tests/properties.php` | 24 场完整对局、7,879 次操作、2,761,444 项状态与卡牌守恒断言 |
+| `php tests/expansions.php` | 178 项；覆盖暂置归还、封手响应、拆装触发、持续减伤、新触发器与条件、观星续接、回滚及结束清理 |
+| `php tests/puzzles.php` | 126 项既有拼图回归 |
+| `php tests/content-audit.php` / `php tests/audit-api-engine.php` | 分别 13 / 22 项组合与接口引擎审计 |
+| `php -d extension=pdo_sqlite tests/api.php` | 253 项真实 HTTP / SQLite 接口与持久化检查 |
+| 语法与环境 | PHP 源文件及测试 lint、前端 JS 语法、doctor、diff 空白检查通过；两内容包全部 74 张卡面齐备，静态玩家规则页已重新生成 |
+
+共 106 场完整模拟对局通过。另以 200 组随机技能组合进行最多 150 步的压力检查，验证合法操作、等待续接与实体牌守恒；这些有限步检查不计作完整对局。随机洗牌会改变操作数和断言数，自动对局不代表平衡结论。
+
+浏览器验收使用独立数据库 `var/magireco-browser-test.sqlite`：图库显示 78 位总角色，按魔法纪录筛选得到 36 位；实际搜索、查看来源说明、编辑角色技能参数、收藏和替换“雄乱”拼图、经服务端验证保存，再带入练习房。实际发动雄乱后，生命与心象费用正确扣除，目标显示封手状态；刷新重连后状态保留。图库首屏全部 12 张新卡面加载正常，桌面页面无横向溢出。截图保存在 `var/magireco-library-verification.png` 和 `var/magireco-game-verification.png`。
+
+角色选择、技能匹配、版本和改编差异见 `docs/content/MAGIRECO_EXPANSIONS.md`、`docs/content/MAGIRECO_RESEARCH.md`、`docs/content/SGS_EXPANSION_MECHANICS.md`。生图提示词、参考来源、输出尺寸及 SHA256 见两份 `art-prompts-magireco-part*.json`。本轮没有进行真人平衡、移动端新增机制或真实 MySQL / PHP 8.x 部署验收。
+
 ## 2026-09-21：四神补全（白虎与朱雀）
 
 新增 ProjectK 四神白虎（0100）和朱雀（0101），内容包增至 38 位角色、76 张心象、8 张额外角色绑定牌，沿用 35 个技能拼图与规则 0.2.0-alpha。本轮未修改引擎。

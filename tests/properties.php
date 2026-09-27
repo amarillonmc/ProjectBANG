@@ -18,6 +18,7 @@ function expectProperty($condition, $message) {
 function physicalCards(array $game): array {
     $cards = array_merge($game['deck'], $game['discard'], $game['draft'] ?? []);
     foreach ($game['players'] as $player) {
+        foreach ($player['sequestered'] ?? [] as $held) { $cards[] = $held['card']; }
         foreach (['hand','mind','spent','equipment','delayed'] as $zone) {
             $cards = array_merge($cards, $player[$zone]);
         }

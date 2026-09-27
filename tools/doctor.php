@@ -16,20 +16,26 @@ if (!in_array('sqlite', $drivers, true) && !in_array('mysql', $drivers, true)) {
     $failed = true;
 }
 $root = dirname(__DIR__);
-foreach (['src/Engine.php','src/Rules.php','src/SkillBlocks.php','src/Catalog.php','src/ContentPack.php','src/content/kf3-classics.json','src/Store.php','public/api.php','public/index.html','public/assets/app.js','public/assets/style.css','public/assets/mind-atlas.png','public/assets/mindscape.png'] as $file) {
+foreach (['src/Engine.php','src/Rules.php','src/SkillBlocks.php','src/Catalog.php','src/ContentPack.php','src/content/kf3-classics.json','src/content/magireco-expansions.json','src/Store.php','public/api.php','public/index.html','public/assets/app.js','public/assets/style.css','public/assets/mind-atlas.png','public/assets/mindscape.png'] as $file) {
     $ok = is_file($root . '/' . $file) && filesize($root . '/' . $file) > 0;
     echo $file . ': ' . ($ok ? 'OK' : 'MISSING/EMPTY') . "\n";
     $failed = $failed || !$ok;
 }
-if (is_file($root . '/src/content/kf3-classics.json')) {
-    $pack = json_decode(file_get_contents($root . '/src/content/kf3-classics.json'), true);
-    $artCount = 0;
-    foreach ($pack['arts'] ?? [] as $art) {
-        if (!is_file($root . '/public/' . $art['url'])) { echo 'Missing portrait: ' . $art['id'] . "\n"; $failed = true; }
-        else { $artCount++; }
+try {
+    require_once $root.'/src/ContentPack.php';
+    $pack = \Imaginary\ContentPack::all();
+    $artCount=0; $expected=count($pack['arts']);
+    foreach ($pack['arts'] as $art) {
+        $url=$art['url']??'';
+        if (!preg_match('~\Aassets/characters/[a-z][a-z0-9_]*\.png\z~D',$url)||!is_file($root.'/public/'.$url)) {
+            echo 'Missing portrait: '.($art['id']??'unknown')."\n"; $failed=true;
+        } else { $artCount++; }
     }
-    echo 'Bundled character portraits: ' . $artCount . " / 38\n";
-    if ($artCount !== 38) { $failed = true; }
+    echo 'Bundled content packs: '.count($pack['contentPacks']).'; characters: '.count($pack['presets'])."\n";
+    echo 'Bundled character portraits: '.$artCount.' / '.$expected."\n";
+    if ($artCount!==$expected) $failed=true;
+} catch (\Throwable $e) {
+    echo 'Content packs: ERROR '.$e->getMessage()."\n"; $failed=true;
 }
 echo 'var writable: ' . (is_writable($root . '/var') ? 'YES' : 'NO (required for default SQLite)') . "\n";
 echo 'Config: ' . (is_file($root . '/config.php') ? 'local config.php present (values hidden)' : 'default SQLite / environment') . "\n";

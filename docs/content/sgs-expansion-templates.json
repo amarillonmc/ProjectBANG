@@ -1,0 +1,1291 @@
+{
+  "rulesVersion": "0.3.0-alpha",
+  "reviewedAt": "2026-09-27",
+  "status": "validated-0.3.0-alpha",
+  "packageSources": [
+    {
+      "expansion": "一将成名",
+      "url": "https://www.sanguosha.com/news/20150423_2773_1118",
+      "note": "一将2011官方成员名单；其余用官方年包攻略标题与2023比赛一将分组交叉确认。"
+    },
+    {
+      "expansion": "一将成名",
+      "url": "https://sanguosha.com/news/20231213_5180_5715",
+      "note": "官方比赛名单区分一将成名与其他系列。"
+    },
+    {
+      "expansion": "SP",
+      "url": "https://www.sanguosha.com/news/20160829_6853_2817",
+      "note": "官方明确标识SP曹昂、SP刘协；其他按官方SP攻略标题。"
+    },
+    {
+      "expansion": "阴",
+      "url": "https://www.sanguosha.com/news/20190327_5477_5613",
+      "note": "官方阴包八将名单含王基、严颜、陆绩、许攸、王平等。"
+    },
+    {
+      "expansion": "雷",
+      "url": "https://www.sanguosha.com/news/20200722_5370_2418",
+      "note": "官方雷包名单含陈到、诸葛瞻、毌丘俭、陆抗、张绣、周妃、郝昭、袁术。"
+    }
+  ],
+  "skillTemplates": [
+    {
+      "id": "sgsx_enyuan",
+      "name": "恩怨·索还",
+      "game": "三国杀",
+      "reference": "一将成名 · 法正「恩怨」",
+      "description": "保留受伤索偿；改为随机取得一张手牌，没有交牌/失去体力选择，也不含受赠报恩。",
+      "tags": [
+        "一将成名",
+        "法正",
+        "after_damage",
+        "steal_hand"
+      ],
+      "expansion": "一将成名",
+      "general": "法正",
+      "sourceVersion": "2011／2016 OL修订版",
+      "sourceUrl": "https://www.sanguosha.com/news/20161205_9021_5212",
+      "originalSummary": "受伤后向来源索要手牌，不交则失去体力。",
+      "adaptation": "保留受伤索偿；改为随机取得一张手牌，没有交牌/失去体力选择，也不含受赠报恩。",
+      "skill": {
+        "name": "恩怨·索还",
+        "trigger": "after_damage",
+        "condition": "always",
+        "cost": {
+          "hand": 0,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "steal_hand",
+            "amount": 1,
+            "target": "target",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    },
+    {
+      "id": "sgsx_jujian",
+      "name": "举荐·补给",
+      "game": "三国杀",
+      "reference": "一将成名 · 徐庶「举荐」",
+      "description": "改为主动弃任意一张手牌，固定让目标摸二并回复一；省略复原及互斥选择。",
+      "tags": [
+        "一将成名",
+        "徐庶",
+        "active",
+        "draw",
+        "heal"
+      ],
+      "expansion": "一将成名",
+      "general": "徐庶",
+      "sourceVersion": "2011／2016 OL修订版",
+      "sourceUrl": "https://www.sanguosha.com/news/20161122_1587_2316",
+      "originalSummary": "结束阶段弃非基本牌，令他人选摸牌、回复或复原。",
+      "adaptation": "改为主动弃任意一张手牌，固定让目标摸二并回复一；省略复原及互斥选择。",
+      "skill": {
+        "name": "举荐·补给",
+        "trigger": "active",
+        "condition": "always",
+        "cost": {
+          "hand": 1,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "draw",
+            "amount": 2,
+            "target": "target",
+            "color": "neutral"
+          },
+          {
+            "op": "heal",
+            "amount": 1,
+            "target": "target",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    },
+    {
+      "id": "sgsx_pojun",
+      "name": "破军·暂置",
+      "game": "三国杀",
+      "reference": "一将成名 · 徐盛「破军」",
+      "description": "每全局回合一次，随机暂置目标最多二张手牌；不移装备、不按体力决定数量，也无界徐盛增伤。",
+      "tags": [
+        "一将成名",
+        "徐盛",
+        "after_play_attack",
+        "sequester_hand"
+      ],
+      "expansion": "一将成名",
+      "general": "徐盛",
+      "sourceVersion": "2011／2016 OL修订版",
+      "sourceUrl": "https://www.sanguosha.com/news/20161221_4498_3916",
+      "originalSummary": "用杀指定目标后，将其若干牌暂置到回合末归还。",
+      "adaptation": "每全局回合一次，随机暂置目标最多二张手牌；不移装备、不按体力决定数量，也无界徐盛增伤。",
+      "skill": {
+        "name": "破军·暂置",
+        "trigger": "after_play_attack",
+        "condition": "always",
+        "cost": {
+          "hand": 0,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "sequester_hand",
+            "amount": 2,
+            "target": "target",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    },
+    {
+      "id": "sgsx_xuanfeng",
+      "name": "旋风·失装反制",
+      "game": "三国杀",
+      "reference": "一将成名 · 凌统「旋风」",
+      "description": "只保留失装触发，关联移除者随机弃二手牌；没有双目标、公开选牌和弃牌阶段分支。",
+      "tags": [
+        "一将成名",
+        "凌统",
+        "after_lose_equipment",
+        "discard_hand"
+      ],
+      "expansion": "一将成名",
+      "general": "凌统",
+      "sourceVersion": "2011／后续OL弃牌版",
+      "sourceUrl": "https://www.sanguosha.com/hero/155",
+      "originalSummary": "失去装备或弃牌阶段弃足牌后，可拆其他角色至多二牌。",
+      "adaptation": "只保留失装触发，关联移除者随机弃二手牌；没有双目标、公开选牌和弃牌阶段分支。",
+      "skill": {
+        "name": "旋风·失装反制",
+        "trigger": "after_lose_equipment",
+        "condition": "always",
+        "cost": {
+          "hand": 0,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "discard_hand",
+            "amount": 2,
+            "target": "target",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    },
+    {
+      "id": "sgsx_zhichi",
+      "name": "智迟·续击减免",
+      "game": "三国杀",
+      "reference": "一将成名 · 陈宫「智迟」",
+      "description": "受伤后获得每次减伤一，持续至下次自己回合；不是牌无效，也不阻止非伤害锦囊。",
+      "tags": [
+        "一将成名",
+        "陈宫",
+        "after_damage",
+        "damage_guard"
+      ],
+      "expansion": "一将成名",
+      "general": "陈宫",
+      "sourceVersion": "2011／2016 OL版",
+      "sourceUrl": "https://www.sanguosha.com/news/20161110_4036_5117",
+      "originalSummary": "回合外受伤后，当回合后续杀和普通锦囊对自己无效。",
+      "adaptation": "受伤后获得每次减伤一，持续至下次自己回合；不是牌无效，也不阻止非伤害锦囊。",
+      "skill": {
+        "name": "智迟·续击减免",
+        "trigger": "after_damage",
+        "condition": "always",
+        "cost": {
+          "hand": 0,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "damage_guard",
+            "amount": 1,
+            "target": "self",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    },
+    {
+      "id": "sgsx_zhiyu",
+      "name": "智愚·示弱反制",
+      "game": "三国杀",
+      "reference": "一将成名 · 荀攸「智愚」",
+      "description": "固定摸一并令来源随机弃一，不公开手牌、不检查摸后同色；每全局回合一次。",
+      "tags": [
+        "一将成名",
+        "荀攸",
+        "after_damage",
+        "draw",
+        "discard_hand"
+      ],
+      "expansion": "一将成名",
+      "general": "荀攸",
+      "sourceVersion": "2012／2016 OL版",
+      "sourceUrl": "https://www.sanguosha.com/news/20161128_5804_1216",
+      "originalSummary": "受伤后摸牌，亮手牌全同色则来源弃手牌。",
+      "adaptation": "固定摸一并令来源随机弃一，不公开手牌、不检查摸后同色；每全局回合一次。",
+      "skill": {
+        "name": "智愚·示弱反制",
+        "trigger": "after_damage",
+        "condition": "always",
+        "cost": {
+          "hand": 0,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "draw",
+            "amount": 1,
+            "target": "self",
+            "color": "neutral"
+          },
+          {
+            "op": "discard_hand",
+            "amount": 1,
+            "target": "target",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    },
+    {
+      "id": "sgsx_mingce",
+      "name": "明策·授予补给",
+      "game": "三国杀",
+      "reference": "一将成名 · 陈宫「明策」",
+      "description": "保留交牌后补牌分支：主动赠一手牌并令收牌者摸一；无牌型限制和第三目标攻击。",
+      "tags": [
+        "一将成名",
+        "陈宫",
+        "active",
+        "give_hand",
+        "draw"
+      ],
+      "expansion": "一将成名",
+      "general": "陈宫",
+      "sourceVersion": "2011／2017 OL版",
+      "sourceUrl": "https://www.sanguosha.com/news/20170612_9927_2009",
+      "originalSummary": "交给他人杀或装备，令其选择摸牌或向指定第三人用杀。",
+      "adaptation": "保留交牌后补牌分支：主动赠一手牌并令收牌者摸一；无牌型限制和第三目标攻击。",
+      "skill": {
+        "name": "明策·授予补给",
+        "trigger": "active",
+        "condition": "always",
+        "cost": {
+          "hand": 0,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "give_hand",
+            "amount": 1,
+            "target": "target",
+            "color": "neutral"
+          },
+          {
+            "op": "draw",
+            "amount": 1,
+            "target": "target",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    },
+    {
+      "id": "sgsx_jingce",
+      "name": "精策·足量用牌",
+      "game": "三国杀",
+      "reference": "一将成名 · 郭淮「精策」",
+      "description": "改在回合结束检查主动使用实体手牌次数达到有效体力后摸二；不采用当前花色/类型新版。",
+      "tags": [
+        "一将成名",
+        "郭淮",
+        "turn_end",
+        "draw"
+      ],
+      "expansion": "一将成名",
+      "general": "郭淮",
+      "sourceVersion": "2013／2016 OL旧版",
+      "sourceUrl": "https://www.sanguosha.com/news/20161102_6337_2211",
+      "originalSummary": "阶段内用牌达到体力值时，出牌阶段末可摸二。",
+      "adaptation": "改在回合结束检查主动使用实体手牌次数达到有效体力后摸二；不采用当前花色/类型新版。",
+      "skill": {
+        "name": "精策·足量用牌",
+        "trigger": "turn_end",
+        "condition": "played_hp",
+        "cost": {
+          "hand": 0,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "draw",
+            "amount": 2,
+            "target": "self",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    },
+    {
+      "id": "sgsx_shenxing",
+      "name": "慎行·两弃一摸",
+      "game": "三国杀",
+      "reference": "一将成名 · 顾雍「慎行」",
+      "description": "费用只接受手牌，每全局回合最多二次；保留明确的二换一比例。",
+      "tags": [
+        "一将成名",
+        "顾雍",
+        "active",
+        "draw"
+      ],
+      "expansion": "一将成名",
+      "general": "顾雍",
+      "sourceVersion": "2014／2016 OL版",
+      "sourceUrl": "https://www.sanguosha.com/news/20161121_8378_3715",
+      "originalSummary": "弃二张牌摸一张，调整手牌结构。",
+      "adaptation": "费用只接受手牌，每全局回合最多二次；保留明确的二换一比例。",
+      "skill": {
+        "name": "慎行·两弃一摸",
+        "trigger": "active",
+        "condition": "always",
+        "cost": {
+          "hand": 2,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "draw",
+            "amount": 1,
+            "target": "self",
+            "color": "neutral"
+          }
+        ],
+        "limit": 2
+      }
+    },
+    {
+      "id": "sgsx_bingyi",
+      "name": "秉壹·同色共济",
+      "game": "三国杀",
+      "reference": "一将成名 · 顾雍「秉壹」",
+      "description": "改为主动检查至少二张且红黑花色一致，与一个指定目标各摸一；不公开手牌，不按手牌数扩目标。",
+      "tags": [
+        "一将成名",
+        "顾雍",
+        "active",
+        "draw",
+        "draw"
+      ],
+      "expansion": "一将成名",
+      "general": "顾雍",
+      "sourceVersion": "2014／2016 OL回合末版",
+      "sourceUrl": "https://www.sanguosha.com/news/20161121_8378_3715",
+      "originalSummary": "展示同色手牌后，使若干角色获得摸牌收益。",
+      "adaptation": "改为主动检查至少二张且红黑花色一致，与一个指定目标各摸一；不公开手牌，不按手牌数扩目标。",
+      "skill": {
+        "name": "秉壹·同色共济",
+        "trigger": "active",
+        "condition": "hand_same_color",
+        "cost": {
+          "hand": 0,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "draw",
+            "amount": 1,
+            "target": "self",
+            "color": "neutral"
+          },
+          {
+            "op": "draw",
+            "amount": 1,
+            "target": "target",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    },
+    {
+      "id": "sgsx_jianying",
+      "name": "渐营·点色相继",
+      "game": "三国杀",
+      "reference": "一将成名 · 沮授「渐营」",
+      "description": "保留点数/花色连续条件，只计主动实体手牌，每全局回合最多二次；不把心象颜色当花色。",
+      "tags": [
+        "一将成名",
+        "沮授",
+        "after_play_card",
+        "draw"
+      ],
+      "expansion": "一将成名",
+      "general": "沮授",
+      "sourceVersion": "2014／2016 OL版",
+      "sourceUrl": "https://www.sanguosha.com/news/20161121_5518_4315",
+      "originalSummary": "所用牌与前一张同点数或同花色时摸一。",
+      "adaptation": "保留点数/花色连续条件，只计主动实体手牌，每全局回合最多二次；不把心象颜色当花色。",
+      "skill": {
+        "name": "渐营·点色相继",
+        "trigger": "after_play_card",
+        "condition": "same_rank_or_suit",
+        "cost": {
+          "hand": 0,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "draw",
+            "amount": 1,
+            "target": "self",
+            "color": "neutral"
+          }
+        ],
+        "limit": 2
+      }
+    },
+    {
+      "id": "sgsx_shibei",
+      "name": "矢北·首伤回复",
+      "game": "三国杀",
+      "reference": "一将成名 · 沮授「矢北」",
+      "description": "本模板只抽取首次受伤回复一的分支；再伤代价可用repeat_damage+lose_health另拼，不宣称完整矢北。",
+      "tags": [
+        "一将成名",
+        "沮授",
+        "after_damage",
+        "heal"
+      ],
+      "expansion": "一将成名",
+      "general": "沮授",
+      "sourceVersion": "2014／2016 OL版",
+      "sourceUrl": "https://www.sanguosha.com/news/20150205_9201_5710",
+      "originalSummary": "每回合首次受伤后回复，之后再受伤则额外失去体力。",
+      "adaptation": "本模板只抽取首次受伤回复一的分支；再伤代价可用repeat_damage+lose_health另拼，不宣称完整矢北。",
+      "skill": {
+        "name": "矢北·首伤回复",
+        "trigger": "after_damage",
+        "condition": "first_damage",
+        "cost": {
+          "hand": 0,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "heal",
+            "amount": 1,
+            "target": "self",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    },
+    {
+      "id": "sgsx_kangkai",
+      "name": "慷忾·邻位援护",
+      "game": "三国杀",
+      "reference": "SP · 曹昂「慷忾」",
+      "description": "只响应距离一内的其他同阵营角色；摸一后赠左侧一手牌，没有展示及立即装备。",
+      "tags": [
+        "SP",
+        "曹昂",
+        "ally_targeted",
+        "draw",
+        "give_hand"
+      ],
+      "expansion": "SP",
+      "general": "曹昂",
+      "sourceVersion": "2016 OL版",
+      "sourceUrl": "https://www.sanguosha.com/news/20160829_6853_2817",
+      "originalSummary": "附近角色成为杀目标后，摸一并给其一牌，装备可立即用。",
+      "adaptation": "只响应距离一内的其他同阵营角色；摸一后赠左侧一手牌，没有展示及立即装备。",
+      "skill": {
+        "name": "慷忾·邻位援护",
+        "trigger": "ally_targeted",
+        "condition": "always",
+        "cost": {
+          "hand": 0,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "draw",
+            "amount": 1,
+            "target": "self",
+            "color": "neutral"
+          },
+          {
+            "op": "give_hand",
+            "amount": 1,
+            "target": "target",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    },
+    {
+      "id": "sgsx_tianming",
+      "name": "天命·受攻换牌",
+      "game": "三国杀",
+      "reference": "SP · 刘协「天命」",
+      "description": "只保留自己受攻时弃二手牌再摸二；费用不足不发动，不扩散至最高体力角色。",
+      "tags": [
+        "SP",
+        "刘协",
+        "on_targeted",
+        "draw"
+      ],
+      "expansion": "SP",
+      "general": "刘协",
+      "sourceVersion": "2016 OL版",
+      "sourceUrl": "https://www.sanguosha.com/news/20161110_8162_4518",
+      "originalSummary": "成为杀目标后弃二摸二，唯一最高体力者也可如此。",
+      "adaptation": "只保留自己受攻时弃二手牌再摸二；费用不足不发动，不扩散至最高体力角色。",
+      "skill": {
+        "name": "天命·受攻换牌",
+        "trigger": "on_targeted",
+        "condition": "always",
+        "cost": {
+          "hand": 2,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "draw",
+            "amount": 2,
+            "target": "self",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    },
+    {
+      "id": "sgsx_chongzhen",
+      "name": "冲阵·守后夺牌",
+      "game": "三国杀",
+      "reference": "SP · 赵云「冲阵」",
+      "description": "改为完整防御成功后取得攻击来源随机一手牌；不要求龙胆，也不在转化瞬间夺牌。",
+      "tags": [
+        "SP",
+        "赵云",
+        "on_defend",
+        "steal_hand"
+      ],
+      "expansion": "SP",
+      "general": "赵云",
+      "sourceVersion": "2016 OL版",
+      "sourceUrl": "https://www.sanguosha.com/news/20161215_4752_4616",
+      "originalSummary": "发动龙胆转化杀闪时，立即获得对方手牌。",
+      "adaptation": "改为完整防御成功后取得攻击来源随机一手牌；不要求龙胆，也不在转化瞬间夺牌。",
+      "skill": {
+        "name": "冲阵·守后夺牌",
+        "trigger": "on_defend",
+        "condition": "always",
+        "cost": {
+          "hand": 0,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "steal_hand",
+            "amount": 1,
+            "target": "target",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    },
+    {
+      "id": "sgsx_xueji",
+      "name": "血祭·伤后献红",
+      "game": "三国杀",
+      "reference": "SP · 关银屏「血祭」",
+      "description": "固定一个目标，费用可为任意手牌，造成一暖色伤害后该目标摸一；保留自己受伤条件。",
+      "tags": [
+        "SP",
+        "关银屏",
+        "active",
+        "damage",
+        "draw"
+      ],
+      "expansion": "SP",
+      "general": "关银屏",
+      "sourceVersion": "2016 OL血祭版",
+      "sourceUrl": "https://www.sanguosha.com/news/20161122_4198_3017",
+      "originalSummary": "受伤时弃红牌，对范围内至多损失体力数目标伤害，各摸一。",
+      "adaptation": "固定一个目标，费用可为任意手牌，造成一暖色伤害后该目标摸一；保留自己受伤条件。",
+      "skill": {
+        "name": "血祭·伤后献红",
+        "trigger": "active",
+        "condition": "wounded",
+        "cost": {
+          "hand": 1,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "damage",
+            "amount": 1,
+            "target": "target",
+            "color": "warm"
+          },
+          {
+            "op": "draw",
+            "amount": 1,
+            "target": "target",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    },
+    {
+      "id": "sgsx_hongyuan",
+      "name": "弘援·舍己供给",
+      "game": "三国杀",
+      "reference": "SP · 诸葛瑾「弘援」",
+      "description": "改为主动弃一手牌，令一个目标摸二；不修改标准摸牌阶段，也不支持两名独立目标。",
+      "tags": [
+        "SP",
+        "诸葛瑾",
+        "active",
+        "draw"
+      ],
+      "expansion": "SP",
+      "general": "诸葛瑾",
+      "sourceVersion": "2016 OL版",
+      "sourceUrl": "https://www.sanguosha.com/news/20161031_9428_0618",
+      "originalSummary": "摸牌阶段少摸一，使至多二名其他角色各摸一。",
+      "adaptation": "改为主动弃一手牌，令一个目标摸二；不修改标准摸牌阶段，也不支持两名独立目标。",
+      "skill": {
+        "name": "弘援·舍己供给",
+        "trigger": "active",
+        "condition": "always",
+        "cost": {
+          "hand": 1,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "draw",
+            "amount": 2,
+            "target": "target",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    },
+    {
+      "id": "sgsx_qizhi",
+      "name": "奇制·去故纳新",
+      "game": "三国杀",
+      "reference": "阴 · 王基「奇制」",
+      "description": "只在使用事件牌后对本次关联目标随机弃一再摸一；限一次，不含非目标另选。",
+      "tags": [
+        "阴",
+        "王基",
+        "after_play_event",
+        "discard_hand",
+        "draw"
+      ],
+      "expansion": "阴",
+      "general": "王基",
+      "sourceVersion": "2016 SP首发／2019阴包收录",
+      "sourceUrl": "https://www.sanguosha.com/news/20160415_5308_1311",
+      "originalSummary": "使用牌时可令未成为目标者弃一摸一。",
+      "adaptation": "只在使用事件牌后对本次关联目标随机弃一再摸一；限一次，不含非目标另选。",
+      "skill": {
+        "name": "奇制·去故纳新",
+        "trigger": "after_play_event",
+        "condition": "always",
+        "cost": {
+          "hand": 0,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "discard_hand",
+            "amount": 1,
+            "target": "target",
+            "color": "neutral"
+          },
+          {
+            "op": "draw",
+            "amount": 1,
+            "target": "target",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    },
+    {
+      "id": "sgsx_juzhan",
+      "name": "拒战·对峙共摸",
+      "game": "三国杀",
+      "reference": "阴 · 严颜「拒战」",
+      "description": "只抽取受攻击时双方各摸一；无阴阳转换与后续目标限制。",
+      "tags": [
+        "阴",
+        "严颜",
+        "on_targeted",
+        "draw",
+        "draw"
+      ],
+      "expansion": "阴",
+      "general": "严颜",
+      "sourceVersion": "官网阴阳转换版",
+      "sourceUrl": "https://www.sanguosha.com/hero/400",
+      "originalSummary": "阳侧受杀时双方摸牌并限制来源再指定你，阴侧用杀夺牌。",
+      "adaptation": "只抽取受攻击时双方各摸一；无阴阳转换与后续目标限制。",
+      "skill": {
+        "name": "拒战·对峙共摸",
+        "trigger": "on_targeted",
+        "condition": "always",
+        "cost": {
+          "hand": 0,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "draw",
+            "amount": 1,
+            "target": "self",
+            "color": "neutral"
+          },
+          {
+            "op": "draw",
+            "amount": 1,
+            "target": "target",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    },
+    {
+      "id": "sgsx_yili",
+      "name": "遗礼·以身护友",
+      "game": "三国杀",
+      "reference": "阴 · 陆绩「遗礼」",
+      "description": "固定自己失去一体力，目标获得每次减伤一并摸一；无橘数量/转移与防止整次伤害。",
+      "tags": [
+        "阴",
+        "陆绩",
+        "active",
+        "lose_health",
+        "damage_guard",
+        "draw"
+      ],
+      "expansion": "阴",
+      "general": "陆绩",
+      "sourceVersion": "阴包怀橘版",
+      "sourceUrl": "https://x.sanguosha.com/hero/92.html",
+      "originalSummary": "消耗体力或橘标记，把橘交给他人以防伤并增摸。",
+      "adaptation": "固定自己失去一体力，目标获得每次减伤一并摸一；无橘数量/转移与防止整次伤害。",
+      "skill": {
+        "name": "遗礼·以身护友",
+        "trigger": "active",
+        "condition": "always",
+        "cost": {
+          "hand": 0,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "lose_health",
+            "amount": 1,
+            "target": "self",
+            "color": "neutral"
+          },
+          {
+            "op": "damage_guard",
+            "amount": 1,
+            "target": "target",
+            "color": "neutral"
+          },
+          {
+            "op": "draw",
+            "amount": 1,
+            "target": "target",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    },
+    {
+      "id": "sgsx_chenglue",
+      "name": "成略·弃策突进",
+      "game": "三国杀",
+      "reference": "阴 · 许攸「成略」",
+      "description": "固定先弃二后摸二，范围加一、额外攻击一次；无阴阳切换与花色限定，不是无限出杀。",
+      "tags": [
+        "阴",
+        "许攸",
+        "active",
+        "draw",
+        "range",
+        "extra_attacks"
+      ],
+      "expansion": "阴",
+      "general": "许攸",
+      "sourceVersion": "阴包转换版",
+      "sourceUrl": "https://www.sanguosha.com/hero/406",
+      "originalSummary": "交替摸弃后，同弃牌花色的牌不受距离与次数限制。",
+      "adaptation": "固定先弃二后摸二，范围加一、额外攻击一次；无阴阳切换与花色限定，不是无限出杀。",
+      "skill": {
+        "name": "成略·弃策突进",
+        "trigger": "active",
+        "condition": "always",
+        "cost": {
+          "hand": 2,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "draw",
+            "amount": 2,
+            "target": "self",
+            "color": "neutral"
+          },
+          {
+            "op": "range",
+            "amount": 1,
+            "target": "self",
+            "color": "neutral"
+          },
+          {
+            "op": "extra_attacks",
+            "amount": 1,
+            "target": "self",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    },
+    {
+      "id": "sgsx_shicai",
+      "name": "恃才·首用理牌",
+      "game": "三国杀",
+      "reference": "阴 · 许攸「恃才」",
+      "description": "每回合首张主动手牌使用后看普通顶一并摸一；不返还原牌、不按类型分别计次。",
+      "tags": [
+        "阴",
+        "许攸",
+        "after_play_card",
+        "scry",
+        "draw"
+      ],
+      "expansion": "阴",
+      "general": "许攸",
+      "sourceVersion": "阴包类型首用版",
+      "sourceUrl": "https://x.sanguosha.com/hero/96.html",
+      "originalSummary": "首用某类别牌后，可将此牌置顶再摸一。",
+      "adaptation": "每回合首张主动手牌使用后看普通顶一并摸一；不返还原牌、不按类型分别计次。",
+      "skill": {
+        "name": "恃才·首用理牌",
+        "trigger": "after_play_card",
+        "condition": "first_card",
+        "cost": {
+          "hand": 0,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "scry",
+            "amount": 1,
+            "target": "self",
+            "color": "neutral"
+          },
+          {
+            "op": "draw",
+            "amount": 1,
+            "target": "self",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    },
+    {
+      "id": "sgsx_feijun",
+      "name": "飞军·弃资拆装",
+      "game": "三国杀",
+      "reference": "阴 · 王平「飞军」",
+      "description": "固定弃一手牌后弃目标最早装备一；不比较双方区域数量，保留拆装备分支。",
+      "tags": [
+        "阴",
+        "王平",
+        "active",
+        "discard_equipment"
+      ],
+      "expansion": "阴",
+      "general": "王平",
+      "sourceVersion": "阴包版",
+      "sourceUrl": "https://x.sanguosha.com/hero/91.html",
+      "originalSummary": "弃一牌后，针对手牌或装备更多者索牌或弃装。",
+      "adaptation": "固定弃一手牌后弃目标最早装备一；不比较双方区域数量，保留拆装备分支。",
+      "skill": {
+        "name": "飞军·弃资拆装",
+        "trigger": "active",
+        "condition": "always",
+        "cost": {
+          "hand": 1,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "discard_equipment",
+            "amount": 1,
+            "target": "target",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    },
+    {
+      "id": "sgsx_huaiju",
+      "name": "怀橘·守势储备",
+      "game": "三国杀",
+      "reference": "阴 · 陆绩「怀橘」",
+      "description": "每次自己回合开始消耗一张心象，建立减伤一并摸一；以有限心象代替橘资源，没有开局三橘或防止整次伤害。",
+      "tags": [
+        "阴",
+        "陆绩",
+        "turn_start",
+        "damage_guard",
+        "draw"
+      ],
+      "expansion": "阴",
+      "general": "陆绩",
+      "sourceVersion": "阴包版",
+      "sourceUrl": "https://x.sanguosha.com/hero/92.html",
+      "originalSummary": "橘标记防止伤害并提供额外摸牌收益。",
+      "adaptation": "每次自己回合开始消耗一张心象，建立减伤一并摸一；以有限心象代替橘资源，没有开局三橘或防止整次伤害。",
+      "skill": {
+        "name": "怀橘·守势储备",
+        "trigger": "turn_start",
+        "condition": "always",
+        "cost": {
+          "hand": 0,
+          "mind": 1
+        },
+        "effects": [
+          {
+            "op": "damage_guard",
+            "amount": 1,
+            "target": "self",
+            "color": "neutral"
+          },
+          {
+            "op": "draw",
+            "amount": 1,
+            "target": "self",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    },
+    {
+      "id": "sgsx_wanglie",
+      "name": "往烈·远袭封手",
+      "game": "三国杀",
+      "reference": "雷 · 陈到「往烈」",
+      "description": "主动弃一手牌换范围二及目标本回合封手；不保留自己停止用牌，仍可由装备防御。",
+      "tags": [
+        "雷",
+        "陈到",
+        "active",
+        "range",
+        "hand_lock"
+      ],
+      "expansion": "雷",
+      "general": "陈到",
+      "sourceVersion": "2019 OL初版",
+      "sourceUrl": "https://sanguosha.com/news/20190227_8290_0116",
+      "originalSummary": "首牌无距离限制，可令用牌不可响应但随后不能再用牌。",
+      "adaptation": "主动弃一手牌换范围二及目标本回合封手；不保留自己停止用牌，仍可由装备防御。",
+      "skill": {
+        "name": "往烈·远袭封手",
+        "trigger": "active",
+        "condition": "always",
+        "cost": {
+          "hand": 1,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "range",
+            "amount": 2,
+            "target": "self",
+            "color": "neutral"
+          },
+          {
+            "op": "hand_lock",
+            "amount": 1,
+            "target": "target",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    },
+    {
+      "id": "sgsx_zuilun",
+      "name": "罪论·谋定取牌",
+      "game": "三国杀",
+      "reference": "雷 · 诸葛瞻「罪论」",
+      "description": "以本回合主动用牌至少二次为单一条件，看顶三重排再摸一；不采用原三条件及互失体力分支。",
+      "tags": [
+        "雷",
+        "诸葛瞻",
+        "turn_end",
+        "scry",
+        "draw"
+      ],
+      "expansion": "雷",
+      "general": "诸葛瞻",
+      "sourceVersion": "2019 OL版",
+      "sourceUrl": "https://x.sanguosha.com/hero/99.html",
+      "originalSummary": "结束阶段看顶三，按伤害/弃牌/最少手牌条件获得若干并归还其余。",
+      "adaptation": "以本回合主动用牌至少二次为单一条件，看顶三重排再摸一；不采用原三条件及互失体力分支。",
+      "skill": {
+        "name": "罪论·谋定取牌",
+        "trigger": "turn_end",
+        "condition": "played_two",
+        "cost": {
+          "hand": 0,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "scry",
+            "amount": 3,
+            "target": "self",
+            "color": "neutral"
+          },
+          {
+            "op": "draw",
+            "amount": 1,
+            "target": "self",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    },
+    {
+      "id": "sgsx_fuyin",
+      "name": "父荫·寡手护持",
+      "game": "三国杀",
+      "reference": "雷 · 诸葛瞻「父荫」",
+      "description": "自己手牌至多二时受攻击获得一次性护盾一；不比较来源手牌、不取消整张牌或决斗。",
+      "tags": [
+        "雷",
+        "诸葛瞻",
+        "on_targeted",
+        "shield"
+      ],
+      "expansion": "雷",
+      "general": "诸葛瞻",
+      "sourceVersion": "雷包官网版",
+      "sourceUrl": "https://x.sanguosha.com/hero/99.html",
+      "originalSummary": "每回合首次成为杀或决斗目标且手牌不多于来源时，该牌无效。",
+      "adaptation": "自己手牌至多二时受攻击获得一次性护盾一；不比较来源手牌、不取消整张牌或决斗。",
+      "skill": {
+        "name": "父荫·寡手护持",
+        "trigger": "on_targeted",
+        "condition": "hand_low",
+        "cost": {
+          "hand": 0,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "shield",
+            "amount": 1,
+            "target": "self",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    },
+    {
+      "id": "sgsx_jueyan",
+      "name": "决堰·弃装换势",
+      "game": "三国杀",
+      "reference": "雷 · 陆抗「决堰」",
+      "description": "必须有装备，实际弃最早一件，额外攻击一次并摸一；装备栏不永久废除，其他分支省略。",
+      "tags": [
+        "雷",
+        "陆抗",
+        "active",
+        "discard_equipment",
+        "extra_attacks",
+        "draw"
+      ],
+      "expansion": "雷",
+      "general": "陆抗",
+      "sourceVersion": "雷包官网版",
+      "sourceUrl": "https://www.sanguosha.com/hero/414",
+      "originalSummary": "废除装备栏后获得该栏对应的摸牌、距离或多杀收益。",
+      "adaptation": "必须有装备，实际弃最早一件，额外攻击一次并摸一；装备栏不永久废除，其他分支省略。",
+      "skill": {
+        "name": "决堰·弃装换势",
+        "trigger": "active",
+        "condition": "has_equipment",
+        "cost": {
+          "hand": 0,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "discard_equipment",
+            "amount": 1,
+            "target": "self",
+            "color": "neutral"
+          },
+          {
+            "op": "extra_attacks",
+            "amount": 1,
+            "target": "self",
+            "color": "neutral"
+          },
+          {
+            "op": "draw",
+            "amount": 1,
+            "target": "self",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    },
+    {
+      "id": "sgsx_zhengrong",
+      "name": "征荣·伤后收势",
+      "game": "三国杀",
+      "reference": "雷 · 毌丘俭「征荣」",
+      "description": "攻击伤害后暂置对方一手牌并自己摸一；暂置牌回合末归还，不保存荣或觉醒。",
+      "tags": [
+        "雷",
+        "毌丘俭",
+        "after_attack",
+        "sequester_hand",
+        "draw"
+      ],
+      "expansion": "雷",
+      "general": "毌丘俭",
+      "sourceVersion": "2026一将成名客户端版／雷包角色",
+      "sourceUrl": "https://x.sanguosha.com/news/20260227_4094_2813.html",
+      "originalSummary": "对其他角色造成伤害后，可将其一张牌置为荣，供后续觉醒使用。",
+      "adaptation": "攻击伤害后暂置对方一手牌并自己摸一；暂置牌回合末归还，不保存荣或觉醒。",
+      "skill": {
+        "name": "征荣·伤后收势",
+        "trigger": "after_attack",
+        "condition": "always",
+        "cost": {
+          "hand": 0,
+          "mind": 0
+        },
+        "effects": [
+          {
+            "op": "sequester_hand",
+            "amount": 1,
+            "target": "target",
+            "color": "neutral"
+          },
+          {
+            "op": "draw",
+            "amount": 1,
+            "target": "self",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    },
+    {
+      "id": "sgsx_xiongluan",
+      "name": "雄乱·有限压制",
+      "game": "三国杀",
+      "reference": "雷 · 张绣「雄乱」",
+      "description": "改付二张心象并失去一体力，封一个目标手牌至本回合末、额外攻击一次；非永久废区与非无限输出。",
+      "tags": [
+        "雷",
+        "张绣",
+        "active",
+        "lose_health",
+        "hand_lock",
+        "extra_attacks"
+      ],
+      "expansion": "雷",
+      "general": "张绣",
+      "sourceVersion": "雷包官网版",
+      "sourceUrl": "https://www.sanguosha.com/hero/415",
+      "originalSummary": "限定发动并废除自身装备判定区，压制一敌手牌且对其无距离次数限制。",
+      "adaptation": "改付二张心象并失去一体力，封一个目标手牌至本回合末、额外攻击一次；非永久废区与非无限输出。",
+      "skill": {
+        "name": "雄乱·有限压制",
+        "trigger": "active",
+        "condition": "always",
+        "cost": {
+          "hand": 0,
+          "mind": 2
+        },
+        "effects": [
+          {
+            "op": "lose_health",
+            "amount": 1,
+            "target": "self",
+            "color": "neutral"
+          },
+          {
+            "op": "hand_lock",
+            "amount": 1,
+            "target": "target",
+            "color": "neutral"
+          },
+          {
+            "op": "extra_attacks",
+            "amount": 1,
+            "target": "self",
+            "color": "neutral"
+          }
+        ],
+        "limit": 1
+      }
+    }
+  ]
+}
