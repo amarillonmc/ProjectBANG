@@ -78,7 +78,7 @@ for ($run = 0; $run < 24; $run++) {
         $stepsTotal++;
     }
     checkGame($game, $expected, $run);
-    expectProperty($game['status'] === 'finished', 'Game did not terminate');
+    expectProperty($game['status'] === 'finished', 'Game did not terminate: run '.$run.', turn '.$game['turnNumber'].', phase '.$game['phase']);
     expectProperty(is_string($game['winner']) && $game['winner'] !== '', 'Missing winner');
     $games++;
 }

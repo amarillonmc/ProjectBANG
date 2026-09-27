@@ -145,12 +145,7 @@ final class Api
                 $this->persistRoom($room, 'choose_build', []);
             } elseif ($action === 'add_bot') {
                 $this->host($room);
-                if (count($room['players']) >= 6) {
-                    throw new ApiError('房间已满（最多 6 人）。');
-                }
-                $preset = isset($input['presetId']) && $input['presetId'] !== '' ? $input['presetId'] : $this->opponentPreset($room);
-                $selected = $this->selectedBuild(['presetId' => $preset]);
-                $room['players'][] = ['id' => 'bot_' . substr(identifier(), 0, 12), 'name' => '练习机 ' . (count($room['players']) + 1), 'bot' => true, 'custom' => false, 'build' => $selected['build']];
+                $this->addBot($room, $input);
                 $this->persistRoom($room, 'add_bot', []);
             } elseif ($action === 'start') {
                 $this->host($room);
@@ -228,6 +223,15 @@ final class Api
             'game' => null,
         ];
         $this->customAllowed($room, $selected);
+        if (array_key_exists('bots', $input)) {
+            $bots = $input['bots'];
+            if (!is_array($bots) || count($bots) < 1 || count($bots) > 5 || array_keys($bots) !== range(0, count($bots) - 1)) {
+                throw new ApiError('请选择 1～5 名机器人，并逐一指定构筑。');
+            }
+            foreach ($bots as $bot) {
+                $this->addBot($room, $this->object($bot, '机器人的构筑选择'));
+            }
+        }
         $this->store->execute("INSERT INTO $table (code, host_id, status, revision, data, updated_at) VALUES (?, ?, ?, ?, ?, ?)", [$code, $room['hostId'], 'lobby', 1, encode($room), time()]);
         $this->store->execute('INSERT INTO ' . $this->store->table('members') . ' (room_code, user_id) VALUES (?, ?)', [$code, $this->user['id']]);
         $this->event($room, 'create_room', []);
@@ -383,14 +387,28 @@ final class Api
         $presets = Catalog::all()['presets'];
         foreach ($presets as $preset) {
             $other = $preset['character'];
-            if ($room['mode'] === 'series' && $other['series'] !== $first['series']) {
-                return $preset['id'];
-            }
-            if ($room['mode'] === 'color' && (($first['color'] === 'cool' && $other['color'] === 'warm') || ($first['color'] === 'warm' && $other['color'] === 'cool') || ($first['color'] === 'neutral' && $other['color'] !== 'neutral'))) {
+            if ($other['color'] !== $first['color'] && ($room['mode'] !== 'series' || $other['series'] !== $first['series'])) {
                 return $preset['id'];
             }
         }
         return reset($presets)['id'];
+    }
+
+    private function addBot(array &$room, array $input): void
+    {
+        if (count($room['players']) >= 6) {
+            throw new ApiError('房间已满（最多 6 人）。');
+        }
+        if ((!isset($input['buildId']) || $input['buildId'] === '') && (!isset($input['presetId']) || $input['presetId'] === '')) {
+            $input = ['presetId' => $this->opponentPreset($room)];
+        }
+        $selected = $this->selectedBuild($input);
+        $this->customAllowed($room, $selected);
+        $room['players'][] = [
+            'id' => 'bot_' . substr(identifier(), 0, 12),
+            'name' => '练习机 ' . (count(array_filter($room['players'], function ($player) { return $player['bot']; })) + 1),
+            'bot' => true, 'custom' => $selected['custom'], 'build' => $selected['build'],
+        ];
     }
 
     private function customAllowed(array $room, array $selected): void

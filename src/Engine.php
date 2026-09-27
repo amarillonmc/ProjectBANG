@@ -261,6 +261,7 @@ final class Engine
         if($g['eventCount']>=96) return;
         if($target===null||!isset($g['players'][$target])||!$g['players'][$target]['alive']) $target=$id;
         foreach($g['players'][$id]['character']['skills'] as $i=>$s) if($s['trigger']===$trigger&&self::skillUsable($g,$id,$i)) {
+            if($g['players'][$id]['bot']&&!self::botEffectsSafe($g,$id,$target,$s['effects'])) continue;
             if(self::effectTargetsValid($g,$id,$target??$id,$s['effects'],$s['cost']['hand'])) self::executeSkill($g,$id,$i,$target??$id,[]);
         }
     }
@@ -342,6 +343,8 @@ final class Engine
             if($g['status']!=='playing'||$g['eventCount']>=96) break; $g['eventCount']++;
             $to=$e['target']==='self'?$id:$target;
             if(!isset($g['players'][$to])||!$g['players'][$to]['alive']) continue; $n=$e['amount'];
+            // Recheck after response windows: a character may have flipped colors in the meantime.
+            if($g['players'][$id]['bot']&&!self::botEffectsSafe($g,$id,$target,[$e])) continue;
             switch($e['op']) {
                 case 'draw': self::draw($g,$to,$n); break;
                 case 'heal': self::heal($g,$to,$n); break;
@@ -543,6 +546,12 @@ final class Engine
         }
         return $c;
     }
+    private static function handDefense(array $card,string $kind): bool
+    {
+        // Resolve tags from the catalog so cards in existing room snapshots work too.
+        $tags=Catalog::cards()[$card['type']]['tags']??[];
+        return in_array('defense',$tags,true)||($kind==='energy'&&in_array('evade',$tags,true));
+    }
     private static function conversionMatches(array $g,string $id,array $card,array $s): bool
     {
         $from=$s['conversion']['from']; $type=self::effective($g,$id,$card)['type'];
@@ -731,7 +740,7 @@ final class Engine
                 if(isset($a['conversion'])) { [$c,$effective]=self::converted($g,$id,$a); }
                 else { $c=self::take($g['players'][$id]['hand'],$a['card']??''); $effective=self::effective($g,$id,$c); }
                 self::check(empty($p['punch']),'拳击只能被已装备且成熟的回避取消');
-                self::check($effective['type']==='defense'||($kind==='energy'&&$effective['type']==='evade'),'请选择有效的防守/躲避牌');
+                self::check(self::handDefense($effective,$kind),'请选择有效的防守/躲避牌');
                 self::spend($g,$c); self::defendStep($g,$id,$p); return;
             }
             if($choice==='evade') {
@@ -820,8 +829,8 @@ final class Engine
             case 'attack': case 'energy':
                 $add('承受伤害','damage');
                 foreach($g['players'][$id]['hand'] as $c) {
-                    $type=self::effective($g,$id,$c)['type'];
-                    if(!self::handLocked($g,$id)&&empty($p['punch'])&&($type==='defense'||($p['kind']==='energy'&&$type==='evade'))) $add('打出 '.$c['name'],'defend',['card'=>$c['uid']]);
+                    $effective=self::effective($g,$id,$c);
+                    if(!self::handLocked($g,$id)&&empty($p['punch'])&&self::handDefense($effective,$p['kind'])) $add('打出 '.$c['name'],'defend',['card'=>$c['uid']]);
                 }
                 foreach($g['players'][$id]['equipment'] as $c) if($c['type']==='evade'&&self::mature($g,$id,$c)) $add('卸除回避并摸一张','evade',['card'=>$c['uid']]);
                 if(empty($p['punch'])&&empty($p['hasteUsed'])&&self::hasEquipment($g,$id,'haste')&&$g['players'][$id]['mind']) $add('加速：弃心象顶牌判定 >7','haste'); break;
@@ -940,12 +949,45 @@ final class Engine
         if($g['mode']==='series') return $g['players'][$id]['series']!==$g['players'][$target]['series'];
         return $g['players'][$id]['color']==='neutral'||$g['players'][$target]['color']==='neutral'||$g['players'][$id]['color']!==$g['players'][$target]['color'];
     }
+    private static function botOpponent(array $g,string $id,string $target): bool
+    {
+        return $g['players'][$id]['color']!==$g['players'][$target]['color']&&self::enemy($g,$id,$target);
+    }
+    private static function offensiveEffect(array $effect): bool
+    {
+        return in_array($effect['op'],['damage','attack','lose_health','steal_hand','discard_hand','sequester_hand','discard_equipment','hand_lock'],true);
+    }
+    private static function botEffectsSafe(array $g,string $id,string $target,array $effects): bool
+    {
+        if($id===$target||self::botOpponent($g,$id,$target)) return true;
+        foreach($effects as $effect) if($effect['target']==='target'&&self::offensiveEffect($effect)) return false;
+        return true;
+    }
+    /** Bot policy filters choices; human card rules and victory conditions remain mode-owned. */
+    private static function botActionSafe(array $g,string $id,array $action): bool
+    {
+        $target=$action['target']??$id; $type=null;
+        if($action['type']==='skill') return self::botEffectsSafe($g,$id,$target,$g['players'][$id]['character']['skills'][$action['index']]['effects']);
+        if($action['type']==='play') {
+            $card=self::effective($g,$id,$g['players'][$id]['hand'][self::cardIndex($g['players'][$id]['hand'],$action['card'])]);
+            $type=isset($action['conversion'])?$g['players'][$id]['character']['skills'][$action['conversion']]['conversion']['to']:$card['type'];
+            if($type==='custom') return self::botEffectsSafe($g,$id,$target,$card['custom']['effects']);
+            if($target!==$id&&(strpos($type,'attack_')===0||in_array($type,['surprise','calamity'],true)||($type==='exchange'&&($action['mode']??'')==='steal'))) return self::botOpponent($g,$id,$target);
+        } elseif($action['type']==='equip_use') {
+            $type=$g['players'][$id]['equipment'][self::cardIndex($g['players'][$id]['equipment'],$action['card'])]['type'];
+            if($type==='punch') return self::botOpponent($g,$id,$target);
+        }
+        if(in_array($type,['energy','potential'],true)||($action['type']==='equip_use'&&$type==='automaton')) {
+            foreach(self::alive($g) as $other) if($other!==$id&&!self::botOpponent($g,$id,$other)) return false;
+        }
+        return true;
+    }
     private static function effectPreference(array $g,string $id,string $target,array $effects): int
     {
         $score=0;
         foreach($effects as $e) {
             if($e['target']==='target') {
-                if(in_array($e['op'],['damage','attack','steal_hand','discard_hand','sequester_hand','discard_equipment','hand_lock'],true)) $score+=self::enemy($g,$id,$target)?5:-25;
+                if(self::offensiveEffect($e)) $score+=self::enemy($g,$id,$target)?5:-25;
                 else $score+=self::enemy($g,$id,$target)?-15:3;
             }
             if($e['op']==='lose_health'&&self::hp($g,$id)<=$e['amount']) $score-=30;
@@ -958,9 +1000,14 @@ final class Engine
         if($timeout&&$g['pending']===null) {
             if($g['phase']==='play') return ['type'=>'end']; if($g['phase']==='draw') return ['type'=>'draw','mind'=>0];
         }
+        if($g['players'][$id]['bot']&&$g['pending']===null&&$g['phase']==='play') {
+            $opponents=array_filter(self::alive($g),function($target)use($g,$id){return self::botOpponent($g,$id,$target);});
+            if(!$opponents) return ['type'=>'end'];
+        }
         $best=null; $bestScore=-99999;
         foreach($legal as $item) {
             $a=$item['action']; $score=0; $t=null;
+            if($g['players'][$id]['bot']&&!self::botActionSafe($g,$id,$a)) continue;
             if($a['type']==='respond') {
                 $scores=['damage'=>-10,'accept'=>1,'alliance'=>5,'defend'=>15,'evade'=>16,'haste'=>8,'attack'=>10,'mind'=>6,'give'=>2,'choose'=>4,'pass'=>1,'tuck'=>count($g['players'][$id]['mind'])<5?8:0,'confirm'=>5,'normal'=>3,'skip'=>10,'draw'=>7,'heal'=>self::hp($g,$id)<$g['players'][$id]['maxHp']-1?9:0];
                 $score=$scores[$a['choice']]??0;

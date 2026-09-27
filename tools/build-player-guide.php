@@ -3,7 +3,7 @@
 if (PHP_SAPI !== 'cli') { http_response_code(404); exit; }
 $root = dirname(__DIR__);
 require_once $root . '/src/SkillBlocks.php';
-$lines = preg_split('/\R/', file_get_contents($root . '/docs/RULES.md'));
+$lines = preg_split('/\R/u', file_get_contents($root . '/docs/RULES.md'));
 function guideInline(string $value): string {
     $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
     $value = preg_replace('/`([^`]+)`/', '<code>$1</code>', $value);

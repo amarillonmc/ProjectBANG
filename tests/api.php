@@ -242,6 +242,51 @@ try {
     request('feedback', ['code' => $code, 'text' => '禁止越权'], $eve['token'], 403);
     check((int) $store->one('SELECT COUNT(*) AS total FROM ' . $store->table('feedback'))['total'] === 1, 'Only authorized feedback persisted');
 
+    // Practice creation accepts an atomic, ordered list of 1..5 bot builds.
+    $botBuild = $clone;
+    $botBuild['name'] = '机器人的自创构筑';
+    $botBuild['character']['name'] = '同色伙伴';
+    $botBuild['deck'] = array_reverse($botBuild['deck']);
+    $botSaved = request('save_build', ['build' => $botBuild], $alice['token'])['build'];
+    $botCreate = ['name' => '可配置机器人', 'presetId' => $first['id'], 'requestId' => 'practice_bots_0001', 'bots' => [
+        ['buildId' => $botSaved['id']], ['presetId' => $opponent['id']],
+    ]];
+    $configured = request('create_room', $botCreate, $alice['token']);
+    check(count($configured['players']) === 3 && $configured['players'][1]['custom'] && !$configured['players'][2]['custom'], 'Practice creates the exact number and types of bots');
+    check($configured['players'][1]['character']['name'] === '同色伙伴' && $configured['players'][2]['character']['id'] === $opponent['character']['id'], 'Bot selections and ordering are preserved');
+    check(request('create_room', $botCreate, $alice['token']) === $configured, 'Retrying practice creation does not duplicate the room or bots');
+    $configuredStored = json_decode($store->one('SELECT data FROM ' . $store->table('rooms') . ' WHERE code = ?', [$configured['code']])['data'], true);
+    check($configuredStored['players'][1]['build']['deck'] === $botSaved['deck'], 'Bot uses the saved ordered mind deck');
+    $configured = request('add_bot', ['code' => $configured['code'], 'buildId' => $botSaved['id']], $alice['token']);
+    check($configured['players'][3]['custom'] && $configured['players'][3]['character']['name'] === '同色伙伴', 'Host may add a saved custom bot in the lobby');
+    $configured = request('start', ['code' => $configured['code']], $alice['token']);
+    check(count($configured['game']['players']) === 4 && $configured['game']['players'][1]['color'] === $configured['game']['players'][0]['color'], 'Custom same-color bot reaches the game');
+    request('add_bot', ['code' => $configured['code'], 'presetId' => $first['id']], $alice['token'], 409);
+
+    $roomCount = (int) $store->one('SELECT COUNT(*) AS total FROM ' . $store->table('rooms'))['total'];
+    foreach ([[], array_fill(0, 6, ['presetId' => $opponent['id']]), ['not-a-list' => ['presetId' => $opponent['id']]], [42], [['buildId' => []]]] as $invalidBots) {
+        request('create_room', ['name' => '错误机器人列表', 'presetId' => $first['id'], 'bots' => $invalidBots], $alice['token'], 400);
+    }
+    request('create_room', ['name' => '禁止越权机器人', 'presetId' => $first['id'], 'bots' => [['presetId' => $opponent['id']], ['buildId' => $botSaved['id']]]], $bob['token'], 404);
+    request('create_room', ['name' => '禁止自创机器人', 'presetId' => $first['id'], 'allowCustom' => false, 'bots' => [['buildId' => $botSaved['id']]]], $alice['token'], 400);
+    check((int) $store->one('SELECT COUNT(*) AS total FROM ' . $store->table('rooms'))['total'] === $roomCount, 'Invalid or unauthorized bot lists create no partial rooms');
+
+    $full = request('create_room', ['name' => '五名机器人', 'presetId' => $first['id'], 'bots' => array_fill(0, 5, ['presetId' => $opponent['id']])], $alice['token']);
+    check(count($full['players']) === 6 && count(array_unique(array_column($full['players'], 'id'))) === 6, 'Five bots have unique seats within the six-player limit');
+    request('add_bot', ['code' => $full['code'], 'presetId' => $opponent['id']], $alice['token'], 400);
+    request('leave_room', ['code' => $full['code']], $alice['token']);
+
+    $restricted = request('create_room', ['name' => '仅预设测试', 'presetId' => $first['id'], 'allowCustom' => false, 'bots' => [['presetId' => $opponent['id']]]], $alice['token']);
+    check(count($restricted['players']) === 2, 'One-bot practice supported');
+    request('add_bot', ['code' => $restricted['code'], 'buildId' => $botSaved['id']], $alice['token'], 400);
+    check(request('room', ['code' => $restricted['code']], $alice['token'])['revision'] === $restricted['revision'], 'Rejected custom bot leaves the lobby untouched');
+    request('leave_room', ['code' => $restricted['code']], $alice['token']);
+
+    $foreign = request('create_room', ['name' => '他人构筑权限', 'presetId' => $first['id']], $bob['token']);
+    request('add_bot', ['code' => $foreign['code'], 'buildId' => $botSaved['id']], $bob['token'], 404);
+    request('leave_room', ['code' => $foreign['code']], $bob['token']);
+    request('delete_build', ['id' => $botSaved['id']], $alice['token']);
+
     $practice = request('create_room', ['name' => '机器人练习', 'mode' => 'series', 'presetId' => $first['id']], $alice['token']);
     $practice = request('add_bot', ['code' => $practice['code']], $alice['token']);
     check($practice['players'][1]['bot'] === true, 'Host adds compatible bot');
@@ -258,7 +303,8 @@ try {
     }
     check($owlPreset !== null && $owlPreset['id'] === 'preset_kf3_0011', 'Catalog exposes the white-faced owl turn-start scry build');
     $scryRoom = request('create_room', ['name' => '开局观星时限', 'mode' => 'series', 'presetId' => $owlPreset['id'], 'turnSeconds' => 120], $alice['token']);
-    request('add_bot', ['code' => $scryRoom['code']], $alice['token']);
+    $scryRoom = request('add_bot', ['code' => $scryRoom['code']], $alice['token']);
+    check($scryRoom['players'][1]['character']['color'] !== $owlPreset['character']['color'] && $scryRoom['players'][1]['character']['series'] !== $owlPreset['character']['series'], 'Default series bot is both a differently colored and different-series opponent');
     $scryRoom = request('start', ['code' => $scryRoom['code']], $alice['token']);
     check($scryRoom['game']['phase'] === 'response' && $scryRoom['game']['pending']['kind'] === 'scry', 'Starting the owl room waits for a private scry response');
     check($scryRoom['game']['pending']['player'] === $alice['user']['id'], 'Opening scry belongs to the human host');

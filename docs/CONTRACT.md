@@ -143,11 +143,11 @@ conversion 只接受整数技能下标且仅用于 play/respond。scry 响应为
 | me | → `{user,builds}` |
 | save_build / validate_build | `{build}` → `{build,budget}` |
 | delete_build | `{id}` → 空结果 |
-| create_room | `{name,mode,buildId?,presetId?,allowCustom,turnSeconds?}` → 房间 |
+| create_room | `{name,mode,buildId?,presetId?,allowCustom,turnSeconds?,bots?:[{buildId?,presetId?}],requestId?}` → 房间；提供 bots 时须为 1～5 项列表，逐项验证并原子创建 |
 | join_room | `{code,buildId?,presetId?}` → 房间 |
 | room | `{code}` → 房间，并推进有界自动行动 |
 | choose_build | `{code,buildId?,presetId?}` → 房间，仅开局前 |
-| add_bot | `{code,presetId?}` → 房间，仅房主 |
+| add_bot | `{code,buildId?,presetId?}` → 房间，仅房主；仅可读取房主自己的保存构筑，遵守 allowCustom；未选择时自动选对手预设 |
 | leave_room | `{code}`，仅大厅；房主离开关闭房间 |
 | start | `{code}`，仅房主、至少两人且有可对抗阵营 |
 | act | `{code,revision,requestId,action}` → 房间 |
@@ -177,4 +177,4 @@ conversion 只接受整数技能下标且仅用于 play/respond。scry 响应为
 
 ## 规则范围
 
-普通牌池固定 104 张；默认开局 5 张普通手牌、标准摸 2 张且可替换至多 2 张心象、默认每回合一次攻击/范围 1，新增额度按解释器增减。永续牌下个自己的回合成熟。防御属于防守，回避属于躲避。冷暖与系列两模式、心坏、翻面、体力、心象归属等基础裁定见 [RULES.md](RULES.md)。未实现的原版《BANG!》《三国杀》机制不能由同名文字取得，改编差异以 [KF3_CLASSICS.md](content/KF3_CLASSICS.md) 明示。
+普通牌池固定 104 张；默认开局 5 张普通手牌、标准摸 2 张且可替换至多 2 张心象、默认每回合一次攻击/范围 1，新增额度按解释器增减。永续牌下个自己的回合成熟。防御属于防守，回避同时属于防守与躲避：可从手牌防御通常攻击（不摸牌），或卸除成熟装备防御并摸一张；拳击仍要求成熟装备回避。机器人按当前颜色过滤有害目标及会波及伙伴的群体行动，系列模式还避开同系列目标；真人动作和模式胜利条件不变。冷暖与系列两模式、心坏、翻面、体力、心象归属等基础裁定见 [RULES.md](RULES.md)。未实现的原版《BANG!》《三国杀》机制不能由同名文字取得，改编差异以 [KF3_CLASSICS.md](content/KF3_CLASSICS.md) 明示。
