@@ -112,7 +112,7 @@ final class Catalog
     {
         $p=self::presets();
         $content=ContentPack::all();
-        return ['rulesVersion'=>SkillBlocks::VERSION,'supportedRulesVersions'=>['0.1.0-alpha','0.2.0-alpha',SkillBlocks::VERSION],'cards'=>self::cards(),'mindOptions'=>self::mindOptions(),'characters'=>array_column($p,'character'),'presets'=>$p,
+        return ['rulesVersion'=>SkillBlocks::VERSION,'supportedRulesVersions'=>['0.1.0-alpha','0.2.0-alpha','0.3.0-alpha',SkillBlocks::VERSION],'cards'=>self::cards(),'mindOptions'=>self::mindOptions(),'characters'=>array_column($p,'character'),'presets'=>$p,
             'blocks'=>SkillBlocks::metadata(),
             'contentPacks'=>$content['contentPacks'],'skillTemplates'=>$content['skillTemplates'],
             'mindTemplates'=>$content['mindTemplates'],'arts'=>$content['arts'],'characterNotes'=>$content['characterNotes'],

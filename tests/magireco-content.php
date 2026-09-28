@@ -42,9 +42,9 @@ function mrInvariant(array $g,int $count): void {
 }
 $pack=ContentPack::data('magireco-expansions');$all=Catalog::presets();$old=ContentPack::data();$catalog=Catalog::all();
 mrCheck(count($pack['presets'])===36&&count($pack['mindTemplates'])===72&&count($pack['skillTemplates'])===30,'36 characters, 72 cards and 30 templates');
-mrCheck(count($all)===78&&count($old['presets'])===38,'both packs coexist with four originals');
+mrCheck(count($all)>=78&&count($old['presets'])===38,'legacy packs coexist with four originals');
 mrCheck(array_column(array_slice($all,4,38),'id')===array_column($old['presets'],'id'),'legacy catalog order preserved');
-mrCheck(count($catalog['contentPacks'])===2,'both content packs published');
+mrCheck(in_array('magireco-expansions-01',array_column($catalog['contentPacks'],'id'),true)&&count($catalog['contentPacks'])>=2,'legacy content packs published');
 $templates=array_column($pack['skillTemplates'],null,'id');$minds=array_column($pack['mindTemplates'],null,'id');$art=array_column($pack['arts'],null,'id');
 $pairs=[];$used=[];$families=[];$bound=0;$ops=[];$triggers=[];$conditions=[];
 $base=$all[0];unset($base['id']);$base['character']['hp']=4;$base['character']['flipColor']=null;$base['character']['skills']=[];
@@ -87,6 +87,6 @@ foreach($pack['presets'] as $i=>$build){
         mrInvariant($g,$count);$steps++;
         foreach($g['players'] as $p)foreach($p['usedSkills']??[] as $index=>$usage)if(($usage['count']??0)>0){$skill=$p['character']['skills'][$index]??null;if($skill)$activated[$skill['trigger']]=true;}
     }
-    mrCheck(Engine::finished($g),'game finished for '.$build['character']['name']);$games++;
+    mrCheck(Engine::finished($g),'game finished for '.$build['character']['name'].'; turn='.$g['turnNumber'].' phase='.($g['pending']['kind']??$g['phase']).' steps='.$n);$games++;
 }
 echo "Magireco: $games complete games, $steps actions, $checks assertions. States: ".implode(', ',array_keys($states)).". Activated: ".implode(', ',array_keys($activated))."\n";

@@ -1,0 +1,277 @@
+{
+  "date": "2026-09-28",
+  "tool": "imagegen (built-in)",
+  "prompts": "adventure-art-prompts.json",
+  "records": [
+    {
+      "id": "av_0001",
+      "name": "卫斯理",
+      "file": "public/assets/characters/av_0001.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "18dc63fbd813c54e73d1432df83cde8aa2769d5854e982a5c3e8527650938831",
+      "generatedFile": "exec-ac86336c-0300-4cef-ac3b-67e3b972573f.png"
+    },
+    {
+      "id": "av_0002",
+      "name": "白素",
+      "file": "public/assets/characters/av_0002.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "ee4cc243eedbef20f5576b196daca6d13e258ae717b9753bf9de9859f8526376",
+      "generatedFile": "exec-0d963421-f6e5-4fb2-9960-70bdcbb8b996.png"
+    },
+    {
+      "id": "av_0003",
+      "name": "白奇伟",
+      "file": "public/assets/characters/av_0003.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "db09f7f7d9163e932f8db968827a3337204fc49b8faa08b6fb3625f74c19d07b",
+      "generatedFile": "exec-d08fe8c2-78d3-4edc-9eda-2826ed4f57fd.png"
+    },
+    {
+      "id": "av_0004",
+      "name": "白老大",
+      "file": "public/assets/characters/av_0004.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "655b46803c943c0026f8175953f9e5a5df95b15f397adc06ed5a73b627c6bf81",
+      "generatedFile": "exec-487cd7c6-fc90-4d4c-8841-5013fe8b763f.png"
+    },
+    {
+      "id": "av_0005",
+      "name": "小郭",
+      "file": "public/assets/characters/av_0005.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "8a53a2242e01c536fe1ee6732753e7a3c6cbb241cfc74b9f0043a316b5e79c7a",
+      "generatedFile": "exec-fdca7aca-0a30-4d6c-92d9-ff598712e33c.png"
+    },
+    {
+      "id": "av_0006",
+      "name": "陈长青",
+      "file": "public/assets/characters/av_0006.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "80c3a4e575e353192373ccf1d0060b9b13c79727fdee8a9e86f86dc60935031c",
+      "generatedFile": "exec-2c42562d-86f7-4f87-aa58-949aefeee806.png"
+    },
+    {
+      "id": "av_0007",
+      "name": "温宝裕",
+      "file": "public/assets/characters/av_0007.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "6dc8ded3966a228e664c4272ea210df2367c2f10d80aec0415bfd2e3e7e8abe6",
+      "generatedFile": "exec-7339f819-5901-48fb-bf8d-65b3e5d59856.png"
+    },
+    {
+      "id": "av_0008",
+      "name": "卫红绫",
+      "file": "public/assets/characters/av_0008.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "b1e81675fd935f9ab577ee5958bf2dbccf6e216d9005c592af58b79a2fc376e1",
+      "generatedFile": "exec-2180ac39-a1d3-4a11-b100-17bb9617f1da.png"
+    },
+    {
+      "id": "av_0009",
+      "name": "胡说",
+      "file": "public/assets/characters/av_0009.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "1188c4fc419fb959073b4dce35ae14ee6902c9c8f898b5452811da2392fae381",
+      "generatedFile": "exec-5381b648-813a-415e-8611-89ecca67893e.png"
+    },
+    {
+      "id": "av_0010",
+      "name": "原振侠",
+      "file": "public/assets/characters/av_0010.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "46f62ae2350187aeeccf7066f71af46d23e4c96fab6b03cf202a8106c3888c5f",
+      "generatedFile": "exec-9567526d-b9c8-4e37-be78-89c9ca3f274b.png"
+    },
+    {
+      "id": "av_0011",
+      "name": "黄绢",
+      "file": "public/assets/characters/av_0011.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "483357bf30476059e659324a4bc19bb672dc283bcb6ceb3c58766b97ba9a3139",
+      "generatedFile": "exec-e19fd4ab-223f-4046-b1c3-35aaeaf5ab7f.png"
+    },
+    {
+      "id": "av_0012",
+      "name": "海棠",
+      "file": "public/assets/characters/av_0012.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "dfc532beb421b1a346a286ae7c5c9dedd36d4b0a65acd7e2cb5d3fb88ccefe0d",
+      "generatedFile": "exec-80f4cfd2-6503-4b3d-b931-45f7043c979d.png"
+    },
+    {
+      "id": "av_0013",
+      "name": "玛仙",
+      "file": "public/assets/characters/av_0013.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "72f8c95552fd4f42e5c59742d34523b74342ba024ed8ffda157ba7a366a7a29a",
+      "generatedFile": "exec-5b0b7d13-a43a-4c66-8a07-56207054d408.png"
+    },
+    {
+      "id": "av_0014",
+      "name": "卡尔斯",
+      "file": "public/assets/characters/av_0014.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "d7c593acb7e78aa59c3380f6ee1840ccece3cc4f142d8d72c4d6bc4be1dde76e",
+      "generatedFile": "exec-78905b7d-f80b-4b18-9b66-13599dd385fd.png"
+    },
+    {
+      "id": "av_0015",
+      "name": "年轻人",
+      "file": "public/assets/characters/av_0015.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "81bd3b2f46057d3c05e756e5696226ba5946652b9d852e77444541ffd8694851",
+      "generatedFile": "exec-74525626-a1e7-4502-bc75-bc2e6f05d21e.png"
+    },
+    {
+      "id": "av_0016",
+      "name": "黑纱公主",
+      "file": "public/assets/characters/av_0016.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "48e00eb78e119642d6955c1ff02abd874fcd402d016ffe66286435a93d0cffd8",
+      "generatedFile": "exec-64c40e39-0fcc-4c5c-8810-63400ba1041e.png"
+    },
+    {
+      "id": "av_0017",
+      "name": "中国人",
+      "file": "public/assets/characters/av_0017.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "89a6122f5d3b3a15d1d607b0918e9cd7b6691829c21ab6183a6b187489e45363",
+      "generatedFile": "exec-253eb952-f200-4d98-806a-d3cb24a2ef40.png"
+    },
+    {
+      "id": "av_0018",
+      "name": "罗开",
+      "file": "public/assets/characters/av_0018.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "5748f1f7ad5102bb75def4f256b523ca9e06b46e07941af944e8beabc3087be3",
+      "generatedFile": "exec-ae84b88d-740c-4023-9327-2d123ac4b242.png"
+    },
+    {
+      "id": "av_0019",
+      "name": "黛娜",
+      "file": "public/assets/characters/av_0019.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "51e49db70c449caf60bc981d707d7d32e902a94569b428f44d1f32c96803f8cf",
+      "generatedFile": "exec-e3a5069d-b54d-4cc4-ac16-938b557156b0.png"
+    },
+    {
+      "id": "av_0020",
+      "name": "康维十七世",
+      "file": "public/assets/characters/av_0020.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "42bb90702e734cca7ed2546141182cd74c5ef1e4fe32d14ded2b51790c65c0e5",
+      "generatedFile": "exec-fde4a990-98ef-4062-b673-4af057d1567f.png"
+    },
+    {
+      "id": "av_0021",
+      "name": "天使",
+      "file": "public/assets/characters/av_0021.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "db157f179958455fcc84c32d2c5fce4a9bfedeba66417cce2e27131356b35333",
+      "generatedFile": "exec-a8cc4a49-bbbc-49a2-9226-4dfecf19df23.png"
+    },
+    {
+      "id": "av_0022",
+      "name": "时间大神",
+      "file": "public/assets/characters/av_0022.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "bda4c49f6ae7c2c13b09e64dc44b46084025c95c4897fb1336c16252e2c74fca",
+      "generatedFile": "exec-0a898002-6fd7-4744-a95b-b3593423ba73.png"
+    },
+    {
+      "id": "av_0023",
+      "name": "高达",
+      "file": "public/assets/characters/av_0023.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "a46be3cd43ca060187dc4a555f3ed545dca26946d62e7b31bbc4dfbf881a4f70",
+      "generatedFile": "exec-034727f7-f6e4-4725-a7b0-68468dcaf80b.png"
+    },
+    {
+      "id": "av_0024",
+      "name": "凯德琳",
+      "file": "public/assets/characters/av_0024.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "873610712e38af1ca913e996f897ec1f52f15f6ad509c25f8b1e8e1eab99722a",
+      "generatedFile": "exec-a6f75820-9e71-4cea-9719-8bd2d971fda3.png"
+    },
+    {
+      "id": "av_0025",
+      "name": "木兰花",
+      "file": "public/assets/characters/av_0025.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "b2dcc60c89785ad67fb42f1d1f671d9cb9deaab96a2f354196550a71a40f5aac",
+      "generatedFile": "exec-282b0735-a994-423c-ade5-5fcfc5fcf4cc.png"
+    },
+    {
+      "id": "av_0026",
+      "name": "穆秀珍",
+      "file": "public/assets/characters/av_0026.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "7ac7ac1a7235ea4d8a6a77c72d9df691cb86e86e6db54d3bc331fdeeeef15d1b",
+      "generatedFile": "exec-0e8356b7-b4d5-4005-86a4-8cedc40ae7c2.png"
+    },
+    {
+      "id": "av_0027",
+      "name": "高翔",
+      "file": "public/assets/characters/av_0027.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "53b9ce99084be3ae1ade2406bb291043035693ce3cfafbfa80d56c19a8614c1f",
+      "generatedFile": "exec-3165fd55-75d7-47ff-a1b4-580766cfe5a5.png"
+    },
+    {
+      "id": "av_0028",
+      "name": "安妮",
+      "file": "public/assets/characters/av_0028.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "1174750718b99f87a7ba008f01e2688c6ae17f311449959579c1ae4498f96917",
+      "generatedFile": "exec-e5b51594-85de-4d99-8736-2096cf680b63.png"
+    },
+    {
+      "id": "av_0029",
+      "name": "云四风",
+      "file": "public/assets/characters/av_0029.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "35e770804cb7ff1b65bc28d3cac725bfc70b789c2c553df7b076d270e65d35ec",
+      "generatedFile": "exec-8164af15-34b1-469f-8f1f-cde67f7f68d6.png"
+    },
+    {
+      "id": "av_0030",
+      "name": "云五风",
+      "file": "public/assets/characters/av_0030.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "1d8956db82abc0687578cfeacac29c395c3c094a1c5c07cdbce30b783972434b",
+      "generatedFile": "exec-dfcb59b3-fd13-4dc1-9aa2-dba6ec5157bd.png"
+    }
+  ]
+}

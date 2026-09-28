@@ -1,6 +1,6 @@
 # 实现契约
 
-当前规则版本：`0.2.0-alpha`。运行环境兼容 PHP 7.4+，部署建议 PHP 8.2+；无 Composer、Node 或常驻后台服务要求。网站根目录为 `public/`，`src/`、`var/`、`config.php` 不公开。界面使用 UTF-8 中文，PHP 命名空间为 `Imaginary`。
+当前规则版本：`0.4.0-alpha`。运行环境兼容 PHP 7.4+，部署建议 PHP 8.2+；无 Composer、Node 或常驻后台服务要求。网站根目录为 `public/`，`src/`、`var/`、`config.php` 不公开。界面使用 UTF-8 中文，PHP 命名空间为 `Imaginary`。
 
 ## 目录、词表与内容包
 
@@ -14,7 +14,7 @@
 | `cards` | 普通牌类型 ID → `{id,name,kind,tags,description}` |
 | `mindOptions` | 每个点数允许的普通心象类型 |
 | `characters` / `presets` | 人物列表 / 可直接使用的完整构筑 |
-| `blocks` | triggers、conditions、effects、effectMeta、targets、conversions、limits |
+| `blocks` | triggers、conditions、effects、effectMeta、equipmentSlots、equipmentEffects、targets、conversions、limits |
 | `limits` | 技能数、效果数、限定牌数和各项预算 |
 | `modes` | color / series 两个对局模式 |
 | `contentPacks` | 内容包名称、说明、characterIds、来源列表 |
@@ -69,7 +69,7 @@ DeckEntry {
 
 `custom.series` 匹配当前使用者系列，且可选 `custom.characterId` 匹配其人物 ID 时，自定义效果才生效；否则应用 fallback。角色编号是可编辑创作标识，不是身份授权。实体卡的普通/心象来源、UID 和原心象所有者不因失配、赠送、偷取、转化或装备而丢失。
 
-缺少版本或携带 `0.1.0-alpha` 的旧构筑可进入当前校验；规范化结果统一写 `0.2.0-alpha`，缺省次数为 1。未知版本拒绝，旧图集编号兼容。保存/导入是校验与规范化，不是按卡名重新解释或静默排序；已开局游戏保留当时的构筑快照。旧房间每技能“已用回合号”的整数存档由引擎读取为该回合已使用一次。
+缺少版本或携带 `0.1.0-alpha`、`0.2.0-alpha`、`0.3.0-alpha` 的旧构筑可进入当前校验；规范化结果统一写 `0.4.0-alpha`，缺省次数为 1。未知版本拒绝，旧图集编号兼容。保存/导入是校验与规范化，不是按卡名重新解释或静默排序；已开局游戏保留当时的构筑快照。旧房间每技能“已用回合号”的整数存档由引擎读取为该回合已使用一次。
 
 新对局自身也持久化 `rulesVersion`。缺省版本或 `0.1.0-alpha` 的游戏状态由 act/tick 显式迁移，补齐新增字段，保留实体牌、伤害、次数与构筑快照，记录 `migratedFromRulesVersion` 和单次日志；非法动作连同迁移一起回滚。只读 view 返回存档的真实 `rulesVersion`、当前 `engineRulesVersion` 和布尔 `rulesUpgradePending`，不在读取时暗改状态。未知对局版本统一拒绝。
 
@@ -77,11 +77,11 @@ DeckEntry {
 
 ## 技能词汇与结算
 
-10 个 trigger：`active`、`turn_start`、`turn_end`、`after_damage`、`after_attack`、`on_defend`、`after_play_attack`、`after_play_event`、`hand_empty`、`convert`。
+15 个 trigger（以下为原始十项；另有 on_targeted、ally_targeted、after_play_card、after_lose_equipment、after_equip）：`active`、`turn_start`、`turn_end`、`after_damage`、`after_attack`、`on_defend`、`after_play_attack`、`after_play_event`、`hand_empty`、`convert`。
 
-6 个 condition：`always`、`wounded`、`hand_low`、`hand_empty`、`hand_full`、`healthy`。次数按**全局回合**分别计数，limit 允许 1～2。自动技能检查关联目标、资源与心坏后执行，费用默认从左侧手牌/心象顶支付。
+17 个 condition，完整清单见 SKILLS.md。原始六项为：`always`、`wounded`、`hand_low`、`hand_empty`、`hand_full`、`healthy`。次数按**全局回合**分别计数，limit 允许 1～2。自动技能检查关联目标、资源与心坏后执行，费用默认从左侧手牌/心象顶支付。
 
-17 个 op 的完整目标约束和语义见 [SKILLS.md](SKILLS.md)，接口元数据中 `effectMeta[op]` 含 `targets,min,max,description,cost`：
+32 个 op 的完整目标约束和语义见 [SKILLS.md](SKILLS.md)，接口元数据中 `effectMeta[op]` 含 `targets,min,max,description,cost,equipmentOnly`：
 
 | 范围 | op |
 | --- | --- |
@@ -94,11 +94,21 @@ DeckEntry {
 
 convert 的 effects 必须为空；普通技能必须包含 1～3 个效果且不能附 conversion。from 允许 attack、defense、red、black、hand；to 允许 attack_neutral、defense。来源按实体手牌及当前有效牌型检查，red/black 仅识别实际花色。先取出转化实体，再支付额外费用；次数照常计费，不能重复消耗同一实体。转化攻击在出牌阶段使用 play 并占普通攻击额度，也可在“潜能爆发”要求攻击时通过 respond 打出；转化防御使用 respond。
 
-效果数组严格有序。attack 将剩余效果存入队列，等待攻击响应后继续；scry 将剩余效果保留到私密排序确认后继续。事件进入事件队列，限定心象也服从回合外目标的“攻守同盟”取消窗口。人物技能不因包含效果而自动成为事件。hand_empty 在行动及即时效果结算边界触发，不能在支付中途插入摸牌；turn_end 在必要弃牌完成后触发。
+效果数组严格有序。attack 将剩余效果存入队列，等待攻击响应后继续；scry 将剩余效果保留到私密排序确认后继续。事件进入事件队列，事件心象也服从回合外目标的“攻守同盟”取消窗口。人物技能不因包含效果而自动成为事件。hand_empty 在行动及即时效果结算边界触发，不能在支付中途插入摸牌；turn_end 在必要弃牌完成后触发。
 
 give_hand 在支付费用后检查选牌。selection 必须包含所有赠牌效果所需数量的不重复、现存手牌 UID；无 selection 时从左侧依次交付。攻击/事件等待期间牌可能被其他反应移走，待恢复的赠牌已无足量资源或指定实体时终止该组剩余效果，不让响应者困在失效选择上。尚未经过等待的非法主动操作整体回滚。
 
 scry 暂时取出至多 amount 张普通牌，响应者必须按顺序提交全部 UID，第一张回到最上方，不支持放底。其他玩家视角没有这些牌、UID、顺序或选项。默认/超时响应保留原顺序；查看者退场或对局结束时未提交牌归还原牌序。双重防御每次成功只减一次需求；直到全部抵消才触发 on_defend，否则承受完整攻击伤害。
+
+## 0.4 装备与私密窗口补充
+
+三个内容包合计 104 位 IP 角色、208 张主题心象、107 组技能模板，另有四个基础示例。新增内容源为 src/content/adventure-king.json，生成器为 tools/build-adventure-content.mjs。
+
+custom.kind 缺省为 event；equipment 要求 slot 为 weapon / armor / gadget。equipmentEffects 返回槽位白名单；equipmentOnly 禁止把持续加成放进人物技能或事件，重复装备 op 被拒绝。装备只对自己使用，进入 equipment 区，触发 after_equip / after_play_card，不触发 after_play_event，也不进入事件取消窗口。同槽替换走既有失装队列。
+
+普通技能新增 inspect_hand、scry_mind、cycle_mind、draw_mind、recall_equipment、break_shield；装备专用 equip_range、equip_damage、equip_shield、equip_draw、equip_distance。范围与受攻距离在查询时汇总，增伤次数保存在玩家 equipmentDamageTurn 并与自己的 turns 比较，反复拆装不能刷新；周期收益在 beginTurn 清除旧加成后、人物 turn_start 前执行。
+
+inspect_hand / scry_mind 的 pending.cards 是私密快照，实体留在手牌/心象原区。响应为 respond + choice: confirm；调序可附全量且不重复的 cards UID，第一张成为顶部。其他玩家不收到快照或选项。默认调查确认，默认心象保持原序，随后恢复剩余效果。现有 scry 仍使用普通牌临时保管区。
 
 ## 引擎调用与安全视角
 
@@ -167,7 +177,7 @@ conversion 只接受整数技能下标且仅用于 play/respond。scry 响应为
 ```json
 {
   "format": "imaginary-puzzles-v1",
-  "rulesVersion": "0.2.0-alpha",
+  "rulesVersion": "0.4.0-alpha",
   "skillTemplates": [],
   "mindTemplates": []
 }

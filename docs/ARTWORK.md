@@ -50,3 +50,7 @@ Primary request: an evocative imaginary landscape where a blue crystalline archi
 ## 替换
 
 保持文件路径即可替换背景或现有独立人物 PNG；人物图集仍需保持四个等大象限与现有顺序。添加独立人物图时，在内容包 arts 目录登记 ID、显示名和本地 URL，并让构筑 character.art 使用对应 ID，无需为每个人物写 CSS 象限选择器。新增图片遵循同样的无字竖幅构图和身份复核流程，并追加实际提示词、参考来源及输出记录。发布包包含全部 PNG，部署时不依赖远程素材、外部字体、ProjectK 或生成服务。
+
+## 冒险王：30 张独立角色卡图
+
+输出为 public/assets/characters/av_0001.png 至 av_0030.png，逐位调用内置 imagegen 生成 1024×1536 PNG。整体采用写实绘本与复古科幻冒险插画语言，人物姿态、服装、道具及背景为创作诠释，不使用影视演员面容作为原著外形依据。网络人设依据见 [adventure-research.json](content/adventure-research.json)，完整共享风格与逐人提示词见 [adventure-art-prompts.json](content/adventure-art-prompts.json)，输出尺寸和 SHA256 见 [adventure-art-manifest.json](content/adventure-art-manifest.json)。原始生成文件保留，游戏使用复制到项目的本地资源；运行时不调用生图或联网取图。

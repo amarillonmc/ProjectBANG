@@ -25,7 +25,7 @@ final class Rules
     {
         foreach(array_keys($v) as $key) if(!in_array($key,$allowed,true)) self::fail('未知字段：'.(string)$key);
     }
-    public static function effects($effects): array
+    public static function effects($effects,bool $equipment=false): array
     {
         if(!is_array($effects)||count($effects)<1||count($effects)>3||array_keys($effects)!==range(0,count($effects)-1)) self::fail('每组效果必须包含 1～3 个积木');
         $out=[];
@@ -34,6 +34,7 @@ final class Rules
             self::keys($e,['op','target','amount','color']);
             $meta=SkillBlocks::metadata()['effectMeta'];
             $op=self::choice($e['op']??null,array_keys($meta),'效果积木');
+            if($meta[$op]['equipmentOnly']!==$equipment) self::fail($equipment?'装备心象只能使用持续装备积木':'持续装备积木只能用于装备心象');
             $target=self::choice($e['target']??'self',['self','target'],'目标');
             if(!in_array($target,$meta[$op]['targets'],true)) self::fail('该积木不支持这个目标');
             $out[]=['op'=>$op,'target'=>$target,'amount'=>self::number($e['amount']??null,$meta[$op]['min'],$meta[$op]['max'],'效果数值'),'color'=>self::choice($e['color']??'neutral',['cool','warm','neutral'],'伤害颜色')];
@@ -43,7 +44,7 @@ final class Rules
     public static function validateBuild(array $b): array
     {
         self::keys($b,['id','name','character','deck','budget','createdAt','updatedAt','rulesVersion']);
-        if(array_key_exists('rulesVersion',$b)) self::choice($b['rulesVersion'],['0.1.0-alpha','0.2.0-alpha',SkillBlocks::VERSION],'规则版本');
+        if(array_key_exists('rulesVersion',$b)) self::choice($b['rulesVersion'],['0.1.0-alpha','0.2.0-alpha','0.3.0-alpha',SkillBlocks::VERSION],'规则版本');
         if(!is_array($b['character']??null)) self::fail('缺少人物'); $c=$b['character'];
         self::keys($c,['id','name','title','series','color','hp','art','flipColor','skills']);
         $skills=$c['skills']??[];
@@ -85,9 +86,20 @@ final class Rules
             $r=self::number($entry['rank']??null,1,13,'点数'); if(isset($ranks[$r])) self::fail('心象点数 A～K 必须各一张'); $ranks[$r]=true;
             $type=self::choice($entry['type']??null,array_merge(Catalog::mindOptions()[$r],['custom']),'该点数心象牌类型'); $d=['type'=>$type,'rank'=>$r];
             if($type==='custom') {
-                $customCount++; $x=$entry['custom']??null; if(!is_array($x)) self::fail('缺少限定牌定义'); self::keys($x,['name','series','fallback','effects','characterId']);
+                $customCount++; $x=$entry['custom']??null; if(!is_array($x)) self::fail('缺少限定牌定义'); self::keys($x,['name','series','fallback','effects','characterId','kind','slot']);
+                $kind=self::choice($x['kind']??'event',['event','equipment'],'心象类别');
                 $d['custom']=['name'=>self::text($x['name']??null,'限定牌名称'),'series'=>self::text($x['series']??null,'限定系列'),
-                    'fallback'=>self::choice($x['fallback']??null,array_keys($cards),'非限定系列替代牌'),'effects'=>self::effects($x['effects']??null)];
+                    'fallback'=>self::choice($x['fallback']??null,array_keys($cards),'非限定系列替代牌'),'effects'=>self::effects($x['effects']??null,$kind==='equipment')];
+                if($kind==='equipment') {
+                    $meta=SkillBlocks::metadata(); $slot=self::choice($x['slot']??null,array_keys($meta['equipmentSlots']),'装备槽');
+                    $ops=[];
+                    foreach($d['custom']['effects'] as $e) {
+                        if(!in_array($e['op'],$meta['equipmentEffects'][$slot],true)) self::fail('该持续效果不支持这个装备槽');
+                        if(isset($ops[$e['op']])) self::fail('同一装备不能重复堆叠相同效果');
+                        $ops[$e['op']]=true;
+                    }
+                    $d['custom']['kind']='equipment'; $d['custom']['slot']=$slot;
+                } elseif(isset($x['slot'])) self::fail('事件心象不能指定装备槽');
                 if(isset($x['characterId'])) $d['custom']['characterId']=self::text($x['characterId'],'限定角色编号');
             } elseif(isset($entry['custom'])) self::fail('普通牌不能携带自定义效果');
             $deck[]=$d;

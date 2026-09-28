@@ -1,0 +1,266 @@
+{
+  "checkedAt": "2026-09-28",
+  "scope": "倪匡六个小说系列；排除影视新增设定与有争议的高达增补人物。摘要仅概括身份；技能、配色、服装和大多数器材为本游戏原创设计。",
+  "sources": {
+    "wesley": "https://zh.wikipedia.org/wiki/%E8%A1%9B%E6%96%AF%E7%90%86%E7%B3%BB%E5%88%97%E8%A7%92%E8%89%B2%E5%88%97%E8%A1%A8",
+    "wen": "https://zh.wikipedia.org/wiki/%E6%BA%AB%E5%AF%B6%E8%A3%95",
+    "hu": "https://zh.wikipedia.org/wiki/%E7%98%9F%E7%A5%9E_(%E5%B0%8F%E8%AA%AA)",
+    "yuan": "https://zh.wikipedia.org/wiki/%E5%8E%9F%E6%8C%AF%E4%BF%A0%E7%B3%BB%E5%88%97",
+    "ma": "https://www.newton.com.tw/wiki/%E7%91%AA%E4%BB%99/3325027",
+    "kars": "https://zh.wikipedia.org/wiki/%E8%BF%B7%E8%B7%AF_(%E5%B0%8F%E8%AF%B4)",
+    "youth": "https://zh.wikipedia.org/wiki/%E6%89%8B%E5%A5%97_(%E5%B0%8F%E8%AA%AA)",
+    "princess": "https://www.wiselypuzzle.com/introduction/youth.html",
+    "eagle": "https://www.wiselypuzzle.com/introduction/eagle.html",
+    "diana": "https://www.newton.com.tw/wiki/%E9%BB%9B%E5%A8%9C/10348",
+    "conway": "https://www.xuoda.com/kh/nk/yzx27/index.htm",
+    "angel": "https://abyss101.blogspot.com/2016/04/asian-eagle-1.html",
+    "clock": "https://zh.wikipedia.org/wiki/%E9%AC%BC%E9%90%98",
+    "gao": "https://www.wiselypuzzle.com/introduction/kotat.html",
+    "katherine": "https://www.hetubook.com/book2/3211/91544.html",
+    "magnolia": "https://zh.wikipedia.org/wiki/%E5%A5%B3%E9%BB%91%E4%BF%A0%E6%9C%A8%E8%98%AD%E8%8A%B1%E7%B3%BB%E5%88%97",
+    "annie": "https://www.kingstone.com.tw/basic/freeread/2018563344972",
+    "yun": "https://m.gulongbbs.com/wuxia/nikuang/halx/10854.html"
+  },
+  "records": [
+    {
+      "id": "av_0001",
+      "name": "卫斯理",
+      "branch": "卫斯理系列",
+      "summary": "跨越怪异事件的冒险者，武艺与好奇心并重。",
+      "sourceUrl": "https://zh.wikipedia.org/wiki/%E8%A1%9B%E6%96%AF%E7%90%86%E7%B3%BB%E5%88%97%E8%A7%92%E8%89%B2%E5%88%97%E8%A1%A8",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0002",
+      "name": "白素",
+      "branch": "卫斯理系列",
+      "summary": "沉着、善推理，是卫斯理的伴侣与冒险搭档。",
+      "sourceUrl": "https://zh.wikipedia.org/wiki/%E8%A1%9B%E6%96%AF%E7%90%86%E7%B3%BB%E5%88%97%E8%A7%92%E8%89%B2%E5%88%97%E8%A1%A8",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0003",
+      "name": "白奇伟",
+      "branch": "卫斯理系列",
+      "summary": "白素的兄长，擅长工程技术，也参与冒险。",
+      "sourceUrl": "https://zh.wikipedia.org/wiki/%E8%A1%9B%E6%96%AF%E7%90%86%E7%B3%BB%E5%88%97%E8%A7%92%E8%89%B2%E5%88%97%E8%A1%A8",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0004",
+      "name": "白老大",
+      "branch": "卫斯理系列",
+      "summary": "青帮前辈，以江湖阅历和人脉提供帮助。",
+      "sourceUrl": "https://zh.wikipedia.org/wiki/%E8%A1%9B%E6%96%AF%E7%90%86%E7%B3%BB%E5%88%97%E8%A7%92%E8%89%B2%E5%88%97%E8%A1%A8",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0005",
+      "name": "小郭",
+      "branch": "卫斯理系列",
+      "summary": "郭则清，后来成为知名私家侦探。",
+      "sourceUrl": "https://zh.wikipedia.org/wiki/%E8%A1%9B%E6%96%AF%E7%90%86%E7%B3%BB%E5%88%97%E8%A7%92%E8%89%B2%E5%88%97%E8%A1%A8",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0006",
+      "name": "陈长青",
+      "branch": "卫斯理系列",
+      "summary": "醉心奇异知识与求仙之事的卫斯理友人。",
+      "sourceUrl": "https://zh.wikipedia.org/wiki/%E8%A1%9B%E6%96%AF%E7%90%86%E7%B3%BB%E5%88%97%E8%A7%92%E8%89%B2%E5%88%97%E8%A1%A8",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0007",
+      "name": "温宝裕",
+      "branch": "卫斯理系列",
+      "summary": "思路跳脱、好奇心旺盛的青年，小名小宝。",
+      "sourceUrl": "https://zh.wikipedia.org/wiki/%E6%BA%AB%E5%AF%B6%E8%A3%95",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0008",
+      "name": "卫红绫",
+      "branch": "卫斯理系列",
+      "summary": "卫斯理与白素的女儿，在山野成长，力量过人。",
+      "sourceUrl": "https://zh.wikipedia.org/wiki/%E8%A1%9B%E6%96%AF%E7%90%86%E7%B3%BB%E5%88%97%E8%A7%92%E8%89%B2%E5%88%97%E8%A1%A8",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0009",
+      "name": "胡说",
+      "branch": "卫斯理系列",
+      "summary": "务实的青年昆虫学家；名字的“说”读作“悦”。",
+      "sourceUrl": "https://zh.wikipedia.org/wiki/%E7%98%9F%E7%A5%9E_(%E5%B0%8F%E8%AA%AA)",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0010",
+      "name": "原振侠",
+      "branch": "原振侠系列",
+      "summary": "医生与冒险者，面对异事也常受情感困扰。",
+      "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%8E%9F%E6%8C%AF%E4%BF%A0%E7%B3%BB%E5%88%97",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0011",
+      "name": "黄绢",
+      "branch": "原振侠系列",
+      "summary": "投身权力角逐并成为女将军的重要人物。",
+      "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%8E%9F%E6%8C%AF%E4%BF%A0%E7%B3%BB%E5%88%97",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0012",
+      "name": "海棠",
+      "branch": "原振侠系列",
+      "summary": "女特工，后来以玫瑰身份出现，追求脱离控制。",
+      "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%8E%9F%E6%8C%AF%E4%BF%A0%E7%B3%BB%E5%88%97",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0013",
+      "name": "玛仙",
+      "branch": "原振侠系列",
+      "summary": "拥有强大脑能量、与爱神星相关的超级女巫。",
+      "sourceUrl": "https://www.newton.com.tw/wiki/%E7%91%AA%E4%BB%99/3325027",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0014",
+      "name": "卡尔斯",
+      "branch": "原振侠系列",
+      "summary": "与黄绢关联的将军和统治者，权势欲强烈。",
+      "sourceUrl": "https://zh.wikipedia.org/wiki/%E8%BF%B7%E8%B7%AF_(%E5%B0%8F%E8%AF%B4)",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0015",
+      "name": "年轻人",
+      "branch": "年轻人系列",
+      "summary": "由叔叔训练的冒险者，与公主共同经历奇遇。",
+      "sourceUrl": "https://zh.wikipedia.org/wiki/%E6%89%8B%E5%A5%97_(%E5%B0%8F%E8%AA%AA)",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0016",
+      "name": "黑纱公主",
+      "branch": "年轻人系列",
+      "summary": "奥丽卡公主在跨系列经历后改名奥丽卡·黑纱。",
+      "sourceUrl": "https://www.wiselypuzzle.com/introduction/youth.html",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0017",
+      "name": "中国人",
+      "branch": "年轻人系列",
+      "summary": "年轻人的叔叔与导师，经验丰富的盗术高手。",
+      "sourceUrl": "https://zh.wikipedia.org/wiki/%E6%89%8B%E5%A5%97_(%E5%B0%8F%E8%AA%AA)",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0018",
+      "name": "罗开",
+      "branch": "亚洲之鹰罗开系列",
+      "summary": "被称为亚洲之鹰的冒险者，以独立意志对抗操控。",
+      "sourceUrl": "https://www.wiselypuzzle.com/introduction/eagle.html",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0019",
+      "name": "黛娜",
+      "branch": "亚洲之鹰罗开系列",
+      "summary": "代号“烈性炸药”的情报与安全人员。",
+      "sourceUrl": "https://www.newton.com.tw/wiki/%E9%BB%9B%E5%A8%9C/10348",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0020",
+      "name": "康维十七世",
+      "branch": "亚洲之鹰罗开系列",
+      "summary": "生活在地球的高等外星机械人，协助众人探索宇宙。",
+      "sourceUrl": "https://www.xuoda.com/kh/nk/yzx27/index.htm",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0021",
+      "name": "天使",
+      "branch": "亚洲之鹰罗开系列",
+      "summary": "与《魔像》及齐亚尔星相关的神秘来客。",
+      "sourceUrl": "https://abyss101.blogspot.com/2016/04/asian-eagle-1.html",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0022",
+      "name": "时间大神",
+      "branch": "亚洲之鹰罗开系列",
+      "summary": "鬼钟与妖偶故事中施加控制的异质存在。",
+      "sourceUrl": "https://zh.wikipedia.org/wiki/%E9%AC%BC%E9%90%98",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0023",
+      "name": "高达",
+      "branch": "浪子高达系列",
+      "summary": "潇洒冒险、追逐财富的浪子，也与罗开相交。",
+      "sourceUrl": "https://www.wiselypuzzle.com/introduction/kotat.html",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0024",
+      "name": "凯德琳",
+      "branch": "浪子高达系列",
+      "summary": "《红粉妙贼》中牵涉契约与险局的公主。",
+      "sourceUrl": "https://www.hetubook.com/book2/3211/91544.html",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0025",
+      "name": "木兰花",
+      "branch": "女黑侠木兰花系列",
+      "summary": "以智勇破解奇案的女侠，与伙伴对抗犯罪组织。",
+      "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%A5%B3%E9%BB%91%E4%BF%A0%E6%9C%A8%E8%98%AD%E8%8A%B1%E7%B3%BB%E5%88%97",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0026",
+      "name": "穆秀珍",
+      "branch": "女黑侠木兰花系列",
+      "summary": "木兰花的勇敢伙伴，行事爽快、富有行动力。",
+      "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%A5%B3%E9%BB%91%E4%BF%A0%E6%9C%A8%E8%98%AD%E8%8A%B1%E7%B3%BB%E5%88%97",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0027",
+      "name": "高翔",
+      "branch": "女黑侠木兰花系列",
+      "summary": "警方人员，也是木兰花的可靠伙伴。",
+      "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%A5%B3%E9%BB%91%E4%BF%A0%E6%9C%A8%E8%98%AD%E8%8A%B1%E7%B3%BB%E5%88%97",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0028",
+      "name": "安妮",
+      "branch": "女黑侠木兰花系列",
+      "summary": "使用轮椅、参与破解险案的“天使侠女”。",
+      "sourceUrl": "https://www.kingstone.com.tw/basic/freeread/2018563344972",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0029",
+      "name": "云四风",
+      "branch": "女黑侠木兰花系列",
+      "summary": "云家兄弟之一，与穆秀珍相伴，擅长技术与器械。",
+      "sourceUrl": "https://m.gulongbbs.com/wuxia/nikuang/halx/10854.html",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    },
+    {
+      "id": "av_0030",
+      "name": "云五风",
+      "branch": "女黑侠木兰花系列",
+      "summary": "云四风的弟弟，参与木兰花一行的冒险。",
+      "sourceUrl": "https://m.gulongbbs.com/wuxia/nikuang/halx/10854.html",
+      "visualPolicy": "形象为基于人物身份的原创诠释；未核实的外貌、服装和配色不宣称为原著定貌。"
+    }
+  ]
+}

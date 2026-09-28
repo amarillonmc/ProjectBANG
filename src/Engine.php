@@ -20,7 +20,7 @@ final class Engine
     private static function stateVersion(array $g): string
     {
         $version=array_key_exists('rulesVersion',$g)?$g['rulesVersion']:'0.1.0-alpha';
-        self::check(is_string($version)&&in_array($version,['0.1.0-alpha','0.2.0-alpha',SkillBlocks::VERSION],true),'此对局的规则版本不受当前服务端支持，请使用匹配版本的服务端继续对局');
+        self::check(is_string($version)&&in_array($version,['0.1.0-alpha','0.2.0-alpha','0.3.0-alpha',SkillBlocks::VERSION],true),'此对局的规则版本不受当前服务端支持，请使用匹配版本的服务端继续对局');
         return $version;
     }
     /** Older rooms use the same physical cards and damage model; migrate additive fields explicitly. */
@@ -50,7 +50,18 @@ final class Engine
         return max(0,$p['maxHp']-$loss);
     }
     private static function broken(array $g,string $id): bool { return count($g['players'][$id]['mind'])===0; }
-    private static function range(array $g,string $id): int { return self::broken($g,$id)?0:1+$g['players'][$id]['rangeBonus']; }
+    private static function range(array $g,string $id): int { return self::broken($g,$id)?0:1+$g['players'][$id]['rangeBonus']+self::equipmentValue($g,$id,'equip_range'); }
+    private static function trueEquipment(array $card): bool { return $card['type']==='custom'&&($card['custom']['kind']??'event')==='equipment'; }
+    private static function equipmentValue(array $g,string $id,string $op): int
+    {
+        $n=0;
+        foreach($g['players'][$id]['equipment'] as $card) if(self::trueEquipment($card)) foreach($card['custom']['effects'] as $e) if($e['op']===$op) $n+=$e['amount'];
+        return $n;
+    }
+    private static function attackDistance(array $g,string $a,string $b): int
+    {
+        return self::distance($g,$a,$b)+self::equipmentValue($g,$b,'equip_distance');
+    }
     private static function alive(array $g): array { return array_values(array_filter($g['order'],function($id)use($g){return $g['players'][$id]['alive'];})); }
     private static function distance(array $g,string $a,string $b): int
     {
@@ -130,7 +141,7 @@ final class Engine
             self::check(is_string($p['id']??null)&&!isset($g['players'][$p['id']]),'玩家编号重复或无效');
             $b=Rules::validateBuild($p['build']); $c=$b['character']; $id=$p['id']; $mind=[];
             foreach($b['deck'] as $i=>$d) {
-                $def=$d['type']==='custom'?['name'=>$d['custom']['name'],'kind'=>'event','tags'=>[],'description'=>'限定系列：'.$d['custom']['series'].'；'.Rules::describeEffects($d['custom']['effects']).'。其他系列视为 '.Catalog::cards()[$d['custom']['fallback']]['name'].'。']:Catalog::cards()[$d['type']];
+                $def=$d['type']==='custom'?['name'=>$d['custom']['name'],'kind'=>$d['custom']['kind']??'event','tags'=>[],'description'=>'限定系列：'.$d['custom']['series'].'；'.Rules::describeEffects($d['custom']['effects']).'。不符合系列或角色绑定时视为 '.Catalog::cards()[$d['custom']['fallback']]['name'].'。']:Catalog::cards()[$d['type']];
                 $mind[]=array_merge($def,$d,['uid'=>'m_'.$id.'_'.$i,'origin'=>'mind','owner'=>$id]);
             }
             $g['players'][$id]=['id'=>$id,'name'=>$p['name'],'character'=>$c,'bot'=>!empty($p['bot']),'color'=>$c['color'],'series'=>$c['series'],'maxHp'=>$c['hp'],'marks'=>['cool'=>0,'warm'=>0,'neutral'=>0],'alive'=>true,'flipped'=>false,'hand'=>[],'mind'=>$mind,'spent'=>[],'equipment'=>[],'delayed'=>[],'turns'=>0,'shield'=>0,'rangeBonus'=>0,'attackBonus'=>0,'extraAttacks'=>0,'attacks'=>0,'usedSkills'=>[]];
@@ -170,6 +181,10 @@ final class Engine
         if($g['status']!=='playing'||!$g['players'][$target]['alive']) return;
         if($source!==null&&self::hasEquipment($g,$source,'treasure')!==null) $n++;
         if($attack&&$source!==null) $n+=$g['players'][$source]['attackBonus'];
+        if($attack&&$source!==null&&($g['players'][$source]['equipmentDamageTurn']??-1)!==$g['players'][$source]['turns']) {
+            $bonus=self::equipmentValue($g,$source,'equip_damage');
+            if($bonus>0) { $n+=min(1,$bonus); $g['players'][$source]['equipmentDamageTurn']=$g['players'][$source]['turns']; }
+        }
         $n=max(0,$n-($g['players'][$target]['damageGuard']??0));
         $shield=min($n,$g['players'][$target]['shield']); $g['players'][$target]['shield']-=$shield; $n-=$shield;
         if($n<=0) { self::log($g,$g['players'][$target]['name'].'的减伤或护盾抵消了伤害。'); return; }
@@ -229,6 +244,8 @@ final class Engine
             case 'first_damage': return $damage===1;
             case 'repeat_damage': return $damage>=2;
             case 'has_equipment': return !empty($p['equipment']);
+            case 'has_true_equipment': foreach($p['equipment'] as $card) if(self::trueEquipment($card)) return true; return false;
+            case 'mind_low': return count($p['mind'])<=4;
             case 'hand_same_color':
                 if($hand<2) return false; $color=null;
                 foreach($p['hand'] as $c) {
@@ -262,7 +279,7 @@ final class Engine
         if($target===null||!isset($g['players'][$target])||!$g['players'][$target]['alive']) $target=$id;
         foreach($g['players'][$id]['character']['skills'] as $i=>$s) if($s['trigger']===$trigger&&self::skillUsable($g,$id,$i)) {
             if($g['players'][$id]['bot']&&!self::botEffectsSafe($g,$id,$target,$s['effects'])) continue;
-            if(self::effectTargetsValid($g,$id,$target??$id,$s['effects'],$s['cost']['hand'])) self::executeSkill($g,$id,$i,$target??$id,[]);
+            if(self::effectTargetsValid($g,$id,$target??$id,$s['effects'],$s['cost']['hand'],[],$s['cost']['mind'])) self::executeSkill($g,$id,$i,$target??$id,[]);
         }
     }
     private static function paySkill(array &$g,string $id,int $i,array $costCards): void
@@ -276,18 +293,26 @@ final class Engine
         self::mindCost($g,$id,$s['cost']['mind']);
         self::log($g,$g['players'][$id]['name'].'发动「'.$s['name'].'」。');
     }
-    private static function effectTargetsValid(array $g,string $id,string $target,array $effects,int $handCost=0,array $costCards=[]): bool
+    private static function effectTargetsValid(array $g,string $id,string $target,array $effects,int $handCost=0,array $costCards=[],int $mindCost=0): bool
     {
-        $hands=[]; $ordinary=[]; $equipment=[];
+        // Separate zone arrays avoid mutating PHP references held by a triggering caller.
+        $hands=[]; $ordinary=[]; $equipment=[]; $minds=[]; $spents=[];
         foreach($g['players'] as $pid=>$p) {
             $hands[$pid]=count($p['hand']); $ordinary[$pid]=0;
             $equipment[$pid]=$p['equipment'];
+            $minds[$pid]=$p['mind']; $spents[$pid]=$p['spent'];
             foreach($p['hand'] as $card) if($card['origin']==='normal') $ordinary[$pid]++;
         }
         $deck=count($g['deck']); $discard=count($g['discard']);
+        $spend=function(array $card)use(&$spents,&$discard): void {
+            if($card['origin']==='mind'&&isset($spents[$card['owner']])) $spents[$card['owner']][]=$card;
+            else $discard++;
+        };
+        for($i=0;$i<$mindCost;$i++) { if(!$minds[$id]) return false; $spend(array_shift($minds[$id])); }
         for($i=0;$i<$handCost;$i++) {
             $uid=$costCards[$i]??($g['players'][$id]['hand'][$i]['uid']??null);
             foreach($g['players'][$id]['hand'] as $card) if($card['uid']===$uid&&$card['origin']==='normal') { $discard++; $ordinary[$id]--; break; }
+            foreach($g['players'][$id]['hand'] as $card) if($card['uid']===$uid&&$card['origin']==='mind') { $spend($card); break; }
         }
         $draw=function(int $n)use(&$deck,&$discard): int {
             $take=min($n,$deck); $deck-=$take;
@@ -297,10 +322,14 @@ final class Engine
         $hands[$id]-=$handCost; $range=self::range($g,$id);
         foreach($effects as $e) {
             $to=$e['target']==='self'?$id:$target; $n=$e['amount'];
-            if(in_array($e['op'],['steal_hand','discard_hand','give_hand','attack','sequester_hand','hand_lock'],true)&&$target===$id) return false;
-            if($e['op']==='attack'&&(self::distance($g,$id,$target)>$range||($g['mode']==='color'&&$e['color']!=='neutral'&&$g['players'][$target]['color']===$e['color']))) return false;
+            if(in_array($e['op'],['steal_hand','discard_hand','give_hand','attack','sequester_hand','hand_lock','inspect_hand','break_shield'],true)&&$target===$id) return false;
+            if($e['op']==='attack'&&(self::attackDistance($g,$id,$target)>$range||($g['mode']==='color'&&$e['color']!=='neutral'&&$g['players'][$target]['color']===$e['color']))) return false;
             if($e['op']==='range'&&!self::broken($g,$id)) $range+=$e['amount'];
             if(in_array($e['op'],['draw','draw_to'],true)) { $take=$draw($e['op']==='draw'?$n:max(0,$n-$hands[$to])); $hands[$to]+=$take; $ordinary[$to]+=$take; }
+            if($e['op']==='draw_mind') $hands[$to]+=count(array_splice($minds[$to],0,$n));
+            if($e['op']==='recover_mind') {
+                for($j=0;$j<$n&&$spents[$to];$j++) $minds[$to][]=array_shift($spents[$to]);
+            }
             if($e['op']==='steal_hand') {
                 $take=min($n,$hands[$target]); $normal=min($take,$ordinary[$target]);
                 $hands[$target]-=$take; $hands[$id]+=$take; $ordinary[$target]-=$normal; $ordinary[$id]+=$normal;
@@ -312,7 +341,11 @@ final class Engine
             if($e['op']==='sequester_hand') { $take=min($n,$hands[$target]); $hands[$target]-=$take; $ordinary[$target]-=min($take,$ordinary[$target]); }
             if($e['op']==='discard_equipment') {
                 if($to===$id&&count($equipment[$to])<$n) return false;
-                for($j=0;$j<$n&&$equipment[$to];$j++) { $removed=array_shift($equipment[$to]); if($removed['origin']==='normal') $discard++; }
+                for($j=0;$j<$n&&$equipment[$to];$j++) $spend(array_shift($equipment[$to]));
+            }
+            if($e['op']==='recall_equipment') {
+                if(count($equipment[$id])<$n) return false;
+                for($j=0;$j<$n;$j++) { $removed=array_shift($equipment[$id]); $hands[$id]++; if($removed['origin']==='normal') $ordinary[$id]++; }
             }
             if($e['op']==='draw_discard') { $take=min($n,$discard); $hands[$to]+=$take; $ordinary[$to]+=$take; $discard-=$take; }
             if($e['op']==='give_hand') {
@@ -325,7 +358,7 @@ final class Engine
     private static function executeSkill(array &$g,string $id,int $i,string $target,array $costCards,array $selection=[]): void
     {
         self::check(self::skillUsable($g,$id,$i),'技能当前不能使用'); $s=$g['players'][$id]['character']['skills'][$i];
-        self::check(self::effectTargetsValid($g,$id,$target,$s['effects'],$s['cost']['hand'],$costCards),'技能目标不合法、超出攻击范围或赠送手牌不足');
+        self::check(self::effectTargetsValid($g,$id,$target,$s['effects'],$s['cost']['hand'],$costCards,$s['cost']['mind']),'技能目标不合法、超出攻击范围或赠送手牌不足');
         self::paySkill($g,$id,$i,$costCards);
         self::validateGiftSelection($g,$id,$s['effects'],$selection);
         self::effects($g,$id,$target,$s['effects'],$selection,$s['trigger']==='active');
@@ -351,6 +384,19 @@ final class Engine
                 case 'damage': self::damage($g,$id,$to,$n,$e['color']); break;
                 case 'recover_mind':
                     for($j=0;$j<$n&&$g['players'][$to]['spent'];$j++) $g['players'][$to]['mind'][]=array_shift($g['players'][$to]['spent']); break;
+                case 'draw_mind':
+                    for($j=0;$j<$n&&$g['players'][$to]['mind'];$j++) $g['players'][$to]['hand'][]=array_shift($g['players'][$to]['mind']); break;
+                case 'cycle_mind':
+                    $moved=array_splice($g['players'][$to]['mind'],0,min($n,count($g['players'][$to]['mind'])));
+                    $g['players'][$to]['mind']=array_merge($g['players'][$to]['mind'],$moved); break;
+                case 'break_shield': if($to!==$id) $g['players'][$to]['shield']=max(0,$g['players'][$to]['shield']-$n); break;
+                case 'recall_equipment':
+                    if(!$g['players'][$id]['equipment']) { self::check(!$strict,'无法完成整组效果：没有可收回的装备'); return; }
+                    $card=array_shift($g['players'][$id]['equipment']); $removedType=$card['type']; unset($card['readyAt']);
+                    if(isset($card['printedType'])) { $card['type']=$card['printedType']; unset($card['printedType']); }
+                    $g['players'][$id]['hand'][]=$card; $g['equipmentLosses'][]=['player'=>$id,'source'=>$id];
+                    if($removedType==='treasure') self::damage($g,null,$id,2,'neutral');
+                    break;
                 case 'shield': $g['players'][$to]['shield']=min(6,$g['players'][$to]['shield']+$n); break;
                 case 'range': $g['players'][$to]['rangeBonus']=min(99,$g['players'][$to]['rangeBonus']+$n); break;
                 case 'attack_bonus': $g['players'][$to]['attackBonus']=min(3,$g['players'][$to]['attackBonus']+$n); break;
@@ -405,8 +451,8 @@ final class Engine
                         if(!$g['players'][$id]['alive']||$g['status']!=='playing') return;
                     }
                     break;
-                case 'scry':
-                    array_unshift($g['queue'],['kind'=>'scry','player'=>$id,'source'=>$id,'target'=>$target,'count'=>$n,'remainingEffects'=>array_slice($effects,$index+1),'selection'=>$selection]); return;
+                case 'scry': case 'scry_mind': case 'inspect_hand':
+                    array_unshift($g['queue'],['kind'=>$e['op'],'player'=>$id,'source'=>$id,'target'=>$target,'count'=>$n,'remainingEffects'=>array_slice($effects,$index+1),'selection'=>$selection]); return;
             }
         }
     }
@@ -417,6 +463,8 @@ final class Engine
         foreach($g['players'] as &$counter) { $counter['playedThisTurn']=0; $counter['damageThisTurn']=0; $counter['lastPlayed']=null; $counter['sameRankOrSuit']=false; } unset($counter);
         if($g['turnNumber']>300) { self::returnSequestered($g); $g['status']='finished'; $g['winner']='平局'; $g['queue']=[]; $g['pending']=null; self::log($g,'达到 300 回合内测上限，对局以平局结束。'); return; }
         $p=&$g['players'][$id]; $p['turns']++; $p['attacks']=0; $p['extraAttacks']=0; $p['doubleDefense']=false; $p['rangeBonus']=0; $p['attackBonus']=0; $p['shield']=0; $p['damageGuard']=0;
+        $p['shield']=min(6,self::equipmentValue($g,$id,'equip_shield'));
+        self::draw($g,$id,self::equipmentValue($g,$id,'equip_draw'));
         self::log($g,'第 '.$g['turnNumber'].' 回合：'.$p['name'].'。'); self::trigger($g,$id,'turn_start',$id);
         foreach($p['delayed'] as $c) $g['queue'][]=['kind'=>'judge','player'=>$id,'card'=>$c];
         self::progress($g);
@@ -486,6 +534,14 @@ final class Engine
                 $cards=[];
                 for($i=0;$i<$e['count'];$i++) { $card=self::normal($g); if($card===null) break; $cards[]=$card; }
                 if($cards) self::pending($g,array_merge($e,['cards'=>$cards,'count'=>count($cards),'prompt'=>'私密观星：将全部查看牌按所选顺序放回普通牌池顶（首张最上）。']));
+                elseif($e['remainingEffects']) self::effects($g,$e['source'],$e['target'],$e['remainingEffects'],$e['selection']??[]);
+            }
+            elseif(in_array($e['kind'],['scry_mind','inspect_hand'],true)) {
+                $cards=$e['kind']==='scry_mind'?$g['players'][$id]['mind']:$g['players'][$e['target']]['hand'];
+                if($e['kind']==='inspect_hand') self::shuffleCards($cards);
+                $cards=array_slice($cards,0,$e['count']);
+                // These are private snapshots, never a second physical card zone.
+                if($cards) self::pending($g,array_merge($e,['cards'=>$cards,'count'=>count($cards),'prompt'=>$e['kind']==='scry_mind'?'私密心象调序：选定全部展示牌的次序后放回心象顶（首张最上）。':'私密调查：只有你能查看这些随机手牌，确认后继续结算。']));
                 elseif($e['remainingEffects']) self::effects($g,$e['source'],$e['target'],$e['remainingEffects'],$e['selection']??[]);
             }
         }
@@ -604,6 +660,7 @@ final class Engine
                     $g['players'][$id]['lastPlayed']=['rank'=>$physical['rank'],'suit'=>$physical['suit']??null];
                     if(strpos($played,'attack_')===0) self::trigger($g,$id,'after_play_attack',$a['target']??$id);
                     elseif((Catalog::cards()[$played]['kind']??($played==='custom'?'event':''))==='event') self::trigger($g,$id,'after_play_event',$a['target']??$id);
+                    if($played==='equipment'||(Catalog::cards()[$played]['kind']??'')==='persistent') self::trigger($g,$id,'after_equip',$id);
                     self::trigger($g,$id,'after_play_card',$a['target']??$id);
                     break;
                 case 'skill':
@@ -638,6 +695,13 @@ final class Engine
         $type=$c['type'];
         $target=$a['target']??$id; $mode=$a['mode']??''; $g['resumePhase']='play';
         self::check($type!=='defense','防御只能在响应时使用');
+        if(self::trueEquipment($c)) {
+            self::check($target===$id,'装备心象只能装备给自己');
+            foreach($g['players'][$id]['equipment'] as $old) if(self::trueEquipment($old)&&$old['custom']['slot']===$c['custom']['slot']) self::removeEquipment($g,$id,$old['uid']);
+            $card['readyAt']=$g['players'][$id]['turns']; $g['players'][$id]['equipment'][]=$card;
+            self::log($g,$g['players'][$id]['name'].'装备「'.$c['name'].'」至'.SkillBlocks::metadata()['equipmentSlots'][$c['custom']['slot']].'槽；持续效果立即生效。');
+            return 'equipment';
+        }
         if(in_array($type,['punch','evade','haste','miracle','treasure','automaton'],true)) {
             foreach($g['players'][$id]['equipment'] as $old) self::check($old['type']!==$type,'同名永续牌不能重复装备');
             if($card['type']!==$type) $card['printedType']=$card['type']; $card['type']=$type; $card['readyAt']=$g['players'][$id]['turns']+1; $g['players'][$id]['equipment'][]=$card;
@@ -653,7 +717,7 @@ final class Engine
             $color=substr($type,7); $target=self::target($g,$target);
             if($target===$id) { self::check($g['mode']==='color'&&$color!=='neutral'&&$g['players'][$id]['color']===$color,'这张攻击不能对自己回复'); self::heal($g,$id,1); return $type; }
             self::check($g['players'][$id]['attacks']<1+($g['players'][$id]['extraAttacks']??0),'本回合已用完攻击次数');
-            self::check(self::distance($g,$id,$target)<=self::range($g,$id),'目标不在攻击范围内（心坏时范围为 0）');
+            self::check(self::attackDistance($g,$id,$target)<=self::range($g,$id),'目标不在攻击范围内（含防具距离，心坏时范围为 0）');
             self::check($g['mode']==='series'||$color==='neutral'||$g['players'][$target]['color']!==$color,'有色攻击不能攻击同色角色');
             $g['players'][$id]['attacks']++; $g['queue'][]=['kind'=>'attack','player'=>$target,'source'=>$id,'color'=>$color,'amount'=>1,'punch'=>false,'defenses'=>!empty($g['players'][$id]['doubleDefense'])?2:1]; return $type;
         }
@@ -703,7 +767,7 @@ final class Engine
         self::check(self::mature($g,$id,$c),'永续牌要等到下个自己的回合才可使用');
         self::check(in_array($c['type'],['punch','haste','automaton'],true),'该永续牌当前不能主动卸除');
         if($c['type']==='punch') {
-            $target=self::target($g,$a['target']??null,false); self::check(!self::broken($g,$id)&&self::distance($g,$id,$target)===1,'拳击需要距离 1 且未心坏');
+            $target=self::target($g,$a['target']??null,false); self::check(!self::broken($g,$id)&&self::attackDistance($g,$id,$target)===1,'拳击需要攻击距离 1 且未心坏');
             self::check($g['players'][$id]['attacks']<1+($g['players'][$id]['extraAttacks']??0),'本回合已用完攻击次数'); $g['players'][$id]['attacks']++;
             self::removeEquipment($g,$id,$c['uid']); $g['queue'][]=['kind'=>'attack','player'=>$target,'source'=>$id,'color'=>'neutral','amount'=>1,'punch'=>true,'defenses'=>!empty($g['players'][$id]['doubleDefense'])?2:1];
         } elseif($c['type']==='haste') { self::removeEquipment($g,$id,$c['uid']); self::draw($g,$id,3); }
@@ -777,12 +841,20 @@ final class Engine
             self::check(in_array($choice,['tuck','pass'],true),'请选择置底或跳过');
             if($choice==='tuck') self::tuck($g,$id,self::take($g['players'][$id]['hand'],$a['card']??'')); return;
         }
-        if($kind==='scry') {
+        if($kind==='inspect_hand') {
+            self::check($choice==='confirm','请确认调查结果');
+            if($p['remainingEffects']) array_unshift($g['queue'],['kind'=>'effects','player'=>$id,'source'=>$p['source'],'target'=>$p['target'],'effects'=>$p['remainingEffects'],'selection'=>$p['selection']??[]]);
+            return;
+        }
+        if($kind==='scry'||$kind==='scry_mind') {
             self::check($choice==='confirm','请确认全部观星牌的顺序');
             $order=$a['cards']??($a['selection']??array_column($p['cards'],'uid'));
             self::check(count($order)===count($p['cards'])&&count(array_unique($order))===count($order),'必须提交全部观星牌且不能重复');
             $ordered=[]; foreach($order as $uid) $ordered[]=self::take($p['cards'],$uid);
-            $g['deck']=array_merge($ordered,$g['deck']);
+            if($kind==='scry_mind') {
+                foreach($ordered as $card) self::take($g['players'][$id]['mind'],$card['uid']);
+                $g['players'][$id]['mind']=array_merge($ordered,$g['players'][$id]['mind']);
+            } else $g['deck']=array_merge($ordered,$g['deck']);
             if($p['remainingEffects']) array_unshift($g['queue'],['kind'=>'effects','player'=>$id,'source'=>$p['source'],'target'=>$p['target'],'effects'=>$p['remainingEffects'],'selection'=>$p['selection']??[]]);
             return;
         }
@@ -845,6 +917,8 @@ final class Engine
                 $add('不置底','pass'); foreach($g['players'][$id]['hand'] as $c) $add('将 '.$c['name'].' 置于心象底','tuck',['card'=>$c['uid']]); break;
             case 'reset': $add('按当前顺序重置全部已耗心象','confirm',['cards'=>array_column($g['players'][$id]['spent'],'uid')]); break;
             case 'scry': $add('按当前顺序放回全部普通牌顶','confirm',['cards'=>array_column($p['cards'],'uid')]); break;
+            case 'scry_mind': $add('按当前顺序放回全部心象顶','confirm',['cards'=>array_column($p['cards'],'uid')]); break;
+            case 'inspect_hand': $add('已查看线索，继续结算','confirm'); break;
             case 'rebuild': $add('将手牌前 '.$p['count'].' 张依次置底','confirm',['cards'=>array_column(array_slice($g['players'][$id]['hand'],0,$p['count']),'uid')]); break;
             case 'judge': $add('从普通牌池判定','normal'); if($g['players'][$id]['mind']) $add('从心象顶判定','mind'); break;
             case 'calamity': $add('跳过本回合','skip'); $add('承受 4 点无色伤害','damage'); break;
@@ -877,7 +951,8 @@ final class Engine
             $c=self::effective($g,$id,$card); $t=$c['type']; $base=['type'=>'play','card'=>$card['uid']]; $label=$c['name'];
             $others=array_values(array_filter($p['hand'],function($h)use($card){return $h['uid']!==$card['uid'];})); $cost=$others[0]['uid']??null;
             if(in_array($t,['defense'],true)) continue;
-            if(strpos($t,'attack_')===0||in_array($t,['alliance','calamity','fortune','custom'],true)) {
+            if(self::trueEquipment($c)) $add($label.'：装备至'.SkillBlocks::metadata()['equipmentSlots'][$c['custom']['slot']],$base);
+            elseif(strpos($t,'attack_')===0||in_array($t,['alliance','calamity','fortune','custom'],true)) {
                 foreach($alive as $to) $add($label.' → '.$g['players'][$to]['name'],array_merge($base,['target'=>$to]));
             } elseif($t==='surprise') {
                 foreach($alive as $to) {
@@ -934,7 +1009,7 @@ final class Engine
                 if($raw['kind']==='reset') { $pending['cards']=$p['spent']; $pending['count']=count($p['spent']); }
                 elseif($raw['kind']==='rebuild') { $pending['cards']=$p['hand']; $pending['count']=$raw['count']; }
                 elseif($raw['kind']==='tuck') $pending['cards']=$p['hand'];
-                elseif($raw['kind']==='scry') { $pending['cards']=$raw['cards']; $pending['count']=$raw['count']; }
+                elseif(in_array($raw['kind'],['scry','scry_mind','inspect_hand'],true)) { $pending['cards']=$raw['cards']; $pending['count']=$raw['kind']==='inspect_hand'?0:$raw['count']; }
             }
             if($raw['kind']==='draft') $pending['cards']=$g['draft'];
         }
@@ -955,7 +1030,7 @@ final class Engine
     }
     private static function offensiveEffect(array $effect): bool
     {
-        return in_array($effect['op'],['damage','attack','lose_health','steal_hand','discard_hand','sequester_hand','discard_equipment','hand_lock'],true);
+        return in_array($effect['op'],['damage','attack','lose_health','steal_hand','discard_hand','sequester_hand','discard_equipment','hand_lock','inspect_hand','break_shield'],true);
     }
     private static function botEffectsSafe(array $g,string $id,string $target,array $effects): bool
     {

@@ -1,0 +1,156 @@
+{
+  "mode": "built-in image_gen",
+  "style": "Use case: illustration-story. Asset type: one finished portrait illustration for a Chinese science-fiction adventure card game, 1024x1536 portrait. Sophisticated painted graphic-novel illustration with clear expressive faces, elegant ink contours and rich atmospheric light; mid-to-late twentieth-century pulp adventure with restrained impossible science. Three-quarter character framing, readable silhouette in a small card crop, face safely inside upper central area. One character only, not a collage. No text, typography, borders, logos or watermark. This is an original visual interpretation of Ni Kuang's literary character, not a likeness of any actor. Clothes, palette and props are art direction, not asserted canonical costume. Fully clothed, nonsexual adventure scene.",
+  "records": [
+    {
+      "id": "av_0001",
+      "name": "卫斯理",
+      "subject": "Wesley / Wei Si-li, an adult Chinese adventurer with strongly defined thick eyebrows, short black hair and a stubborn questioning expression. Dark teal field jacket over a white shirt, coiled fine silver whip at his belt. He examines a mysterious golden sphere in an old Hong Kong study, books and a star-map glowing behind him. Confident grounded martial-arts bearing, warm gold against midnight teal."
+    },
+    {
+      "id": "av_0002",
+      "name": "白素",
+      "subject": "Bai Su, an adult Chinese woman, exceptionally composed and observant adventurer. Neatly pinned black hair, ivory high-collared blouse and practical charcoal trousers, holding an open notebook beside a rain-lit window in a Hong Kong study. Her gaze notices a faint geometric anomaly reflected in the window, calm intelligence rather than magic casting. Pearl gray, jade green and quiet amber."
+    },
+    {
+      "id": "av_0003",
+      "name": "白奇伟",
+      "subject": "Bai Qiwei, a tall athletic adult Chinese engineer and adventurer with short dark hair and a decisive expression. Rolled sleeves, earth-toned utility vest, blueprint case and brass surveying instrument. Standing on a half-built suspension bridge above a misty river gorge, cables create strong perspective, steel blue and copper daylight."
+    },
+    {
+      "id": "av_0004",
+      "name": "白老大",
+      "subject": "Old Boss Bai, a formidable elderly Chinese former underworld patriarch, swept silver hair, lined face and uncompromising eyes. Dark traditional long jacket with a jade ring, a walking stick held with relaxed authority. Seated upright in a wooden armchair in a dim ancestral reception hall, a carved screen and one warm lamp; dignified and powerful, no caricature. Ink black, burgundy and antique gold."
+    },
+    {
+      "id": "av_0005",
+      "name": "小郭",
+      "subject": "Guo Zeqing, known as Xiao Guo, an adult Chinese private investigator, neat short hair, alert patient eyes, charcoal suit beneath a tan raincoat. A small camera and evidence envelope in his hands. Following a trail through a rain-soaked Hong Kong street at night with indistinct neon reflections, no readable signs. Slate blue, tobacco brown and reflected amber."
+    },
+    {
+      "id": "av_0006",
+      "name": "陈长青",
+      "subject": "Chen Changqing, an eccentric middle-aged Chinese seeker of supernatural mysteries. Slightly untidy dark hair, intelligent intense eyes, worn scholar's jacket, holding a peculiar old artifact under a desk lamp. Crowded private library of unusual objects, old books and abstract astronomical diagrams with no legible text, inquisitive rather than sinister. Moss green and warm parchment."
+    },
+    {
+      "id": "av_0007",
+      "name": "温宝裕",
+      "subject": "Wen Baoyu, an imaginative young Chinese man in his early twenties, lively handsome face, tousled short black hair, mustard casual jacket and a small backpack. Excitedly comparing an ordinary-looking stone with an impossible luminous orbital pattern above a cluttered workbench; curious and irreverent, with old Chinese medicine cabinets in the background. Bright ochre and electric turquoise."
+    },
+    {
+      "id": "av_0008",
+      "name": "卫红绫",
+      "subject": "Wei Hongling, the young adult daughter of Wesley and Bai Su, a tall powerful Chinese woman with long thick dark hair and a direct curious expression, practical forest expedition clothes. She moves with extraordinary ease across mossy rocks in dense mountainous jungle, reaching toward a strange star-lit opening in the canopy. Strong physique, no sexualization, emerald and red-earth palette."
+    },
+    {
+      "id": "av_0009",
+      "name": "胡说",
+      "subject": "Hu Shuo (Shuo pronounced Yue), a quiet practical young adult Chinese entomologist and friend of Wen Baoyu. Tidy black hair, thin spectacles as an artistic interpretation, navy work jacket, holding a magnifying lens over an unusual cocoon beside carefully arranged insect specimen boxes. A museum laboratory and a misty garden beyond the window. Methodical humane expression, steel blue, paper cream and subtle amber."
+    },
+    {
+      "id": "av_0010",
+      "name": "原振侠",
+      "subject": "Dr. Yuan Zhenxia, an adult Chinese physician and adventurer, handsome contemplative face, short black hair, pale medical coat over dark casual clothes, carrying a compact medical bag. Standing at the threshold between a dim hospital corridor and a vast mysterious star field, hand extended with compassion. Blue-white hospital light meets violet cosmic light; wistful, capable, humane."
+    },
+    {
+      "id": "av_0011",
+      "name": "黄绢",
+      "subject": "Huang Juan, an ambitious adult Chinese woman who becomes a military general. Short sleek black hair, poised commanding gaze, tailored olive military jacket with fictional unmarked insignia, gloved hand resting on a folded campaign map. A desert command balcony with distant antenna silhouettes, no real political symbols. Olive, bronze and burnt orange."
+    },
+    {
+      "id": "av_0012",
+      "name": "海棠",
+      "subject": "Haitang, an adult Chinese intelligence operative longing for freedom. Dark shoulder-length hair, composed yet wistful eyes, practical wine-red coat over black clothes, carrying a small unmarked travel case. She stands where a dim urban railway platform dissolves into a distant unfamiliar violet sky, suggesting a choice of identity and freedom. No actor likeness, no weapons aimed at viewer."
+    },
+    {
+      "id": "av_0013",
+      "name": "玛仙",
+      "subject": "Ma Xian, an adult Chinese super-witch with extraordinary mental energy and a link to extraterrestrial civilization. Long black hair, intelligent expressive face, flowing but modest indigo clothes. Her open hands surround a delicate luminous lattice like interwoven thought and starlight inside an alien observatory, wonder and determination, indigo and rose-gold, no stereotyped pointed hat."
+    },
+    {
+      "id": "av_0014",
+      "name": "卡尔斯",
+      "subject": "General Kars, an adult North African ruler and military strongman from an unspecified fictional country. Broad weathered face, imposing stance, dark military uniform with invented geometric insignia and a cap held at his side. Standing before a severe desert fortress command table, one stark slant of sunlight, ochre sand and gunmetal. No likeness to real rulers, no real emblems."
+    },
+    {
+      "id": "av_0015",
+      "name": "年轻人",
+      "subject": "The Young Man, Ni Kuang's brilliant young adult Chinese gentleman adventurer and daring thief. Slender athletic build, charming alert expression, black hair, crisp white shirt and midnight-blue dinner jacket, holding a pair of delicate gloves. Monte Carlo-style rooftop under moonlight, a distant locked vault and glittering coastline as atmosphere. Elegant agile confidence, sapphire and silver."
+    },
+    {
+      "id": "av_0016",
+      "name": "黑纱公主",
+      "subject": "The Black-Veil Princess, formerly Princess Olica, an adult woman with Indigenous American ancestry in Ni Kuang's fiction, dignified features, dark hair and unwavering expression. Modest flowing black outfit with a delicate translucent veil, no stereotyped feather headdress. Standing amid shimmering overlapping doorways to a starry landscape, suggesting extraordinary perception and passage through space. Black, violet and luminous silver; romantic resolve."
+    },
+    {
+      "id": "av_0017",
+      "name": "中国人",
+      "subject": "The Chinese Man, the Young Man's uncle and veteran master thief in Ni Kuang's adventure stories. Mature Chinese man with silver at his temples, impeccably tailored charcoal suit, calm amused eyes and leather gloves. Sitting at a polished table with an antique lock and a chess knight, softly lit European hotel study, dignified mentorship and precise craft. Warm walnut, graphite and gold."
+    },
+    {
+      "id": "av_0018",
+      "name": "罗开",
+      "subject": "Luo Kai, the Eagle of Asia, a strong adult man born in Tibet, sharp eagle-like gaze, windblown black hair, rugged dark expedition jacket and muted maroon scarf. Standing on a high mountain ledge above clouds with a distant eagle silhouette, one hand steady on a rock, disciplined and intensely free. No religious costume claims; deep sky blue, rock gray and maroon."
+    },
+    {
+      "id": "av_0019",
+      "name": "黛娜",
+      "subject": "Diana / Daina, a tall adult Germanic European intelligence officer with short golden-blond hair and a forceful clear gaze, codename High Explosive. Fitted practical navy field suit, compact radio in hand, a classified-looking but unreadable folder tucked under one arm. Coastal radar station in rain, amber warning lights and storm-blue atmosphere, capable and commanding, fully clothed."
+    },
+    {
+      "id": "av_0020",
+      "name": "康维十七世",
+      "subject": "Conway XVII, a benevolent highly advanced alien robot living as a tall distinguished adult gentleman. Human face with expressive thoughtful eyes, dark formal suit, silver at the temples, subtle geometric light visible at one open mechanical wrist. Greek stone villa workshop, compact spacecraft model and crystalline instruments, warm humanity contrasted with precise technology. Ivory stone, royal blue and silver."
+    },
+    {
+      "id": "av_0021",
+      "name": "天使",
+      "subject": "Angel / Tianshi, the mysterious adult woman associated with Luo Kai's Mask / Moxiang adventure, portrayed as an enigmatic extraterrestrial visitor in human form. Calm luminous face, long dark hair, modest pale silver travel cloak. Standing before an abstract alien sculpture with folds of light crossing an ancient stone chamber. No angel wings or religious halo; unknown visitor rather than literal biblical angel. Pearl, pale cyan and violet shadow."
+    },
+    {
+      "id": "av_0022",
+      "name": "时间大神",
+      "subject": "The Time Deity from Ni Kuang's Eagle of Asia stories, a frightening intelligent alien entity associated with a living clock and manipulation. A single central nonhuman clock-like figure, an antique circular timepiece suspended inside branching dark metallic tendrils and translucent arcs, no readable numerals. A cavernous chamber of distorted shadows, eerie intelligence rather than a human god. Antique brass, abyss blue and ultraviolet."
+    },
+    {
+      "id": "av_0023",
+      "name": "高达",
+      "subject": "Gao Da, Ni Kuang's roguish adult Chinese gentleman adventurer and thief, NOT a Gundam robot. Handsome angular face, casually swept black hair, rakish confident smile, cream dinner jacket over a black shirt. Standing on the deck of a luxurious vintage ocean liner at dusk holding a small jewel case, city lights and a seaplane far away, champagne gold and midnight blue."
+    },
+    {
+      "id": "av_0024",
+      "name": "凯德琳",
+      "subject": "Princess Katherine / Kaidelin from Ni Kuang's Hongfen Miaoz ei adventure, an adult displaced princess navigating a dangerous intrigue. Elegant woman with warm brown hair styled in waves, composed but guarded expression, modest emerald evening dress with a dark shawl. Holding a sealed document in a quiet corner of an old cosmopolitan lounge, chandelier reflections and a dark corridor behind. Her appearance is an original interpretation, no ethnicity or canonical costume asserted."
+    },
+    {
+      "id": "av_0025",
+      "name": "木兰花",
+      "subject": "Magnolia / Mu Lanhua, the Black Heroine from Ni Kuang's literary adventures, an adult Chinese woman detective and martial artist with sharp composed eyes and neatly tied dark hair. Practical black high-collared action suit, inspecting a small futuristic wristwatch with a narrow beam of light. On a Hong Kong rooftop above the harbor at night, self-possessed intelligence and courage. Ink black, warm lanterns and cyan glints, no superhero mask."
+    },
+    {
+      "id": "av_0026",
+      "name": "穆秀珍",
+      "subject": "Mu Xiuzhen, an energetic courageous adult Chinese woman and partner of Magnolia. Short lively black hair, expressive determined face, red-brown pilot jacket and practical trousers, goggles resting on her head as an artistic choice. Beside an experimental small aircraft in a hangar, turning eagerly toward an adventure, dynamic but grounded. Vermilion, cream and cool steel."
+    },
+    {
+      "id": "av_0027",
+      "name": "高翔",
+      "subject": "Gao Xiang, an adult Chinese police officer and trusted partner of Magnolia. Neat black hair, serious steady expression, plain dark suit and a discreet fictional badge with no legible text. Holding a flashlight and a notebook in a quiet harbor warehouse, protective measured stance, atmospheric noir mystery. Deep navy, charcoal and warm white light."
+    },
+    {
+      "id": "av_0028",
+      "name": "安妮",
+      "subject": "Annie, the young adult wheelchair-using heroine from Ni Kuang's Magnolia stories. Intelligent determined Chinese woman, short dark hair, fully clothed in a practical pale blue jacket and dark trousers, seated visibly in an ingenious compact wheeled chair with small mechanical tool compartments. Reaching to operate a radio console in a workshop, strong agency and adventurous spirit. Show the chair and wheels clearly, no hospital setting or pity framing. Sky blue and brass."
+    },
+    {
+      "id": "av_0029",
+      "name": "云四风",
+      "subject": "Yun Sifeng, an adult Chinese industrialist and inventive engineer, short neatly combed black hair, rolled white shirtsleeves and a dark work waistcoat. Adjusting a complex miniature vehicle mechanism with a precision tool in a bright modernist workshop, blueprints without readable text and a large hangar window. Focused warm expression, steel blue and amber metal."
+    },
+    {
+      "id": "av_0030",
+      "name": "云五风",
+      "subject": "Yun Wufeng, an adult Chinese man from the Magnolia adventures, younger brother in the inventive Yun family, alert cheerful expression and windswept dark hair. Teal mechanic's jacket and a compact navigation instrument. Leaning beside a sleek vintage sports car in a coastal workshop, adventurous technical confidence. Distinct from his older brother, turquoise, charcoal and sunset orange."
+    }
+  ]
+}
