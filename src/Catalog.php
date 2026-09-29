@@ -3,6 +3,7 @@ namespace Imaginary;
 
 require_once __DIR__ . '/SkillBlocks.php';
 require_once __DIR__ . '/ContentPack.php';
+require_once __DIR__ . '/SkillPuzzles.php';
 
 /** The ordinary pool and mode rules are server-owned, never part of a submitted build. */
 final class Catalog
@@ -26,14 +27,18 @@ final class Catalog
             ['punch','拳击','persistent',['attack'],'从下个自己的回合起可卸除：对距离 1 的目标使用无色攻击，只能用「躲避」取消。'],
             ['evade','回避','persistent',['defense','evade'],'具有「防守」与「躲避」属性：可从手牌打出以防御通常攻击或能量爆发（不摸牌）；也可装备，从下个自己的回合起卸除以防御并摸一张牌，可取消拳击。'],
             ['haste','加速','persistent',[],'从下个自己的回合起可卸除摸三张；成熟后防御时可弃心象顶牌判定，点数 >7 则防御成功。'],
-            ['miracle','奇迹','persistent',[],'成熟后，自己濒死自动卸除回复 2；其他角色濒死自动卸除回复 1（内测采用座次顺序自动救援）。'],
+            ['miracle','奇迹','persistent',[],'自己濒死自动卸除回复 2；其他角色濒死自动卸除回复 1。心坏时仍可救援，肉体归零时可恢复肉体；本人优先，再按座次救援。默认装备后立即成熟。'],
             ['treasure','宝藏','persistent',[],'成熟后伤害 +1；任何方式卸除时受到 2 点无色伤害。'],
             ['automaton','自律兵器','persistent',[],'从下个自己的回合起可卸除：使用一次无需心象费用的能量爆发。'],
             ['calamity','飞来横祸','delayed',[],'目标下个回合抽牌前从普通/心象顶判定；点数 ≥2 则弃此牌，选择承受 4 无色伤害或跳过回合，否则保留。'],
             ['fortune','意外之喜','delayed',[],'目标下个回合抽牌前从普通/心象顶判定；点数 K 则弃此牌，选择摸三张或回复四点，否则保留。'],
         ];
         $out=[];
-        foreach ($rows as $r) $out[$r[0]]=['id'=>$r[0],'name'=>$r[1],'kind'=>$r[2],'tags'=>$r[3],'description'=>$r[4]];
+        foreach ($rows as $r) {
+            $out[$r[0]]=['id'=>$r[0],'name'=>$r[1],'kind'=>$r[2],'tags'=>$r[3],'description'=>$r[4]];
+            if(in_array($r[2],['persistent','delayed'],true)) $out[$r[0]]['maturityTurns']=$r[0]==='punch'?1:0;
+        }
+        foreach(['evade','haste','automaton'] as $type) $out[$type]['description']=str_replace('从下个自己的回合起','装备后立即',$out[$type]['description']);
         return $out;
     }
 
@@ -112,11 +117,11 @@ final class Catalog
     {
         $p=self::presets();
         $content=ContentPack::all();
-        return ['rulesVersion'=>SkillBlocks::VERSION,'supportedRulesVersions'=>['0.1.0-alpha','0.2.0-alpha','0.3.0-alpha',SkillBlocks::VERSION],'cards'=>self::cards(),'mindOptions'=>self::mindOptions(),'characters'=>array_column($p,'character'),'presets'=>$p,
+        return ['rulesVersion'=>SkillBlocks::VERSION,'supportedRulesVersions'=>['0.1.0-alpha','0.2.0-alpha','0.3.0-alpha','0.4.0-alpha',SkillBlocks::VERSION],'cards'=>self::cards(),'mindOptions'=>self::mindOptions(),'characters'=>array_column($p,'character'),'presets'=>$p,
             'blocks'=>SkillBlocks::metadata(),
-            'contentPacks'=>$content['contentPacks'],'skillTemplates'=>$content['skillTemplates'],
+            'contentPacks'=>$content['contentPacks'],'skillTemplates'=>array_merge(SkillPuzzles::all(),$content['skillTemplates']),
             'mindTemplates'=>$content['mindTemplates'],'arts'=>$content['arts'],'characterNotes'=>$content['characterNotes'],
-            'limits'=>['skills'=>2,'effects'=>3,'customCards'=>4,'characterBudget'=>18,'customBudget'=>24,'customCardBudget'=>12],
+            'limits'=>array_merge(RuleConfig::all(),['skills'=>RuleConfig::get('maxSkills'),'effects'=>RuleConfig::get('maxEffects'),'customCards'=>13]),
             'modes'=>['color'=>'冷暖对抗','series'=>'系列对抗'],
         ];
     }

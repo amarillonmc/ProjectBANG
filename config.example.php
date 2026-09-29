@@ -19,4 +19,22 @@ return [
     'debug' => false,
     'max_builds' => 30,
     'max_rooms_per_host' => 10,
+    // Workshop budgets. Bundled examples continue to use 18 / 24.
+    'rules' => [
+        'characterBudget' => 18,
+        'customBudget' => 24,
+        'customCardBudget' => 12,
+        // A puzzle limit of 0 means unlimited; this is the runtime safety ceiling.
+        'unlimitedUses' => 98,
+        'unlimitedBudgetWeight' => 2,
+        // Resource limits, not two-skill / three-effect game design restrictions.
+        'maxSkills' => 98,
+        'maxEffects' => 98,
+        'maxAmount' => 98,
+        'maxHp' => 98,
+        'maxActionsPerTurn' => 512,
+        'maxResolutionSteps' => 4096,
+        'maxTurns' => 300,
+        'negativeBudgetFloor' => -12,
+    ],
 ];

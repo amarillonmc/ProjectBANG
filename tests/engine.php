@@ -59,7 +59,7 @@ $g=game();plain($g);play($g,'a','attack_neutral','b');response($g,'b','damage');
 $g=game('series');plain($g);play($g,'a','attack_neutral','b');response($g,'b','damage');ok($g['players']['b']['maxHp']===6&&$g['players']['b']['marks']['neutral']===1,'series all damage same');
 $g=game();plain($g);give($g,'b','defense','guard');play($g,'a','attack_neutral','b');response($g,'b','defend',['card'=>'guard']);ok($g['players']['b']['maxHp']===6,'defense cancels');
 
-$g=game();plain($g);play($g,'a','haste');$equip=$g['players']['a']['equipment'][0]['uid'];
+$g=game();plain($g);$uid=give($g,'a','haste');$g['players']['a']['hand'][0]['maturityTurns']=1;Engine::act($g,'a',['type'=>'play','card'=>$uid]);$equip=$g['players']['a']['equipment'][0]['uid'];
 rejects(function()use(&$g,$equip){Engine::act($g,'a',['type'=>'equip_use','card'=>$equip]);},'persistent requires next own turn');
 $g['players']['a']['turns']++;Engine::act($g,'a',['type'=>'equip_use','card'=>$equip]);ok(count($g['players']['a']['hand'])===3,'haste draws three');
 $g=game();plain($g);$g['players']['a']['equipment'][]=array_merge(card('punch','punch'),['readyAt'=>1]);give($g,'b','defense','guard');

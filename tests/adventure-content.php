@@ -65,7 +65,8 @@ foreach($pack['presets'] as $i=>$build){
     $count=2+$i%5;$mode=$i%2?'series':'color';$players=[['id'=>'a','name'=>$build['character']['name'],'build'=>$build,'bot'=>true]];
     for($j=1;$j<$count;$j++){$other=$j===1?$legacy[$build['character']['color']==='warm'?0:1]:($j%2?$legacy[$j%4]:$pack['presets'][($i+$j)%30]);$players[]=['id'=>chr(97+$j),'name'=>'测试'.$j,'build'=>$other,'bot'=>true];}
     $g=Engine::create($players,$mode);$total=count(acCards($g));
-    for($n=0;$n<5500&&$g['status']==='playing';$n++){$states[$g['pending']['kind']??$g['phase']]=true;acInvariant($g,$total);acCheck(Engine::botStep($g),'bot has legal progress');$steps++;}
-    acInvariant($g,$total);acCheck($g['status']==='finished','complete game for '.$build['character']['name']);$games++;
+    $simulationLimit=(\Imaginary\RuleConfig::get('maxTurns')+1)*(\Imaginary\RuleConfig::get('maxActionsPerTurn')+1)*8;
+    for($n=0;$n<$simulationLimit&&$g['status']==='playing';$n++){$states[$g['pending']['kind']??$g['phase']]=true;acInvariant($g,$total);acCheck(Engine::botStep($g),'bot has legal progress');$steps++;}
+    acInvariant($g,$total);acCheck($g['status']==='finished','complete game for '.$build['character']['name'].'; turn='.$g['turnNumber'].' phase='.($g['pending']['kind']??$g['phase']).' steps='.$n);$games++;
 }
 echo "Adventure: $games complete games, $steps actions, $checks assertions; states: ".implode(', ',array_keys($states))."\n";

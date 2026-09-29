@@ -157,6 +157,6 @@ $g=practiceGame(); $g['players']['p0']['bot']=false; $g['players']['p1']['bot']=
 $g['players']['p1']['character']['skills']=[practiceSkill([Catalog::effect('damage',1,'target')],'on_targeted')];
 $hit=practiceCard($g,'p0','attack_neutral'); $before=$g['players']['p0']['maxHp'];
 Engine::act($g,'p0',['type'=>'play','card'=>$hit,'target'=>'p1']);
-checkPractice($g['players']['p0']['maxHp']===$before&&!$g['players']['p1']['usedSkills'],'Bot does not retaliate against a same-color human; human targeting stays legal');
+checkPractice($g['players']['p0']['maxHp']===$before-1&&!empty($g['players']['p1']['usedSkills']),'Locked retaliation resolves for bots even against same-color attackers');
 
 echo 'PASS '.$checks.' practice/defense assertions'.PHP_EOL;

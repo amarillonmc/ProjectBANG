@@ -41,7 +41,7 @@ function checkGame(array $game, int $initialCount, int $run): void {
     $uids = array_column($cards, 'uid');
     expectProperty(count($uids) === count(array_unique($uids)), 'Duplicate physical UID');
     foreach ($game['players'] as $p) {
-        expectProperty($p['maxHp'] >= 0 && $p['shield'] >= 0 && $p['shield'] <= 6, 'Body/shield bounds');
+        expectProperty($p['maxHp'] >= 0 && $p['shield'] >= 0 && $p['shield'] <= \Imaginary\RuleConfig::get('maxAmount'), 'Body/shield bounds');
         foreach ($p['marks'] as $n) { expectProperty(is_int($n) && $n >= 0, 'Negative or noninteger marks'); }
     }
     foreach ($cards as $card) {

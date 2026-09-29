@@ -28,7 +28,7 @@ function mrInvariant(array $g,int $count): void {
     mrCheck(count(array_unique($uids))===$count,'unique physical card IDs');
     foreach($g['players'] as $p){
         mrCheck($p['shield']>=0&&$p['shield']<=6,'shield bounded');
-        mrCheck(($p['damageGuard']??0)>=0&&($p['damageGuard']??0)<=2,'damage guard bounded');
+        mrCheck(($p['damageGuard']??0)>=0&&($p['damageGuard']??0)<=\Imaginary\RuleConfig::get('maxAmount'),'damage guard bounded');
     }
     foreach($cards as $c)mrCheck($c['origin']!=='mind'||isset($g['players'][$c['owner']]),'mind owner retained');
     if($g['status']!=='playing')return;
@@ -75,18 +75,22 @@ mrCheck(count($used)===30&&$bound===10,'all 30 templates used; ten optional boun
 // Every character leads one complete four-player game, alternating color and series.
 // Partners share an IP, opponents include legacy content, and all physical zones count.
 $games=0;$steps=0;$states=[];$activated=[];
+// A legal 300-turn game may exceed the old fixed 15,000 operations after
+// immediate maturity and larger action limits. Include response operations.
+$simulationLimit=(\Imaginary\RuleConfig::get('maxTurns')+1)*(\Imaginary\RuleConfig::get('maxActionsPerTurn')+1)*8;
 foreach($pack['presets'] as $i=>$build){
     $partner=$pack['presets'][($i+13)%36];$foe=$old['presets'][$i%38];
     if($i%2===0)foreach($old['presets'] as $candidate)if($candidate['character']['color']!==$build['character']['color']){$foe=$candidate;break;}
     $builds=[$build,$foe,$partner,$all[$i%4]];$players=[];
     foreach($builds as $seat=>$b)$players[]=['id'=>'p'.$seat,'name'=>$b['character']['name'],'build'=>$b,'bot'=>true];
     $g=Engine::create($players,$i%2?'series':'color');$count=104+13*count($players);mrInvariant($g,$count);
-    for($n=0;$n<3500&&!Engine::finished($g);$n++){
+    for($n=0;$n<$simulationLimit&&!Engine::finished($g);$n++){
         $kind=$g['pending']['kind']??$g['phase'];$states[$kind]=true;
         mrCheck(Engine::botStep($g),'bot progresses '.$build['character']['name'].'/'.$kind);
         mrInvariant($g,$count);$steps++;
         foreach($g['players'] as $p)foreach($p['usedSkills']??[] as $index=>$usage)if(($usage['count']??0)>0){$skill=$p['character']['skills'][$index]??null;if($skill)$activated[$skill['trigger']]=true;}
     }
+    if(!Engine::finished($g)) file_put_contents(__DIR__.'/../var/magireco-unfinished.json',json_encode($g,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT));
     mrCheck(Engine::finished($g),'game finished for '.$build['character']['name'].'; turn='.$g['turnNumber'].' phase='.($g['pending']['kind']??$g['phase']).' steps='.$n);$games++;
 }
 echo "Magireco: $games complete games, $steps actions, $checks assertions. States: ".implode(', ',array_keys($states)).". Activated: ".implode(', ',array_keys($activated))."\n";

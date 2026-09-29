@@ -23,7 +23,7 @@ function contentInvariant(array $g,int $count): void {
     $cards=contentCards($g);$uids=array_column($cards,'uid');
     contentCheck(count($cards)===$count,'physical count at turn '.$g['turnNumber']);
     contentCheck(count(array_unique($uids))===$count,'unique physical IDs');
-    foreach($g['players'] as $p){contentCheck($p['maxHp']>=0&&$p['shield']>=0&&$p['shield']<=6,'bounded resources');}
+    foreach($g['players'] as $p){contentCheck($p['maxHp']>=0&&$p['shield']>=0&&$p['shield']<=\Imaginary\RuleConfig::get('maxAmount'),'bounded resources');}
     foreach($cards as $card)contentCheck($card['origin']!=='mind'||isset($g['players'][$card['owner']]),'mind owner retained');
     if($g['status']==='playing'){
         $actor=$g['pending']['player']??$g['turn'];contentCheck($g['players'][$actor]['alive'],'living actor');
@@ -72,7 +72,8 @@ foreach($pack['presets'] as $i=>$build){
     $builds=[$build,$all[0],$opposite,$all[1]];$players=[];
     foreach($builds as $seat=>$b)$players[]=['id'=>'p'.$seat,'name'=>$b['character']['name'],'build'=>$b,'bot'=>true];
     $g=Engine::create($players,$i%2?'series':'color');$initial=104+13*count($players);contentInvariant($g,$initial);
-    for($n=0;$n<3500&&!Engine::finished($g);$n++){
+    $simulationLimit=(\Imaginary\RuleConfig::get('maxTurns')+1)*(\Imaginary\RuleConfig::get('maxActionsPerTurn')+1)*8;
+    for($n=0;$n<$simulationLimit&&!Engine::finished($g);$n++){
         $actor=$g['pending']['player']??$g['turn'];$kind=$g['pending']['kind']??$g['phase'];$seen[$kind]=true;
         contentCheck(Engine::botStep($g),'bot progresses '.$build['character']['name'].' / '.$kind);
         contentInvariant($g,$initial);$steps++;
