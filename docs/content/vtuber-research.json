@@ -1,0 +1,816 @@
+{
+  "checkedAt": "2026-09-30",
+  "window": {
+    "from": 2017,
+    "to": 2022
+  },
+  "policy": "按 2017—2022 年的公开创作、正面观众记忆或行业影响选取，非排名、非穷尽名单。绊爱在 2016 年末出道，但入选依据落在时间窗内。现有资料页面可能更新到 2026 年，本文不将后来的成就追记进本弹。仅使用公开虚拟身份，不搜集表演者真实身份。",
+  "records": [
+    {
+      "id": "vt_0001",
+      "name": "绊爱",
+      "aliases": "Kizuna AI / キズナアイ",
+      "branch": "先驱视频势",
+      "era": "2016—2022",
+      "summary": "2016 年末开始活动，2017 年开设游戏频道，随后拓展演出与音乐；在本弹时间窗内推动了 VTuber 这一表达形式的传播。",
+      "selectionReason": "以“连接”为核心的早期行业象征；作为本弹开篇。",
+      "sourceUrls": [
+        "https://kizunaai.com/biography/"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "支援",
+        "characterBudget": 15,
+        "cardBudgets": [
+          7,
+          11
+        ],
+        "reason": "赠予实体手牌后才能补牌；联动奖励每个自身回合周期一次，只选一位同阵营伙伴。"
+      }
+    },
+    {
+      "id": "vt_0002",
+      "name": "辉夜月",
+      "aliases": "Kaguya Luna / 輝夜月",
+      "branch": "先驱视频势",
+      "era": "2017—2020",
+      "summary": "2017 年 12 月登场，2018 年发行首曲并举办 VR 演出；高能量的说话与演出风格是鲜明记忆点。",
+      "selectionReason": "代表早期短视频爆发力及 VR 演唱会探索。",
+      "sourceUrls": [
+        "https://www.sonymusic.co.jp/artist/kaguyaluna/profile/"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "爆发",
+        "characterBudget": 14,
+        "cardBudgets": [
+          8,
+          6
+        ],
+        "reason": "攻击额度不等于免费攻击；连牌必须同点数或花色，自损不触发受伤收益。"
+      }
+    },
+    {
+      "id": "vt_0003",
+      "name": "未来明",
+      "aliases": "Mirai Akari / ミライアカリ",
+      "branch": "先驱视频势",
+      "era": "2017—2022",
+      "summary": "2017 年 10 月开始活动；官方设定包含失忆，活动涵盖视频、歌舞与电视。",
+      "selectionReason": "以明亮互动和早期跨媒介活动入选，取失忆与未来之光作为设计线索。",
+      "sourceUrls": [
+        "https://akari-mir.ai/"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "储备",
+        "characterBudget": 14,
+        "cardBudgets": [
+          7,
+          9
+        ],
+        "reason": "记忆私密储存且保留归属；回收需牌堆非空，每周期取一张，无法零投入循环。"
+      }
+    },
+    {
+      "id": "vt_0004",
+      "name": "电脑少女小白",
+      "aliases": "Siro / 電脳少女シロ",
+      "branch": "先驱视频势",
+      "era": "2017—2022",
+      "summary": "2018 年即参与射击游戏官方联动；柔和形象、海豚般笑声和游戏时的反差为广泛记忆点。",
+      "selectionReason": "代表早期视频、游戏与电视综艺之间的连接。",
+      "sourceUrls": [
+        "https://prtimes.jp/main/html/rd/p/000000177.000014685.html",
+        "https://zh.wikipedia.org/wiki/電腦少女小白"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "应变",
+        "characterBudget": 14,
+        "cardBudgets": [
+          7,
+          8
+        ],
+        "reason": "防御必须完整成功才补给；主动攻守二选一都要弃一张牌。"
+      }
+    },
+    {
+      "id": "vt_0005",
+      "name": "巴恰鲁",
+      "aliases": "Baacharu / ばあちゃる",
+      "branch": "先驱视频势",
+      "era": "2017—2022",
+      "summary": "马头面具与西装是标志；2018 年与小白共同参与游戏联动，也长期参与主持与企划。",
+      "selectionReason": "纳入早期男性虚拟表演者与主持型角色。",
+      "sourceUrls": [
+        "https://prtimes.jp/main/html/rd/p/000000177.000014685.html",
+        "https://bangumi.tv/character/61401"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "联动",
+        "characterBudget": 14,
+        "cardBudgets": [
+          8,
+          10
+        ],
+        "reason": "串场以一张手牌换他人收益；复制需手牌与心象双费用，只在当回合使用且继承累计次数。"
+      }
+    },
+    {
+      "id": "vt_0006",
+      "name": "猫宫日向",
+      "aliases": "Nekomiya Hinata / 猫宮ひなた",
+      "branch": "先驱游戏势",
+      "era": "2018—2022",
+      "summary": "2018 年开始活动，2019 年与未来明成为日本游戏大奖官方大使；游戏与射击主题鲜明。",
+      "selectionReason": "以游戏表现和游戏行业联动为入选依据，不讨论表演者身份。",
+      "sourceUrls": [
+        "https://prtimes.jp/main/html/rd/p/000000017.000013057.html",
+        "https://kyodonewsprwire.jp/release/201907299189"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "竞技",
+        "characterBudget": 14,
+        "cardBudgets": [
+          4,
+          10
+        ],
+        "reason": "双方真实手牌拼点，平局不胜；黑牌防御每个自身回合周期一次。"
+      }
+    },
+    {
+      "id": "vt_0007",
+      "name": "Azuma Lim",
+      "aliases": "アズマリム / Azurim / 阿兹利姆",
+      "branch": "个人与户外探索",
+      "era": "2018—2022",
+      "summary": "2018 年活动起步；本人访谈回顾了 2021 年取得小型二轮驾照并开始摩托旅行的经历。",
+      "selectionReason": "以早期活动、自主创作和走向户外的积极探索入选。",
+      "sourceUrls": [
+        "https://alive-project.com/streamer-magazine/11240/",
+        "https://www.tunecore.co.jp/artists/azuma_lim"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "旅程",
+        "characterBudget": 15,
+        "cardBudgets": [
+          11,
+          9
+        ],
+        "reason": "旅程依赖每周期第一张主动牌，常规至多积三；花两标记和一手牌，在自我探索与赠牌援助间选择。"
+      }
+    },
+    {
+      "id": "vt_0008",
+      "name": "月之美兔",
+      "aliases": "Tsukino Mito / 月ノ美兎",
+      "branch": "直播拓荒 · NIJISANJI",
+      "era": "2018—2022",
+      "summary": "学级委员形象，2018 年作为早期 NIJISANJI 成员活动，2021 年举办个人演唱会。",
+      "selectionReason": "代表直播谈话、奇想企划与日常虚拟形象的拓展。",
+      "sourceUrls": [
+        "https://www.nijisanji.jp/talents/l/mito-tsukino",
+        "https://prtimes.jp/a/?c=60989&f=d60989-115-abecc42af576534e38c1eeaf5c8824ae.pdf&r=115"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "企划",
+        "characterBudget": 14,
+        "cardBudgets": [
+          8,
+          8
+        ],
+        "reason": "企划要弃牌，信息收益不等于夺牌；回合末必须实际使用至少两张手牌才能补普通牌。"
+      }
+    },
+    {
+      "id": "vt_0009",
+      "name": "樋口枫",
+      "aliases": "Higuchi Kaede / 樋口楓",
+      "branch": "直播拓荒 · NIJISANJI",
+      "era": "2018—2022",
+      "summary": "早期 NIJISANJI 成员；官方角色设定为喜爱小号的吹奏乐部成员。",
+      "selectionReason": "用铜管、应援与合奏表现她的音乐和协作形象。",
+      "sourceUrls": [
+        "https://www.nijisanji.jp/talents/l/kaede-higuchi"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "应援",
+        "characterBudget": 16,
+        "cardBudgets": [
+          7,
+          10
+        ],
+        "reason": "送出手牌才能授予到自己下回合开始的临时射程；枫声只削已有护盾，不能化为额外伤害。"
+      }
+    },
+    {
+      "id": "vt_0010",
+      "name": "静凛",
+      "aliases": "Shizuka Rin / 静凛",
+      "branch": "直播拓荒 · NIJISANJI",
+      "era": "2018—2022",
+      "summary": "早期 NIJISANJI 成员；官方设定为温和、指导后辈的可靠前辈，游戏直播是其活动特色。",
+      "selectionReason": "纳入早期长时游戏陪伴与稳健前辈型角色。",
+      "sourceUrls": [
+        "https://www.nijisanji.jp/talents/l/rin-shizuka"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "储备",
+        "characterBudget": 14,
+        "cardBudgets": [
+          8,
+          6
+        ],
+        "reason": "被动多摸一张但没有免费攻击；存档或读取都弃一张手牌，同回合不能两边都做。"
+      }
+    },
+    {
+      "id": "vt_0011",
+      "name": "叶",
+      "aliases": "Kanae / 叶",
+      "branch": "游戏与联动 · NIJISANJI",
+      "era": "2018—2022",
+      "summary": "2018 年开始活动；柔和言谈与猫抱枕是官方人物介绍的核心意象，2022 年参与 Aim Higher 演出。",
+      "selectionReason": "代表男性游戏直播、联动与温和交流。",
+      "sourceUrls": [
+        "https://www.nijisanji.jp/talents/l/kanae",
+        "https://prtimes.jp/a/?c=5875&f=d5875-4832-7d441245124d15f3d9e4fc7fe27bc828.pdf&r=4832"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "支援",
+        "characterBudget": 14,
+        "cardBudgets": [
+          8,
+          10
+        ],
+        "reason": "治疗要真实赠牌；减伤在扣血前选择发动并弃手牌，每个自身回合周期一次。"
+      }
+    },
+    {
+      "id": "vt_0012",
+      "name": "葛叶",
+      "aliases": "Kuzuha / 葛葉",
+      "branch": "游戏与联动 · NIJISANJI",
+      "era": "2018—2022",
+      "summary": "吸血鬼游戏玩家形象，2018 年开始活动，2021 年举办 Bloody Alexandrite，2022 年参与 Aim Higher。",
+      "selectionReason": "以竞技游戏、男性直播势和音乐舞台的跨界影响入选。",
+      "sourceUrls": [
+        "https://www.nijisanji.jp/talents/l/kuzuha",
+        "https://www.nijisanji.jp/events/kuzuha_bloodyalexandrite/"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "竞技",
+        "characterBudget": 15,
+        "cardBudgets": [
+          7,
+          7
+        ],
+        "reason": "决斗先弃一张手牌，伤害后补给每周期一次；七体力补偿必须近身消耗攻击资源的玩法。"
+      }
+    },
+    {
+      "id": "vt_0013",
+      "name": "时乃空",
+      "aliases": "Tokino Sora / ときのそら",
+      "branch": "虚拟偶像 · hololive",
+      "era": "2017—2022",
+      "summary": "2017 年 9 月首次直播，是 hololive 最早的虚拟偶像；2019 年签约唱片公司并举办 Dream!。",
+      "selectionReason": "以持续歌唱和最初舞台的积累作为本弹另一条起点。",
+      "sourceUrls": [
+        "https://hololive.hololivepro.com/en/talents/tokino-sora/"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "支援",
+        "characterBudget": 14,
+        "cardBudgets": [
+          7,
+          10
+        ],
+        "reason": "光环只增加伙伴的手牌上限；每周期单目标补给，角色心坏或离场时光环立即失效。"
+      }
+    },
+    {
+      "id": "vt_0014",
+      "name": "樱巫女",
+      "aliases": "Sakura Miko / さくらみこ",
+      "branch": "综艺与游戏 · hololive",
+      "era": "2018—2022",
+      "summary": "2018 年出道，虚拟神社巫女与自称精英、常有笨拙一面的反差来自官方简介。",
+      "selectionReason": "以游戏综艺和挫折后的努力作为积极记忆点。",
+      "sourceUrls": [
+        "https://hololive.hololivepro.com/en/talents/sakuramiko/"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "判定",
+        "characterBudget": 15,
+        "cardBudgets": [
+          7,
+          10
+        ],
+        "reason": "红判定才多摸牌；改判必须付出黑色手牌且不拿回旧判定牌，不能无成本决定所有结果。"
+      }
+    },
+    {
+      "id": "vt_0015",
+      "name": "白上吹雪",
+      "aliases": "Shirakami Fubuki / 白上フブキ",
+      "branch": "综艺与游戏 · hololive",
+      "era": "2018—2022",
+      "summary": "2018 年出道，白发狐耳、爱好交流与宅文化；白上与黑上的反差形象也见官方推荐视频。",
+      "selectionReason": "代表跨成员互动、轻快内容传播与狐狸角色的多面性。",
+      "sourceUrls": [
+        "https://hololive.hololivepro.com/en/talents/shirakami-fubuki/"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "应变",
+        "characterBudget": 13,
+        "cardBudgets": [
+          7,
+          7
+        ],
+        "reason": "低手牌减伤仍需弃牌；临时白/黑能力付双资源，下一自身回合开始失效，基础颜色不因狐影自动改变。"
+      }
+    },
+    {
+      "id": "vt_0016",
+      "name": "凑阿库娅",
+      "aliases": "Minato Aqua / 湊あくあ",
+      "branch": "综艺与游戏 · hololive",
+      "era": "2018—2022",
+      "summary": "2018 年出道，海洋女仆设定；官方推荐同时包括原创歌与单排游戏挑战。",
+      "selectionReason": "取游戏专注和女仆偶像之间的反差，避免只做攻击型角色。",
+      "sourceUrls": [
+        "https://hololive.hololivepro.com/en/talents/minato-aqua/"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "竞技",
+        "characterBudget": 15,
+        "cardBudgets": [
+          8,
+          9
+        ],
+        "reason": "拼点另付一张手牌，输了只整理牌顶；防御成功回收记忆但每周期仅一次，以五体力换取防守收益。"
+      }
+    },
+    {
+      "id": "vt_0017",
+      "name": "大空昴",
+      "aliases": "Oozora Subaru / 大空スバル",
+      "branch": "综艺与游戏 · hololive",
+      "era": "2018—2022",
+      "summary": "2018 年出道，官方设定为格斗队与电竞部经理，开朗且容易与人交流。",
+      "selectionReason": "以应援、管理和富感染力的互动入选。",
+      "sourceUrls": [
+        "https://hololive.hololivepro.com/en/talents/oozora-subaru/"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "应援",
+        "characterBudget": 15,
+        "cardBudgets": [
+          4,
+          10
+        ],
+        "reason": "主动为别人补给且最多两位；光环只有射程，没有增伤或额外攻击。"
+      }
+    },
+    {
+      "id": "vt_0018",
+      "name": "戌神沁音",
+      "aliases": "Inugami Korone / 戌神ころね",
+      "branch": "综艺与游戏 · hololive",
+      "era": "2019—2022",
+      "summary": "2019 年出道，面包店看门犬与爱游戏的设定；“手指”招呼与耐久游戏是鲜明观众记忆。",
+      "selectionReason": "以复古游戏、长时挑战与跨语言幽默入选。",
+      "sourceUrls": [
+        "https://hololive.hololivepro.com/en/talents/inugami-korone/"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "耐久",
+        "characterBudget": 15,
+        "cardBudgets": [
+          7,
+          9
+        ],
+        "reason": "耐久只在弃牌后手牌不超过二时补到最多四；暂置仅一张且全局回合末归还，发动付双费用。"
+      }
+    },
+    {
+      "id": "vt_0019",
+      "name": "星街彗星",
+      "aliases": "Hoshimachi Suisei / 星街すいせい",
+      "branch": "音乐舞台 · hololive",
+      "era": "2018—2022",
+      "summary": "2018 年出道，2021 年发行 Still Still Stellar 并举办首次个人演唱会。",
+      "selectionReason": "取自主起步、不断打磨歌唱与星光舞台；技能连段是玩法诠释。",
+      "sourceUrls": [
+        "https://hololive.hololivepro.com/en/talents/hoshimachi-suisei/",
+        "https://stellarintothegalaxy.hololive.tv/news"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "连段",
+        "characterBudget": 15,
+        "cardBudgets": [
+          7,
+          7
+        ],
+        "reason": "每周期最多通过连牌得一标记，积两枚再弃一牌爆发；五体力、实际攻击牌与颜色规则共同限制峰值。"
+      }
+    },
+    {
+      "id": "vt_0020",
+      "name": "AZKi",
+      "aliases": "AZKi / アズキ",
+      "branch": "音乐舞台 · INNK / hololive",
+      "era": "2018—2022",
+      "summary": "2018 年开始活动；2021 年“不要停止音乐”企划连接许多虚拟音乐创作者。",
+      "selectionReason": "以音乐共同体与开拓为核心，不使用 2023 年以后才突出的地图游戏经历。",
+      "sourceUrls": [
+        "https://hololive.hololivepro.com/events/stand-at-the-crossroads/",
+        "https://game.watch.impress.co.jp/docs/news/1313278.html"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "联动",
+        "characterBudget": 15,
+        "cardBudgets": [
+          6,
+          8
+        ],
+        "reason": "自己用事件才为他人补牌；稳定回收仅一张，没有主动多段进攻或无限音符循环。"
+      }
+    },
+    {
+      "id": "vt_0021",
+      "name": "兔田佩克拉",
+      "aliases": "Usada Pekora / 兎田ぺこら",
+      "branch": "综艺与游戏 · hololive",
+      "era": "2019—2022",
+      "summary": "2019 年出道，爱胡萝卜的兔耳角色；游戏企划、恶作剧与戏剧性反应形成鲜明风格。",
+      "selectionReason": "用短时陷阱与有失败可能的回避表现观众熟悉的游戏反差。",
+      "sourceUrls": [
+        "https://hololive.hololivepro.com/en/talents/usada-pekora/"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "扰动",
+        "characterBudget": 15,
+        "cardBudgets": [
+          9,
+          8
+        ],
+        "reason": "暂置仅一张且会归还；攻击前判定付牌且可能失败，整周期最多一次，五体力保留被集火的风险。"
+      }
+    },
+    {
+      "id": "vt_0022",
+      "name": "宝钟玛琳",
+      "aliases": "Houshou Marine / 宝鐘マリン",
+      "branch": "综艺与游戏 · hololive",
+      "era": "2019—2022",
+      "summary": "2019 年出道，官方设定是为获得海盗船积蓄的海盗装扮女孩，喜爱宝藏。",
+      "selectionReason": "取绘画、谈话、音乐与海盗寻宝形象中的积极创作面。",
+      "sourceUrls": [
+        "https://hololive.hololivepro.com/en/talents/houshou-marine/"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "储备",
+        "characterBudget": 15,
+        "cardBudgets": [
+          7,
+          6
+        ],
+        "reason": "先存牌再出航，取回牌要额外弃手牌；两项主动各周期一次，储存牌可被公开检查。"
+      }
+    },
+    {
+      "id": "vt_0023",
+      "name": "桐生可可",
+      "aliases": "Kiryu Coco / 桐生ココ",
+      "branch": "跨语言交流 · hololive",
+      "era": "2019—2021",
+      "summary": "2019 年出道，龙与异文化交流设定；晨间节目和跨语言社群互动是这一时期的重要记忆。",
+      "selectionReason": "选择节目创意与连接不同语言观众的贡献，技能不涉及现实争议。",
+      "sourceUrls": [
+        "https://hololive.hololivepro.com/en/talents/kiryu-coco/"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "联动",
+        "characterBudget": 16,
+        "cardBudgets": [
+          7,
+          9
+        ],
+        "reason": "晨间栏目先支付一张手牌，桥梁再付心象和赠牌；临时技能下回合到期，只增加容量。"
+      }
+    },
+    {
+      "id": "vt_0024",
+      "name": "角卷绵芽",
+      "aliases": "Tsunomaki Watame / 角巻わため",
+      "branch": "音乐陪伴 · hololive",
+      "era": "2019—2022",
+      "summary": "2019 年末出道；歌唱、每周音乐直播与猜拳短片见官方简介。",
+      "selectionReason": "用绵羊意象与安可表现柔和陪伴和舞台韧性。",
+      "sourceUrls": [
+        "https://hololive.hololivepro.com/en/talents/tsunomaki-watame/"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "耐久",
+        "characterBudget": 15,
+        "cardBudgets": [
+          8,
+          10
+        ],
+        "reason": "绵云每个自身回合周期只挡一点；自救整局一次且付双费用，不能突破无色伤害削去的身体上限。"
+      }
+    },
+    {
+      "id": "vt_0025",
+      "name": "Gawr Gura",
+      "aliases": "がうる・ぐら / 噶呜·古拉",
+      "branch": "英语圈 · hololive Myth",
+      "era": "2020—2022",
+      "summary": "2020 年 9 月出道，来自亚特兰蒂斯的鲨鱼少女；首批 Myth 成员。",
+      "selectionReason": "作为英语 VTuber 扩大受众的重要代表，以海潮与灵活进攻入选。",
+      "sourceUrls": [
+        "https://hololive.hololivepro.com/en/talents/gawr-gura/"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "机动",
+        "characterBudget": 15,
+        "cardBudgets": [
+          10,
+          7
+        ],
+        "reason": "机动只改变攻击距离和手牌上限；鲨浪弃牌且遵守冷色合法目标，每周期只发动一次。"
+      }
+    },
+    {
+      "id": "vt_0026",
+      "name": "Mori Calliope",
+      "aliases": "森カリオペ / 森美声",
+      "branch": "英语圈 · hololive Myth",
+      "era": "2020—2022",
+      "summary": "2020 年 9 月出道，死神学徒与强烈歌唱风格；官方简介同时强调对伙伴的温柔。",
+      "selectionReason": "以英语原创音乐与说唱创作为入选依据。",
+      "sourceUrls": [
+        "https://hololive.hololivepro.com/en/talents/mori-calliope/"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "连段",
+        "characterBudget": 14,
+        "cardBudgets": [
+          7,
+          9
+        ],
+        "reason": "押韵须连续两张同点数或花色，每周期一次；采样只取已有普通弃牌，不制造新牌或复活角色。"
+      }
+    },
+    {
+      "id": "vt_0027",
+      "name": "Amelia Watson",
+      "aliases": "ワトソン・アメリア / 华生·阿米莉亚",
+      "branch": "英语圈 · hololive Myth",
+      "era": "2020—2022",
+      "summary": "2020 年 9 月出道，侦探设定、FPS 与解谜游戏；时间旅行和自制虚拟企划形成社群记忆。",
+      "selectionReason": "以侦探调查、技术企划与时间题材构成玩法，不复写整局历史。",
+      "sourceUrls": [
+        "https://hololive.hololivepro.com/en/talents/watson-amelia/"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "时间",
+        "characterBudget": 15,
+        "cardBudgets": [
+          7,
+          9
+        ],
+        "reason": "全局回合内实际用两张牌后才能付一手牌与两心象；额外回合整局一次，之后恢复正常座次，重连不刷新。"
+      }
+    },
+    {
+      "id": "vt_0028",
+      "name": "Ninomae Ina’nis",
+      "aliases": "一伊那尔栖 / Ninomae Inanis / 一伊那尓栖",
+      "branch": "英语圈 · hololive Myth",
+      "era": "2020—2022",
+      "summary": "2020 年 9 月出道，古神祭司、神秘书本与触手设定，绘画直播与安静交流为活动特色。",
+      "selectionReason": "取绘画、收纳和温和防守，与其他 Myth 成员区分。",
+      "sourceUrls": [
+        "https://hololive.hololivepro.com/en/talents/ninomae-inanis/"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "储备",
+        "characterBudget": 16,
+        "cardBudgets": [
+          8,
+          8
+        ],
+        "reason": "绘卷一次需要两张实体手牌，换一张普通牌；不限次数防御只能消耗绘卷库存，不能空放。"
+      }
+    },
+    {
+      "id": "vt_0029",
+      "name": "花谱",
+      "aliases": "KAF / 花譜",
+      "branch": "虚拟音乐 · KAMITSUBAKI",
+      "era": "2018—2022",
+      "summary": "2018 年开始活动，2022 年 8 月在日本武道馆举办“不可解参（狂）”。",
+      "selectionReason": "代表虚拟歌手进入大型音乐舞台；只采用 2022 年前的花谱形象与记忆。",
+      "sourceUrls": [
+        "https://kaf.kamitsubaki.jp/about/",
+        "https://kaf.kamitsubaki.jp/history/"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "成长",
+        "characterBudget": 16,
+        "cardBudgets": [
+          8,
+          9
+        ],
+        "reason": "每周期事件最多积一声纹；三枚后整局只觉醒一次，失去一点体力上限才获得长期额外摸牌。"
+      }
+    },
+    {
+      "id": "vt_0030",
+      "name": "田中姬",
+      "aliases": "Tanaka Hime / 田中ヒメ",
+      "branch": "双人音乐 · HIMEHINA",
+      "era": "2018—2022",
+      "summary": "2018 年开始的双人虚拟组合成员，以高音和高能量谈话见长。",
+      "selectionReason": "拆分为独立角色；热唱与资源交付表现高音声部，不要求另一人必须在场。",
+      "sourceUrls": [
+        "https://old.himehina.jp/contents/topics/profile"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "连段",
+        "characterBudget": 16,
+        "cardBudgets": [
+          8,
+          8
+        ],
+        "reason": "热唱必须连续匹配两张实体牌且每周期一次；绯愿给别人一张才摸二，不强制绑定组合搭档。"
+      }
+    },
+    {
+      "id": "vt_0031",
+      "name": "铃木雏",
+      "aliases": "Suzuki Hina / 鈴木ヒナ",
+      "branch": "双人音乐 · HIMEHINA",
+      "era": "2018—2022",
+      "summary": "2018 年加入 HIMEHINA 的另一声部，官方简介突出柔和歌声与和声。",
+      "selectionReason": "与田中姬形成互补，突出倾听、和声和防守节奏。",
+      "sourceUrls": [
+        "https://old.himehina.jp/contents/topics/profile"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "判定",
+        "characterBudget": 14,
+        "cardBudgets": [
+          7,
+          10
+        ],
+        "reason": "共振成功为他人补牌，失败只有自盾；和声减伤付手牌并每周期一次，与红色声部互补但可独立使用。"
+      }
+    },
+    {
+      "id": "vt_0032",
+      "name": "甲贺流忍者狸猫",
+      "aliases": "Ponpoko / 甲賀流忍者ぽんぽこ",
+      "branch": "个人企划 · ぽこピー",
+      "era": "2018—2022",
+      "summary": "2018 年开始活动；长期跨创作者节目“ぽんぽこ24”在 2022 年举办第六回。",
+      "selectionReason": "纳入个人势的企划组织、地方日常和跨团体联动。",
+      "sourceUrls": [
+        "https://ponpoko24.com/",
+        "https://osharepeanuts.com/"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "联动",
+        "characterBudget": 15,
+        "cardBudgets": [
+          6,
+          12
+        ],
+        "reason": "企划付牌、最多两名他人受益；无装备时才有距离掩护，装入强器材会失去忍法保护。"
+      }
+    },
+    {
+      "id": "vt_0033",
+      "name": "花生君",
+      "aliases": "Peanuts-kun / ピーナッツくん",
+      "branch": "个人企划 · ぽこピー",
+      "era": "2017—2022",
+      "summary": "2017 年开始短篇动画活动，之后发展直播、ぽんぽこ24 和原创音乐。",
+      "selectionReason": "代表非美少女角色、短篇动画与个人音乐创作的可能性。",
+      "sourceUrls": [
+        "https://osharepeanuts.com/"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "换牌",
+        "characterBudget": 16,
+        "cardBudgets": [
+          7,
+          7
+        ],
+        "reason": "弃几张只摸几张，弃掉支付前全部非空手牌才加攻击额度；五体力与每周期一次限制换牌发动。"
+      }
+    },
+    {
+      "id": "vt_0034",
+      "name": "Ironmouse",
+      "aliases": "アイアンマウス / 铁鼠",
+      "branch": "英语圈 · 独立与 VShojo",
+      "era": "2017—2022",
+      "summary": "2017 年开始直播；2022 年的长时订阅直播显著扩大了其在 Twitch 的影响。",
+      "selectionReason": "取歌唱、幽默与社群陪伴，不把表演者现实健康状况写成游戏惩罚。",
+      "sourceUrls": [
+        "https://streamscharts.com/news/ironmouses-31-days-long-twitch-subathon",
+        "https://www.ironmousemodelindex.com/model0001"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "支援",
+        "characterBudget": 14,
+        "cardBudgets": [
+          7,
+          10
+        ],
+        "reason": "实际受伤后每周期才得到一灯；两灯加双资源换两目标照应，五体力防止无代价堆资源。"
+      }
+    },
+    {
+      "id": "vt_0035",
+      "name": "Vox Akuma",
+      "aliases": "ヴォックス・アクマ / 沃克斯",
+      "branch": "英语圈 · NIJISANJI EN",
+      "era": "2021—2022",
+      "summary": "2021 年末出道，2022 年 7 月官方宣布 YouTube 订阅达百万。",
+      "selectionReason": "纳入英语男性 VTuber 的受众拓展与声音表演；选择型技能保留对手决策。",
+      "sourceUrls": [
+        "https://www.anycolor.co.jp/news/6t3dj7ovb7j8",
+        "https://www.nijisanji.jp/en/talents/l/vox-akuma"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "谈判",
+        "characterBudget": 15,
+        "cardBudgets": [
+          7,
+          8
+        ],
+        "reason": "对手在暂置与弃牌中选择；主动先弃一张牌，暂置会归还。回合末回收仅一张，不存在永久封手。"
+      }
+    },
+    {
+      "id": "vt_0036",
+      "name": "名取纱那",
+      "aliases": "Natori Sana / 名取さな",
+      "branch": "个人创作与日常",
+      "era": "2018—2022",
+      "summary": "2018 年开始活动的个人势虚拟护士，2022 年举行“さなのばくたん。-メチャ・ハッピー・ショー-”。",
+      "selectionReason": "以个人创作、日常交流和生日舞台的积极记忆入选；治疗只是游戏题材。",
+      "sourceUrls": [
+        "https://www.zan-live.com/ja/live/detail/10143",
+        "https://natorisana.com/about/"
+      ],
+      "visualPolicy": "参考公开虚拟形象重新生成独立构图；资料包含历史设计图与官网标准形象。2017—2022 是选角和事迹的时间窗，不将现行官网立绘的服装发布日期一概断言为该时期。场景、动作和道具组合为本项目创作诠释。",
+      "balance": {
+        "role": "看护",
+        "characterBudget": 15,
+        "cardBudgets": [
+          8,
+          9
+        ],
+        "reason": "治疗支付手牌且不能恢复无色伤害损失的身体上限；红色改判消耗真牌，不回收旧判定牌。"
+      }
+    }
+  ]
+}

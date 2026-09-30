@@ -8,7 +8,7 @@ final class ContentPack
     public static function data(string $id='kf3-classics'): array
     {
         static $packs=[];
-        $files=['kf3-classics'=>'kf3-classics.json','magireco-expansions'=>'magireco-expansions.json','adventure-king'=>'adventure-king.json'];
+        $files=['kf3-classics'=>'kf3-classics.json','magireco-expansions'=>'magireco-expansions.json','adventure-king'=>'adventure-king.json','vtuber-summons'=>'vtuber-summons.json'];
         if (!isset($files[$id])) throw new \InvalidArgumentException('未知内置内容包：'.$id);
         if (!isset($packs[$id])) {
             $text = file_get_contents(__DIR__ . '/content/' . $files[$id]);
@@ -31,7 +31,7 @@ final class ContentPack
         if ($combined !== null) return $combined;
         $out=['presets'=>[],'skillTemplates'=>[],'mindTemplates'=>[],'arts'=>[],'characterNotes'=>[],'contentPacks'=>[]];
         $seen=[];
-        foreach (['kf3-classics','magireco-expansions','adventure-king'] as $id) {
+        foreach (['kf3-classics','magireco-expansions','adventure-king','vtuber-summons'] as $id) {
             $pack=self::data($id);
             foreach (array_keys($out) as $section) {
                 foreach ($pack[$section] as $key=>$item) {

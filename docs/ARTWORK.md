@@ -54,3 +54,9 @@ Primary request: an evocative imaginary landscape where a blue crystalline archi
 ## 冒险王：30 张独立角色卡图
 
 输出为 public/assets/characters/av_0001.png 至 av_0030.png，逐位调用内置 imagegen 生成 1024×1536 PNG。整体采用写实绘本与复古科幻冒险插画语言，人物姿态、服装、道具及背景为创作诠释，不使用影视演员面容作为原著外形依据。网络人设依据见 [adventure-research.json](content/adventure-research.json)，完整共享风格与逐人提示词见 [adventure-art-prompts.json](content/adventure-art-prompts.json)，输出尺寸和 SHA256 见 [adventure-art-manifest.json](content/adventure-art-manifest.json)。原始生成文件保留，游戏使用复制到项目的本地资源；运行时不调用生图或联网取图。
+
+## 电拟神召：36 张 VTuber 卡图
+
+输出为 `public/assets/characters/vt_0001.png` 至 `vt_0036.png`，每位独立调用内置 imagegen，生成新的姿态、动作与场景，再将原始 PNG 原样复制到项目。公开立绘只作身份与服装参考，不直接用作卡面。采用动漫卡牌插画、青色与珊瑚金色光线；包含舞台、旅途、海底、画室与日常场景。2017—2022 是人物及事迹的选择时间窗，参考素材同时包含历史设计图和官网标准形象，各图的具体依据以记录为准。
+
+完整提示词、参考网址与参考文件哈希见 [vtuber-art-prompts.json](content/vtuber-art-prompts.json)；生成原件文件名、尺寸与 SHA256 见 [vtuber-art-manifest.json](content/vtuber-art-manifest.json)。原始生成文件保留，网站只读取项目内 PNG，部署不需要外部立绘、联网取图或生成服务。

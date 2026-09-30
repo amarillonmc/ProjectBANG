@@ -27,7 +27,7 @@ function acInvariant($g,$total): void {
 }
 $pack=ContentPack::data('adventure-king');$catalog=Catalog::all();
 acCheck(count($pack['presets'])===30&&count($pack['mindTemplates'])===60&&count($pack['skillTemplates'])===42,'30 characters / 60 cards / 42 templates');
-acCheck(count($catalog['presets'])===108&&count($catalog['contentPacks'])===3,'all three packs coexist');
+acCheck(count($catalog['presets'])>=108&&count($catalog['contentPacks'])>=3,'existing packs coexist with later releases');
 acCheck(count(array_unique(array_column($pack['characterNotes'],'branch')))===6,'all six literary branches');
 $templates=array_column($pack['skillTemplates'],null,'id');$minds=array_column($pack['mindTemplates'],null,'id');$used=[];$pairs=[];$hashes=[];
 foreach($pack['presets'] as $b){

@@ -1,0 +1,578 @@
+[
+  {
+    "id": "vt_0001",
+    "name": "绊爱",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Kizuna AI, preserve long brown hair with pink streaks, teal eyes, distinctive pink looped ribbon headband and white-pink sleeveless stage uniform from reference. NEW scene: she gently joins two floating luminous threads into a heart-like network between her hands, looking to the viewer with an inviting smile, a dawn-colored virtual amphitheatre and fine constellations behind her. Hands close to her chest, not the reference reaching pose. Theme: connecting people.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://www.sanipak.co.jp/dcms_media/image/kizunaai_mainvisual.png",
+        "referenceSha256": "e72e2b431967d81081e4db1b738259e222f4658175ba6f2e3da730de60978926"
+      }
+    ],
+    "originalFile": "exec-2f55a74c-c089-49d0-b367-75c3a0c5b625.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0002",
+    "name": "辉夜月",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Kaguya Luna, pale silver-lilac short twin tails, bright magenta-blue eyes, black geometric hairclip with red button, yellow-black triangular hair ornaments, signature black-white outfit with black high collar and white bow. Do NOT reproduce the graffiti paint or printed portraits seen on reference costume: use her clean classic 2017-2018 outfit colors. NEW scene: exuberant vocalist laughing mid-performance beside a floating crescent, soundwave ribbons arc through a midnight indigo VR concert space, energetic tilted shoulders and a microphone. One character only.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://www.sonymusic.co.jp/adm_image/common/artist_image/70009000/70009300/artist_photo/53495.jpg",
+        "referenceSha256": "1bbc628558df83d6f3088a874a13350afa722c64ba5b50abf65dc985e19d1938"
+      }
+    ],
+    "originalFile": "exec-7aaeca42-016a-4cf8-a0d5-7dc2785e6bc8.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0003",
+    "name": "未来明",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Mirai Akari, preserve blonde high ponytail, blue eyes, large luminous geometric butterfly-like head ribbon, blue-white futuristic stage outfit, headset around neck, yellow ribbon accents. NEW scene: she holds a tiny glowing blue butterfly on her open palm and gazes at it with hopeful curiosity; other abstract memory fragments rise into a warm sunrise over an airy virtual city. Three-quarter waist-up pose, no jumping pose, remove all lettering from ribbons. Theme: lost memories and a bright future.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://akari-mir.ai/RP6xlm7h/wp-content/themes/mirai-akari/assets/index/img/akari.png",
+        "referenceSha256": "0224a9e12f46e8e6e45cceefd3500d63a496baf8f1820c1573ac8d7cef03cf94"
+      }
+    ],
+    "originalFile": "exec-cf759bbf-820a-4f3e-8cc5-601f16c11a55.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0004",
+    "name": "电脑少女小白",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Dennou Shoujo Siro. Preserve silver-white short bob, blue eyes, ahoge, small blue hair ornament and blue-white frilled digital-idol costume. NEW scene: she smiles sweetly while conducting a small translucent dolphin-shaped water-light arc with one hand; abstract game target rings appear deep in an icy blue virtual aquarium, suggesting her playful gamer side without any weapon. Calm precise gaze, original three-quarter pose.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://dotlive.jp/img/member/siro-410w.jpg",
+        "referenceSha256": "fc14c33681f9fc278f4266270815eaf68b45d0e5cafa98d1830f63cfb5df661f"
+      }
+    ],
+    "originalFile": "exec-56fa7d1f-8be0-4fae-be18-98ec97b4bc44.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0005",
+    "name": "巴恰鲁",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Baacharu, the recognisable male virtual performer wearing a realistic brown horse-head mask, white blaze down nose, blue business suit, white shirt, red-magenta patterned necktie. Preserve the horse MASK, never replace it with a human face or a centaur. NEW scene: master of ceremonies in a virtual theatre, he flourishes a conductor baton with one gloved hand and presents a spotlight with the other. Humorous gallant posture, warm theatrical lighting, no other people. Waist-up.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://dotlive.jp/img/member/baacharu-410w.jpg",
+        "referenceSha256": "5919241e25309321bc01672e0cc0a3eae15cbaff32b0dc79fafa3412ca996851"
+      }
+    ],
+    "originalFile": "exec-d6954368-e2b8-45e8-bfe3-2d8483578e5c.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0006",
+    "name": "猫宫日向",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Nekomiya Hinata, preserve coral-pink hair, cat ears, thin very long twin tails tied low with bright green beads, blue eyes, loose pale-blue sleeveless shirt and black short leggings. Remove the reference shirt lettering. NEW scene: she leans over a game controller on a cozy futuristic desk, focused mischievous smile; amber and teal abstract target reticles in the background, a cardboard box and sunlit plants nearby. Catlike confidence, modest eye-level waist-up composition.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://cdn.kyodonewsprwire.jp/prwfile/release/M101360/201907299189/_prw_PI3fl_Fl23DaeL.png",
+        "referenceSha256": "dc3ed6a244e97a15fc0a442c0b0507bdbcf16e1cf0661f721f69620cb0426404"
+      }
+    ],
+    "originalFile": "exec-53ae6ce5-878f-4e38-a5a8-facd5eabbdeb.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0007",
+    "name": "Azuma Lim",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Azuma Lim / Azurim. Preserve long flowing silver-lavender hair, warm amber-red eyes, black choker, white hoodie with BLACK CAT-EAR shapes on hood and black sleeve stripes, dark skirt. NEW scene: she pauses beside a small blue step-through touring motorcycle on a seaside hill at sunrise, holding a white safety helmet in the crook of one arm and a folded blank route map in her other hand. Hood down slightly but both cat-ear hood decorations visible. Bright determined friendly smile, face and upper body prominent. Lavender coastal wildflowers, winding road and open ocean; theme of starting a journey again. No motorcycle brand or text.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://streamer-magazine.lolipop.io/wp-content/uploads/2025/11/img_07.png",
+        "referenceSha256": "495ee9e178762bd8aec507ed7f3a3ae7283a71452c8b9ec347edcc2d46ad3234"
+      }
+    ],
+    "originalFile": "exec-6313547d-3678-4dd6-82a9-f46a955d0f4c.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0008",
+    "name": "月之美兔",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Tsukino Mito. Preserve long straight black hair, paired small hairpins, violet eyes, navy school blazer with pale piping and plaid collar, large pink ribbon. NEW scene: mischievously earnest class representative holding a tiny hand-made paper rabbit and directing a miniature stop-motion film set on a classroom desk, a vintage film reel and surreal theatrical props in soft background. Wry small smile and lively tilted gesture, not a generic idol concert. No writing or school emblems.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://images.microcms-assets.io/assets/5694fd90407444338a64d654e407cc0e/598fa0f71c554ef9bbde319304025876/liver-full-body_Mito_Tsukino.png.webp",
+        "referenceSha256": "6d3152fc0159b7ae43e4f186a3b4d272fe9fd4acf81f1d993f1b2560c0334050"
+      }
+    ],
+    "originalFile": "exec-d21ea97f-014f-46dc-bfa7-80332d344dd2.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0009",
+    "name": "樋口枫",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Higuchi Kaede. Preserve silver long ponytail tied with a large white bow, violet eyes, black school blazer, tan cardigan, blue plaid tie, small beauty mark by eye. NEW scene: she confidently holds a polished brass trumpet with both hands at chest height, turning toward a golden rehearsal-room light as glowing maple leaves swirl through a blue virtual concert backdrop. Brisk spirited expression, music and teamwork, no text, eye-level modest waist-up.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://images.microcms-assets.io/assets/5694fd90407444338a64d654e407cc0e/325a9fbd45e64b3b860519952e73efa8/liver-full-body_Kaede_Higuchi.png.webp",
+        "referenceSha256": "7732096eb7b3276d8e5144877d85191928eaafceb343a829ef9a0cc7c86d744d"
+      }
+    ],
+    "originalFile": "exec-0e4c251a-fa41-454f-ad1d-063471096ac9.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0010",
+    "name": "静凛",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Shizuka Rin. Preserve short indigo bob, golden olive eyes, navy blazer with cyan piping, purple-pink neck bow and yellow knit vest. NEW scene: calm late-night gamer seated at a desk, one hand adjusting a headset, another resting on a controller. Cool monitor glow, steaming mug, soft warm desk lamp and a dawn line just starting outside. Reassuring senpai smile, patient concentration, no screen text, no replicated reference pose.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://images.microcms-assets.io/assets/5694fd90407444338a64d654e407cc0e/0c6e9b9bfc6443e1a602ee4394db0564/liver-full-body_Rin_Shizuka.png.webp",
+        "referenceSha256": "7b89a3bb883e0718621b4bb9e86a678620d05fd6105deadd316dc5a092625652"
+      }
+    ],
+    "originalFile": "exec-8bfeebe0-b1b1-46d5-8c1e-45b9be056230.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0011",
+    "name": "叶",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Kanae. Preserve ash-brown side-swept hair, blue-gray eyes, gentle male face and dark shirt with pale blue rose pattern from reference. NEW scene: a peaceful virtual lounge, he cradles a small gray cat-shaped cushion under one arm while offering a glowing blue card-like abstract light with the other, quiet kindly smile, soft angelic window light without literal wings. Upper body portrait, subtle game-controller silhouette in background, no words.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://images.microcms-assets.io/assets/5694fd90407444338a64d654e407cc0e/c22012c1710143cbabcf3e2d2bb9a7d1/liver-full-body_Kanae.png",
+        "referenceSha256": "eb4a9e69ee1cc475da69b52141a2d78090d0db4d2deee3a66464b12bc2ffe570"
+      }
+    ],
+    "originalFile": "exec-66256b62-6dd3-441e-90fa-de50f09f21dd.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0012",
+    "name": "葛叶",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Kuzuha. Preserve tousled silver-white hair, red eyes, small fangs, black zipped track jacket and red bat emblem. NEW scene: an absorbed competitive gamer leaning slightly forward, one hand fanning three blank crimson cards near chest, sharp confident smile, an abstract red-black digital arena and floating chess-like strategic shapes behind him. Dramatic scarlet rim light, no gore, no actual game logos, single young male character, eye-level waist-up.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://images.microcms-assets.io/assets/5694fd90407444338a64d654e407cc0e/026e3370bbd1436c8f6800abfd151caa/liver-full-body_Kuzuha.png",
+        "referenceSha256": "a0e40c3900f10cb7cefabcedfff07b26b96c180abbd4563de423770f357f5a38"
+      }
+    ],
+    "originalFile": "exec-7437f104-f610-4d43-9d9b-b858fcf190ac.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0013",
+    "name": "时乃空",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Character: Tokino Sora, long chestnut brown hair, sapphire eyes, signature red ribbon and gold star hair ornaments, early blue-and-white gold-trim idol stage dress from reference. NEW scene: first light on a vast virtual concert stage, she holds a microphone near her chest and gently opens the other palm to countless tiny audience stars. Hopeful composed smile, dawn sky behind a curved glass stage, elegant hopeful composition.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://prtimes.jp/i/30268/21/original/d30268-21-755043-1.png",
+        "referenceSha256": "29ed9b73cbc32fce633ba0aa578b50acbf1595a92554df044618c4a225448723"
+      }
+    ],
+    "originalFile": "exec-8de94bef-fe57-4658-810f-67e25acd2b0b.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0014",
+    "name": "樱巫女",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Character: Sakura Miko, pink hair, little side ponytail and cherry blossom ornaments, green eyes, pink-and-white shrine-maiden outfit from reference. NEW scene: she accidentally scatters glowing fortune papers among cherry blossoms in a sunlit virtual shrine, surprised but determined joyful expression, reaches to catch one glowing blank charm. A small bell and warm golden sparkles. Preserve her hair ornaments and shrine colors, no writing on papers.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://hololive.hololivepro.com/wp-content/uploads/2020/06/Sakura-Miko_pr-img_01.webp",
+        "referenceSha256": "382b700ed39d51dd59b23bd59d02d839a304150e2ce619b33778a827c216bad2"
+      }
+    ],
+    "originalFile": "exec-53de89c4-a1d9-4e63-9600-46a2e3c16585.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0015",
+    "name": "白上吹雪",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Character: Shirakami Fubuki, white fox ears with dark inner tips, long white hair and side braid, turquoise eyes, white jacket, light-blue scarf, black shorts, fluffy white tail. NEW scene: a cheerful fox guardian in a snowy lantern grove, holding two small magical fox lights, one white/cyan and one dark silver, expressing friendship and a playful alter-ego. Friendly smile, dynamic diagonal gesture, snowflakes, warm lantern rim light.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://hololive.hololivepro.com/wp-content/uploads/2020/06/Shirakami-Fubuki_pr-img_01.webp",
+        "referenceSha256": "59daa6792c7a4ba21c61cce71a2afc741bfbebe0d3f6f0454c22e2efb7110993"
+      }
+    ],
+    "originalFile": "exec-9c308a13-90e7-4cd3-b1d6-d140c4131056.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0016",
+    "name": "凑阿库娅",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Character: Minato Aqua, pink twin tails with cyan ends, purple-pink eyes, distinctive anchor maid headdress, navy-and-white marine maid dress. NEW scene: focused gaming idol in a luminous blue submarine arcade, holding a transparent navigation controller with both hands, tiny bubbles and distant star-shaped stage lights. Calm concentrated expression with slight shy smile, careful fine hands, retain full headpiece.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://hololive.hololivepro.com/wp-content/uploads/2023/09/Minato-Aqua_pr-img_01.png",
+        "referenceSha256": "fb2f66c6dc0ea9d2ff78d579c9ce475ba592280b0061e8228694275b11a12d32"
+      }
+    ],
+    "originalFile": "exec-069db13e-f052-49fe-8e98-59e245b0cf41.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0017",
+    "name": "大空昴",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Character: Oozora Subaru, short black hair, bright blue-green eyes, backward red-and-white cap, yellow striped sports shirt with teal edging, whistle necklace, white shorts. NEW scene: enthusiastic team manager leaning forward at a sunset sky stadium, raising a yellow-and-teal megaphone in one hand, other hand open encouragingly. Confetti, sweeping stadium lights, tiny duck-shaped cloud in background, sporty energetic wholesome portrait.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://hololive.hololivepro.com/wp-content/uploads/2020/06/Oozora-Subaru_pr-img_01.webp",
+        "referenceSha256": "6f224753352f07e4323265b1742087bb140ea532052f912385b151efabf6f415"
+      }
+    ],
+    "originalFile": "exec-1acbd2d6-a55f-4f94-b737-c0387e75f00a.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0018",
+    "name": "戌神沁音",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Character: Inugami Korone, brown braided hair and floppy dog ears, bone hairpins, reddish-brown eyes, yellow cardigan over white dress, red collar. NEW scene: cozy late-night bakery retro-gaming marathon, cheerful grin, holding a simple unbranded retro controller, basket of fresh bread in foreground, amber oven light mixed with cyan pixel-like fireflies. One tiny bread dog mascot on shelf, playful energetic hands without any dismemberment. New composition.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://hololive.hololivepro.com/wp-content/uploads/2020/06/Inugami-Korone_pr-img_01.png",
+        "referenceSha256": "01b0aaded5402dda4af8bd1e1a73ca2827687531d3807ddc8040d88b5ae98333"
+      }
+    ],
+    "originalFile": "exec-ce54c907-4990-4f51-8d36-7cc71f9e75ae.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0019",
+    "name": "星街彗星",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Character: Hoshimachi Suisei, blue hair with side ponytail, blue eyes, plaid gray-and-navy idol dress, tiny crown and plaid beret, navy gloves and gold star accents. NEW scene: singing confidently with a handheld microphone at a rooftop observatory concert, a brilliant comet traces linked geometric star paths in the sky. Strong diagonal light, flowing blue ribbon tails, charismatic steady smile, full crown visible.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://hololive.hololivepro.com/wp-content/uploads/2020/06/Hoshimachi-Suisei_pr-img_01.png",
+        "referenceSha256": "ca144a905ce1859a0919014379fabff3fb8b594110ea304d5ec9e9843a585527"
+      }
+    ],
+    "originalFile": "exec-66f5c4b8-9bd5-4baa-a299-0b3f2102d58a.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0020",
+    "name": "AZKi",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Character: AZKi in her fourth-anniversary 2022 white-and-beige outfit as shown: long dark hair with bright pink underlayers and front streak, purple eyes, small floral butterfly hairpin, asymmetrical tailored beige jacket over flowing white dress with pale pink hem. NEW scene: singer connecting many distant tiny floating music stages with luminous ribbons, standing beside a microphone and a glowing open music box on a glass sky-bridge. Warm confident smile, pink aurora, cyan and gold lights of countless collaborators in the distance, no map or geography theme, no letters.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://hololive.hololivepro.com/wp-content/uploads/2020/06/AZKi_pr-img_01.webp",
+        "referenceSha256": "d65d8c75dc4a10fa8612b1cdebd8e88caa63b85eda90b74f1769599f7fd653a4"
+      }
+    ],
+    "originalFile": "exec-508a5a7b-0343-4916-a763-db7e96a6eb37.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0021",
+    "name": "兔田佩克拉",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Character: Usada Pekora, long pale-blue braids with carrot ornaments, tall white rabbit ears, red-orange eyes, white-and-blue fluffy trimmed dress, black gloves. NEW scene: mischievous rabbit inventor in a whimsical carrot greenhouse, crouching beside a harmless glowing box trap with a carrot-shaped lever and springs; she glances back with triumphant playful laugh as a puff of confetti goes off. Bright cyan and warm orange sparks, no weapons or injuries, full ears inside frame.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://hololive.hololivepro.com/wp-content/uploads/2020/06/Usada-Pekora_pr-img_01.webp",
+        "referenceSha256": "412abf8c956553815dfb147e67947d781d589fce748b2fb9914384143b61f21e"
+      }
+    ],
+    "originalFile": "exec-a8b908c2-3085-47a4-8c27-b8b1282ad858.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0022",
+    "name": "宝钟玛琳",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Character: Houshou Marine, reddish maroon hair in twin tails, red-and-gold heterochromia, signature black-and-gold pirate hat with feather, red pirate outfit and dark cape. NEW scene: delighted captain opening a small luminous treasure chest on a ship's map table, sea charts without letters, paintbrush and sketchbook beside scattered jewels, turquoise sunset ocean through cabin windows. Waist-up focus on face and hands, adventurous and humorous, no suggestive posing, retain hat and recognizable colors.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://hololive.hololivepro.com/wp-content/uploads/2020/06/Houshou-Marine_pr-img_01.png",
+        "referenceSha256": "d6dcc3f5ddbd537014fb8452b71932c0a6744d8dd7ee54ea2c797219e790a8ea"
+      }
+    ],
+    "originalFile": "exec-a216cf9f-2b9f-435f-a7da-76183260dac1.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0023",
+    "name": "桐生可可",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Character: Kiryu Coco, long orange hair with blonde streak, purple dragon horns, red-purple eyes, black school-style jacket over white blouse and red skirt, purple dragon tail, gold dragon medallion. NEW scene: charismatic dragon host in a sunrise broadcast studio high above a futuristic city, seated upright speaking into a desk microphone, holding two blank colorful cue cards like a bridge between audiences. Confident friendly grin, orange sunrise mixed with cyan virtual windows, no readable text, no logos, no low camera angle.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://hololive.hololivepro.com/wp-content/uploads/2023/09/Kiryu-Coco_pr-img_01.png",
+        "referenceSha256": "0f2a4fb9491e479fc7c76d95a448522ef71f5e54c278a63aaf787bd3ba30b082"
+      }
+    ],
+    "originalFile": "exec-34d11fd0-fe01-4133-a8e6-2201ad88fac1.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0024",
+    "name": "角卷绵芽",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Character: Tsunomaki Watame, long soft blonde hair, small curled sheep horns, blue-violet eyes, red heart hairclip, fluffy white outfit and pink lined cape, red ribbon. NEW scene: gentle night concert on a floating grassy island, holding a microphone and reaching softly toward small glowing wool-cloud sheep. Warm lanterns, constellation canopy, peaceful devoted smile, luminous wool textures, graceful supportive mood.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://hololive.hololivepro.com/wp-content/uploads/2020/06/Tsunomaki-Watame_pr-img_01.webp",
+        "referenceSha256": "20bc168d74ed69e1cd1366373f8cc9d87513ebd8a01a740dbd58cd651cb64b5b"
+      }
+    ],
+    "originalFile": "exec-2e83cb50-fe60-4855-841e-266fa707b3a2.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0025",
+    "name": "Gawr Gura",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Character: Gawr Gura, short white hair with pale-blue streaks, blue eyes, small shark teeth, oversized blue shark hoodie with white tooth-edged hood and shark tail. NEW scene: cheerful little shark adventurer surfing a spiral of turquoise ocean water through sunken luminous archways, holding a small blue trident upright, friendly playful expression. Knee-up framing, full hood and hair visible, oversized hoodie covers torso normally, wholesome cute adventure, tiny bubbles and coral fish.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://hololive.hololivepro.com/wp-content/uploads/2024/05/Gawr-Gura_pr-img_01.png",
+        "referenceSha256": "ab6021ccb415629a1df2fd25c96f6c522d899b36c94b3f6a5d446bd5bbafbbfa"
+      }
+    ],
+    "originalFile": "exec-4972c934-99c5-42bd-a744-f2b59780b65c.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0026",
+    "name": "Mori Calliope",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Character: Mori Calliope, long pastel-pink hair, red eyes, small dark crown with gold center, black-and-gold reaper stage outfit and cape with red lining. NEW scene: composing rap rhythms at a moonlit gothic recording desk, one gloved hand holding a microphone, the other marking an unlettered musical waveform in gold light. Her ornate scythe rests safely on a rack in the background. Confident thoughtful face, red roses and cyan sound ripples, chest-up to waist framing, no suggestive pose.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://hololive.hololivepro.com/wp-content/uploads/2020/07/Mori-Calliope_pr-img_01.webp",
+        "referenceSha256": "36e2246fefea101df5de5f00a207038df58571264bf6117b2542619f8f66856d"
+      }
+    ],
+    "originalFile": "exec-1b34088e-a1f5-4a25-85c8-8d41b028ad9a.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0027",
+    "name": "Amelia Watson",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Character: Amelia Watson, a cheerful adult virtual detective, with a short blonde bob, blue eyes, beige detective cap and closed beige coat, shirt with red tie and brown plaid vest. Create a new waist-up storybook scene of her investigating a floating golden pocket watch on her wooden study desk, a magnifier in her gloved hand, luminous clockwork gears and an antique city through a window, warm cyan and amber light. Clear expressive inquisitive face, complete cap comfortably in frame, everyday fully clothed detective adventure.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://hololive.hololivepro.com/wp-content/uploads/2020/07/Watson-Amelia_pr-img_01.png",
+        "referenceSha256": "a0aadc5780e8398bf025b0d04879c0ed722a969ac99c51f58fd67d12b5e2bf9d"
+      }
+    ],
+    "originalFile": "exec-e598d051-820b-4a1d-a0eb-8bdc83e334ea.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0028",
+    "name": "Ninomae Ina’nis",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Character: Ninomae Ina'nis, long very dark purple hair with gold-tipped side locks, violet eyes, gold forehead ornament and circular halo, black purple orange priestess artist outfit. NEW scene: serene virtual atelier under the sea of stars, she paints luminous ink fish on a large unlettered scroll with a fine brush; friendly purple tentacles help hold paint jars in the background, gentle smile. Waist-up framing, opaque modest outfit, no visible writing or text on book, beautiful indigo ink and warm gold lighting.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://hololive.hololivepro.com/wp-content/uploads/2020/07/Ninomae-Inanis_pr-img_01.webp",
+        "referenceSha256": "6bc478c1f42d08b1d0f940a02db9a0185fdbc781b1c4d748deffc0f397e0427f"
+      }
+    ],
+    "originalFile": "exec-f7c2221d-e4e2-4725-b950-e5a405281d50.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0029",
+    "name": "花谱",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Character: KAF in the 2020 blue 青雀 design from reference: pale pink hair, expressive multicolored eyes, deep electric-blue hooded poncho with white geometric feather pattern and circle eye motifs, pale-blue dress, black sleeves, vivid yellow small accents. NEW scene: solitary virtual singer on a rainy rooftop above a dreamlike city, cupping a tiny golden sound-light that becomes a flock of blue paper birds. Hood up but face clearly visible, wistful hopeful expression, layered translucent music ripples, clean new composition, no reference sheet layout or text.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://pbs.twimg.com/media/ETEcRIzVAAE901F.jpg",
+        "referenceSha256": "77774c00e2663da16e0e3721c013779c475b5aced8fd43668cedbb11f9627590"
+      }
+    ],
+    "originalFile": "exec-6ffadbb5-d98f-433b-b8ce-3e377ea89923.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0030",
+    "name": "田中姬",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Character: Tanaka Hime of HIMEHINA, pale pink hair with two rounded side buns and long curled locks, bright purple eyes, crimson Chinese-inspired dress with gold trim and pale frills, pink ribbons. NEW scene: high-energy dancer singing into a microphone on an illuminated theater bridge, red ribbons and gold musical light sweep around her. Laughing delighted face, one hand extended in a clear dance gesture, dynamic but wholesome, single character, remove any nameplate lettering.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://demo-himehina.sk-pf.com/s3/demo-skiyaki/uploads/ckeditor/pictures/59101/content_Hime.png",
+        "referenceSha256": "35f7e04837a4611491e0625cf96d2a9ff7884e1f72eed92b9331d2f60522dd87"
+      }
+    ],
+    "originalFile": "exec-3c7bb60a-12c1-40de-8da4-35f7773f4f2b.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0031",
+    "name": "铃木雏",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Character: Suzuki Hina of HIMEHINA, long blonde hair with a small blue front streak, purple eyes, blue beret with simple gold ornament, navy sleeveless high-collar stage outfit with gold piping, black fingerless gloves. NEW scene: graceful singer on a moonlit theater bridge, holding a microphone near her face while a flowing blue musical ribbon crosses a distant red ribbon in the sky. Gentle lively smile, complementary to a red singer but only this one character visible, no lettering, luminous cyan and golden stage accents.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://demo-himehina.sk-pf.com/s3/demo-skiyaki/uploads/ckeditor/pictures/59102/content_Hina.png",
+        "referenceSha256": "80184a6a9b99523e7a9b73196c1a260ab82fc6776ac92c2236248dd0f374f6b1"
+      }
+    ],
+    "originalFile": "exec-88b9ebf2-738b-4842-950a-e4240729011c.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0032",
+    "name": "甲贺流忍者狸猫",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Character: Ponpoko, classic chibi tanuki ninja design, gray bob haircut, round tanuki ears, green leaf on head, gray eyes, small dark round nose, dark sleeveless ninja tunic and muted purple patterned scarf, striped fluffy tanuki tail. Keep her appealing simplified face and proportions, render with polished storybook anime detail. NEW scene: hosting a friendly overnight village festival among lanterns and bamboo hills, offering a small bento box toward viewer, miniature blank stage banners and twinkling lights. No text from reference, no sword action, all ages joyful scene.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://img.moegirl.org.cn/common/9/9f/Ninja%21_Pompoko.png",
+        "referenceSha256": "5b6a87eb54722d1c571f8355fa40f54f3adc4484476721fd7b8c1000a69d6d3c"
+      }
+    ],
+    "originalFile": "exec-21022122-b0e2-4f6e-90ce-16bc9d2784eb.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0033",
+    "name": "花生君",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Character: Peanuts-kun, the yellow peanut-shaped cartoon mascot in reference with extremely large black oval eyes, red neckerchief, small white cartoon trunks with blue waistband, skinny yellow arms and legs. Retain his comic nonhuman design, do not make a human or realistic peanut. NEW scene: joyous miniature rapper DJ at a turntable on a neon rooftop, one hand spinning a vinyl disc, one hand holding a microphone, luminous yellow and cyan musical arcs and whimsical city behind him. Rich anime storybook rendering with clean mascot silhouette, no text or logos.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://osharepeanuts.com/_astro/profile.XJHGugIj_2rjxr.webp",
+        "referenceSha256": "3fec4a78f6c918597d4d2d920e0015249adba16a4740839cc12ea8405cbac3fa"
+      }
+    ],
+    "originalFile": "exec-c37f95e6-6984-4b11-87ae-2ff4985282cb.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0034",
+    "name": "Ironmouse",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Character: Ironmouse's 2021 design from reference, pink wavy hair with dark purple front streak, white small demon horns with gray bases, violet eyes, heart-shaped hair ornaments, pink long sleeves and black suspender dress. NEW scene: joyful singer hosting a cozy endless-night virtual celebration, holding a microphone and a small warm heart-shaped lantern, many pink and cyan lanterns float through an open observatory window. Warm resilient smile, wholesome waist-up portrait, no medical equipment, no copy of model sheet or writing.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://pbs.twimg.com/media/ExsfqkKWEAQcQNs.jpg",
+        "referenceSha256": "7a94d5afabe7811ec6cc41d2aa849eceb9d512d85f2967ec307a669fefac11a6"
+      }
+    ],
+    "originalFile": "exec-0a8d9531-3f43-4604-b639-22b8acf083a9.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0035",
+    "name": "Vox Akuma",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Character: Vox Akuma, long tousled black hair with red streaks, golden eyes with red eyeliner, white suit over dark red shirt, flowing black kimono-like coat decorated with red and white flowers, red tassel earring. NEW scene: an elegant storyteller in a candlelit ancient castle recording room, speaking into an antique microphone beside an open blank book, pale red sound-ribbons spiral like flower petals. Confident subtle smile, graceful hand at book, gold and cyan rim lighting, no text, no additional person.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://images.microcms-assets.io/assets/5694fd90407444338a64d654e407cc0e/e24bc9746ad84f95b2869c88c2e14ccf/liver-full-body_Vox_Akuma.png.webp",
+        "referenceSha256": "838a00662b4d1094912aea709b4e70de863a20acaebf9b2a19a4bcae4c7ccb49"
+      }
+    ],
+    "originalFile": "exec-c4c1bbbc-fd9e-48ec-aa7b-666db823eab5.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  },
+  {
+    "id": "vt_0036",
+    "name": "名取纱那",
+    "tool": "image_gen.imagegen",
+    "generatedAt": "2026-09-30",
+    "prompt": "Use case: stylized-concept. Asset: one original illustration for the VTuber card series 电拟神召, first set. Create a NEW composition using the attached image only as character identity and costume reference, never paste, trace or simply reframe the reference. Portrait 2:3, preferably 1024x1536. Refined anime fantasy trading-card painting, expressive face, fine ink lines, softly textured gouache, luminous cyan and warm coral-gold accents, sophisticated detailed background. Single character, waist-to-thigh framing, complete head and hair accessories comfortably inside frame. No text, letters, numbers, logos, watermark, borders, card UI, or collage. Opaque full painted background. Wholesome nonsexual presentation. Character: Natori Sana, light ash-brown long hair and straight bangs, small side ponytails with pink rabbit ornaments, red eyes, pink nurse cap with heart motif, pink apron over white modest nurse dress, heart emblem. NEW scene: preparing a cheerful little birthday tea party at a virtual seaside clinic desk, offering a plate with a rabbit-shaped cookie and a small pink candle, flowers and greeting cards without writing. Bright gentle smile, soft spring light, heart and rabbit motifs, wholesome friendly portrait, no medical procedure or realistic patient.",
+    "transparentBackground": false,
+    "referenceImages": [
+      {
+        "url": "https://natorisana.com/img/about-nurse-2x.png",
+        "referenceSha256": "c08a1c3db259556710ad17507826764d2dd426471ba7c584ded3894869bf1e20"
+      }
+    ],
+    "originalFile": "exec-adb4267b-162e-4624-b391-407949fce659.png",
+    "note": "参考仅用于虚拟角色辨识；新场景、新动作、新构图。最终 PNG 为生成输出的逐字节副本。"
+  }
+]

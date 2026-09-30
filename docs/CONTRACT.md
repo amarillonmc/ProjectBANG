@@ -25,7 +25,9 @@
 
 `src/content/kf3-classics.json` 包含本次 38 个预设、76 张心象、35 组命名技能拼图和 38 张独立图片引用，与原有 4 个通用预设合并。每位新人物两项技能、两张主题心象，其中 8 张心象额外绑定角色。白虎（kf3_0100）与朱雀（kf3_0101）加入后四神齐备，继续复用已有模板。玩法差异见 [内容手册](content/KF3_CLASSICS.md)。内容由 `tools/build-kf3-content.mjs` 生成，运行网站只读取随项目发布的 JSON，不依赖 ProjectK。
 
-模板是普通数据的复制来源，不是解释器指令。构筑可保存受校验的有限效果树与获得技能定义，不能保存模板调用、递归宏或可执行代码；用户导入不能写入服务端内容包。三个内容包的 107 个技能模板之外，`SkillPuzzles.php` 提供 32 个通用机制示例，不增加预设角色。
+模板是普通数据的复制来源，不是解释器指令。构筑可保存受校验的有限效果树与获得技能定义，不能保存模板调用、递归宏或可执行代码；用户导入不能写入服务端内容包。四个内容包的 179 个技能模板之外，`SkillPuzzles.php` 提供 32 个通用机制示例，不增加预设角色。
+
+`src/content/vtuber-summons.json` 为《电拟神召》第一弹：36 位角色、72 项命名技能和 72 张心象（14 张装备、36 张角色绑定），统一系列为“电拟神召”。四包合计 140 位 IP 角色，连同 4 位示例共 144 个预设；280 张主题心象。生成器 `tools/build-vtuber-content.mjs` 通过 PHP 服务端校验器规范化输出，游戏运行不依赖 Node。人物别名和研究标签可用于角色库搜索；艺术资源、研究来源与强度约束见 [内容手册](content/VTUBER_SUMMONS.md)。
 
 ## 构筑与验证
 
@@ -101,7 +103,7 @@ scry 暂时取出至多 amount 张普通牌，响应者必须按顺序提交全�
 
 ## 0.4 装备与私密窗口补充
 
-三个内容包合计 104 位 IP 角色、208 张主题心象、107 组技能模板，另有四个基础示例。新增内容源为 src/content/adventure-king.json，生成器为 tools/build-adventure-content.mjs。
+0.4 发布时三个内容包合计 104 位 IP 角色、208 张主题心象、107 组技能模板，另有四个基础示例。当时新增内容源为 src/content/adventure-king.json，生成器为 tools/build-adventure-content.mjs。
 
 custom.kind 缺省为 event；equipment 要求 slot 为 weapon / armor / gadget。equipmentEffects 返回槽位白名单；equipmentOnly 禁止把持续加成放进人物技能或事件，重复装备 op 被拒绝。装备只对自己使用，进入 equipment 区，触发 after_equip / after_play_card，不触发 after_play_event，也不进入事件取消窗口。同槽替换走既有失装队列。
 
