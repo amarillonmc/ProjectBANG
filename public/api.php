@@ -12,17 +12,34 @@ final class Api
     private $store;
     private $config;
     private $user;
+    private $auth;
+    private $workshop;
 
     public function __construct(Store $store, array $config)
     {
         $this->store = $store;
         $this->config = $config;
+        $this->auth = new Auth($store);
+        $this->workshop = new Workshop($store, $config);
     }
 
     public function dispatch(string $action, array $input, string $token, string $ip): array
     {
         if ($action === 'catalog') {
             return Catalog::all();
+        }
+        if (in_array($action, ['login', 'recover_account'], true)) {
+            $this->throttle('login-ip:'.$ip, 30, 600);
+            $handle = is_string($input['handle'] ?? null) ? strtolower($input['handle']) : '';
+            $this->throttle('login-account:'.$handle, 15, 600);
+            return $this->auth->login($input, $action === 'recover_account');
+        }
+        if (in_array($action, ['shared_work', 'shared_collection', 'gallery'], true)) {
+            $this->throttle('browse:'.$ip, 240, 60);
+            $viewer = $this->auth->user($token);
+            if ($action === 'gallery') return $this->workshop->gallery($input);
+            if ($action === 'shared_collection') return $this->workshop->sharedCollection($input['id'] ?? null, $viewer['id'] ?? null);
+            return ['version'=>$this->workshop->describe($this->workshop->version($input['id'] ?? null, $viewer['id'] ?? null), true)];
         }
         if ($action === 'guest') {
             $this->throttle('guest:' . $ip, 20, 3600);
@@ -35,11 +52,17 @@ final class Api
         if (!preg_match('/^[a-f0-9]{64}$/D', $token)) {
             throw new ApiError('请先创建或恢复玩家身份。', 401);
         }
-        $this->user = $this->store->one('SELECT id, name FROM ' . $this->store->table('users') . ' WHERE token_hash = ?', [hash('sha256', $token)]);
+        $this->user = $this->auth->user($token);
         if (!$this->user) {
-            throw new ApiError('玩家凭证无效，请恢复正确的身份备份。', 401);
+            throw new ApiError('玩家凭证无效，请登录账号或恢复访客身份备份。', 401);
         }
         $this->throttle('user:' . $this->user['id'], 240, 60);
+        if ($action === 'register_account') {
+            $this->throttle('register:'.$ip, 10, 3600);
+            return $this->auth->register($this->user, $input);
+        }
+        if ($action === 'logout') return $this->auth->logout($token);
+        if ($action === 'upload_portrait') $this->throttle('portrait:'.$this->user['id'], 20, 3600);
         if ($action === 'join_room') {
             $this->throttle('join:' . $ip, 30, 600);
         }
@@ -56,8 +79,8 @@ final class Api
             return ['user' => $this->user, 'builds' => array_map(function ($row) { return decode($row['data']); }, $rows), 'rooms' => $history];
         }
         if ($action === 'validate_build') {
-            $build = Rules::validateBuild($this->object($input['build'] ?? null, '构筑'));
-            return ['build' => $build, 'budget' => Rules::budget($build)];
+            $build = Rules::validateBuild($this->object($input['build'] ?? null, '构筑'), ($input['draft'] ?? false) !== true);
+            return ['build' => $build, 'budget' => Rules::budget($build), 'tier'=>Workshop::tier(Rules::budget($build))];
         }
         if ($action === 'creation_test') {
             if (!is_array($input['answers'] ?? null)) throw new ApiError('请完成全部 16 道心象问答。');
@@ -88,22 +111,26 @@ final class Api
                 return Tutorial::view($state,$id);
             });
         }
-        $allowed = ['save_build', 'delete_build', 'create_room', 'join_room', 'choose_build', 'add_bot', 'leave_room', 'start', 'room', 'act', 'feedback', 'export'];
+        $allowed = ['portfolio', 'work_history', 'set_visibility', 'save_collection', 'share_collection', 'delete_collection', 'revoke_collection_share', 'upload_portrait', 'save_build', 'delete_build', 'create_room', 'join_room', 'choose_build', 'add_bot', 'leave_room', 'start', 'room', 'act', 'feedback', 'export'];
         if (!in_array($action, $allowed, true)) {
             throw new ApiError('未知接口。', 404);
         }
         return $this->store->transaction(function () use ($action, $input) {
             // Lock identity first, then room. This also serializes idempotency/build quotas on MySQL.
             $this->store->one('SELECT id FROM ' . $this->store->table('users') . ' WHERE id = ?' . $this->store->lockSuffix(), [$this->user['id']]);
+            $owner = $this->user['id'];
+            if ($action === 'portfolio') return $this->workshop->portfolio($owner);
+            if ($action === 'work_history') return $this->workshop->history($owner, $input['id'] ?? null);
+            if ($action === 'set_visibility') return $this->workshop->visibility($owner, $input);
+            if ($action === 'save_collection') return $this->workshop->saveCollection($owner, $input);
+            if ($action === 'share_collection') return $this->workshop->shareCollection($owner, $input['id'] ?? null);
+            if ($action === 'delete_collection' || $action === 'revoke_collection_share') return $this->workshop->removeCollection($owner, $input['id'] ?? null, $action === 'revoke_collection_share');
+            if ($action === 'upload_portrait') return $this->workshop->upload($owner, $input);
             if ($action === 'save_build') {
                 return $this->saveBuild($input);
             }
             if ($action === 'delete_build') {
-                $id = $this->id($input['id'] ?? '');
-                if (!$this->store->execute('DELETE FROM ' . $this->store->table('builds') . ' WHERE id = ? AND user_id = ?', [$id, $this->user['id']])) {
-                    throw new ApiError('找不到你的构筑。', 404);
-                }
-                return [];
+                return $this->workshop->delete($owner, $input['id'] ?? null);
             }
             if ($action === 'create_room') {
                 if (!isset($input['requestId'])) {
@@ -169,6 +196,7 @@ final class Api
                     if ($player['id'] === $this->user['id']) {
                         $player['build'] = $selected['build'];
                         $player['custom'] = $selected['custom'];
+                        $player['versionId'] = $selected['versionId'] ?? null;
                     }
                 }
                 unset($player);
@@ -182,7 +210,8 @@ final class Api
                 if (count($room['players']) < 2) {
                     throw new ApiError('至少需要两位玩家，可以加入练习机器人。');
                 }
-                $room['game'] = Engine::create($room['players'], $room['mode']);
+                $room['rulesSignature'] = Workshop::signature();
+                $room['game'] = Engine::create($room['players'], $room['mode'], $room['budgetLimits'] ?? null);
                 $room['game']['turnSeconds'] = $room['turnSeconds'];
                 if (isset($room['game']['deadline'])) {
                     $room['game']['deadline'] = time() + ($room['game']['pending'] !== null ? min(45, $room['turnSeconds']) : $room['turnSeconds']);
@@ -196,25 +225,7 @@ final class Api
 
     private function saveBuild(array $input): array
     {
-        $raw = $this->object($input['build'] ?? null, '构筑');
-        $build = Rules::validateBuild($raw);
-        $id = isset($raw['id']) && $raw['id'] !== '' ? $this->id($raw['id']) : identifier();
-        $table = $this->store->table('builds');
-        $existing = $this->store->one("SELECT user_id FROM $table WHERE id = ?", [$id]);
-        if ($existing && $existing['user_id'] !== $this->user['id']) {
-            throw new ApiError('不能覆盖他人的构筑。', 403);
-        }
-        $build['id'] = $id;
-        if ($existing) {
-            $this->store->execute("UPDATE $table SET data = ?, updated_at = ? WHERE id = ? AND user_id = ?", [encode($build), time(), $id, $this->user['id']]);
-        } else {
-            $count = $this->store->one("SELECT COUNT(*) AS total FROM $table WHERE user_id = ?", [$this->user['id']]);
-            if ((int) $count['total'] >= (int) $this->config['max_builds']) {
-                throw new ApiError('构筑数量已达上限，请先导出并删除旧构筑。');
-            }
-            $this->store->execute("INSERT INTO $table (id, user_id, data, updated_at) VALUES (?, ?, ?, ?)", [$id, $this->user['id'], encode($build), time()]);
-        }
-        return ['build' => $build, 'budget' => Rules::budget($build)];
+        return $this->workshop->save($this->user['id'], $input);
     }
 
     private function createRoom(array $input): array
@@ -247,9 +258,10 @@ final class Api
         } while ($this->store->one("SELECT code FROM $table WHERE code = ?", [$code]));
         $room = [
             'code' => $code, 'name' => $name, 'mode' => $mode, 'hostId' => $this->user['id'],
+            'budgetLimits' => Workshop::limits($input['budgetLimits'] ?? null),
             'status' => 'lobby', 'allowCustom' => $allowCustom, 'turnSeconds' => $seconds,
             'revision' => 1, 'createdAt' => time(), 'updatedAt' => time(),
-            'players' => [['id' => $this->user['id'], 'name' => $this->user['name'], 'bot' => false, 'custom' => $selected['custom'], 'build' => $selected['build']]],
+            'players' => [['id' => $this->user['id'], 'name' => $this->user['name'], 'bot' => false, 'custom' => $selected['custom'], 'build' => $selected['build'], 'versionId' => $selected['versionId'] ?? null]],
             'game' => null,
         ];
         $this->customAllowed($room, $selected);
@@ -281,7 +293,7 @@ final class Api
         }
         $selected = $this->selectedBuild($input);
         $this->customAllowed($room, $selected);
-        $room['players'][] = ['id' => $this->user['id'], 'name' => $this->user['name'], 'bot' => false, 'custom' => $selected['custom'], 'build' => $selected['build']];
+        $room['players'][] = ['id' => $this->user['id'], 'name' => $this->user['name'], 'bot' => false, 'custom' => $selected['custom'], 'build' => $selected['build'], 'versionId' => $selected['versionId'] ?? null];
         $this->store->execute('INSERT INTO ' . $this->store->table('members') . ' (room_code, user_id) VALUES (?, ?)', [$room['code'], $this->user['id']]);
         $this->persistRoom($room, 'join_room', []);
         return $this->snapshot($room);
@@ -358,6 +370,7 @@ final class Api
     {
         if ($room['game'] && ($room['game']['status'] ?? '') === 'finished') {
             $room['status'] = 'finished';
+            $this->workshop->recordTrials($room);
         }
         $previous = $room['revision'];
         $room['revision']++;
@@ -379,6 +392,7 @@ final class Api
         return [
             'code' => $room['code'], 'name' => $room['name'], 'mode' => $room['mode'],
             'hostId' => $room['hostId'], 'status' => $room['status'], 'allowCustom' => $room['allowCustom'],
+            'budgetLimits' => $room['budgetLimits'] ?? Workshop::limits(),
             'turnSeconds' => $room['turnSeconds'], 'revision' => $room['revision'],
             'players' => array_map(function ($player) {
                 return ['id' => $player['id'], 'name' => $player['name'], 'bot' => $player['bot'], 'custom' => $player['custom'] ?? false, 'character' => $player['build']['character']];
@@ -389,13 +403,18 @@ final class Api
 
     private function selectedBuild(array $input): array
     {
+        if (!empty($input['versionId'])) {
+            $v = $this->workshop->version($input['versionId'], $this->user['id']);
+            return ['build'=>Rules::validateBuild(decode($v['data']), false), 'custom'=>true, 'versionId'=>$v['id']];
+        }
         if (isset($input['buildId']) && $input['buildId'] !== '') {
             $id = $this->id($input['buildId']);
-            $row = $this->store->one('SELECT data FROM ' . $this->store->table('builds') . ' WHERE id = ? AND user_id = ?', [$id, $this->user['id']]);
+            $row = $this->store->one('SELECT * FROM ' . $this->store->table('builds') . ' WHERE id = ? AND user_id = ?', [$id, $this->user['id']]);
             if (!$row) {
                 throw new ApiError('找不到你的构筑。', 404);
             }
-            return ['build' => Rules::validateBuild(decode($row['data'])), 'custom' => true];
+            $v = $this->workshop->ensureVersion($row);
+            return ['build' => Rules::validateBuild(decode($v['data']), false), 'custom' => true, 'versionId'=>$v['id']];
         }
         $presets = Catalog::all()['presets'];
         $first = reset($presets);
@@ -429,7 +448,7 @@ final class Api
         if (count($room['players']) >= 6) {
             throw new ApiError('房间已满（最多 6 人）。');
         }
-        if ((!isset($input['buildId']) || $input['buildId'] === '') && (!isset($input['presetId']) || $input['presetId'] === '')) {
+        if (empty($input['versionId']) && (!isset($input['buildId']) || $input['buildId'] === '') && (!isset($input['presetId']) || $input['presetId'] === '')) {
             $input = ['presetId' => $this->opponentPreset($room)];
         }
         $selected = $this->selectedBuild($input);
@@ -437,12 +456,13 @@ final class Api
         $room['players'][] = [
             'id' => 'bot_' . substr(identifier(), 0, 12),
             'name' => '练习机 ' . (count(array_filter($room['players'], function ($player) { return $player['bot']; })) + 1),
-            'bot' => true, 'custom' => $selected['custom'], 'build' => $selected['build'],
+            'bot' => true, 'custom' => $selected['custom'], 'build' => $selected['build'], 'versionId' => $selected['versionId'] ?? null,
         ];
     }
 
     private function customAllowed(array $room, array $selected): void
     {
+        Rules::validateBuild($selected['build'], true, $room['budgetLimits'] ?? null);
         if (!$room['allowCustom'] && $selected['custom']) {
             throw new ApiError('此房间只允许内置示例构筑。');
         }
@@ -542,25 +562,26 @@ if (!defined('IMAGINARY_API_LIBRARY')) {
         if (!is_string($action)) {
             throw new ApiError('接口名称无效。');
         }
-        $readActions = ['catalog', 'me', 'room', 'export'];
+        $readActions = ['catalog', 'me', 'room', 'export', 'shared_work', 'shared_collection', 'gallery'];
         if ($method !== 'POST' && !($method === 'GET' && in_array($action, $readActions, true))) {
             header('Allow: GET, POST');
             throw new ApiError('此操作需要 POST 请求。', 405);
         }
         $input = [];
         if ($method === 'POST') {
-            if ((int) ($_SERVER['CONTENT_LENGTH'] ?? 0) > 131072) {
-                throw new ApiError('请求体超过 128 KiB。', 413);
+            $bodyLimit = $action === 'upload_portrait' ? 2900000 : 131072;
+            if ((int) ($_SERVER['CONTENT_LENGTH'] ?? 0) > $bodyLimit) {
+                throw new ApiError('请求体过大（普通请求最大 128 KiB，上传图片最大 2 MiB）。', 413);
             }
             $contentType = strtolower(explode(';', $_SERVER['CONTENT_TYPE'] ?? '')[0]);
             if ($contentType !== 'application/json') {
                 throw new ApiError('请使用 application/json 请求。', 415);
             }
             $stream = fopen('php://input', 'rb');
-            $raw = stream_get_contents($stream, 131073);
+            $raw = stream_get_contents($stream, $bodyLimit + 1);
             fclose($stream);
-            if (strlen($raw) > 131072) {
-                throw new ApiError('请求体超过 128 KiB。', 413);
+            if (strlen($raw) > $bodyLimit) {
+                throw new ApiError('请求体过大（普通请求最大 128 KiB，上传图片最大 2 MiB）。', 413);
             }
             $raw = $raw === '' ? '{}' : $raw;
             $input = decode($raw);

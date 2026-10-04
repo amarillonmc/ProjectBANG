@@ -21,6 +21,9 @@ function configuration(): array
         'debug' => false,
         'max_builds' => 30,
         'max_rooms_per_host' => 10,
+        'max_versions_per_build' => 200,
+        'max_collections' => 30,
+        'max_portraits' => 100,
     ];
     $file = $root . '/config.php';
     if (is_file($file)) {
@@ -67,3 +70,5 @@ require_once __DIR__ . '/Store.php';
 require_once __DIR__ . '/Catalog.php';
 require_once __DIR__ . '/Rules.php';
 require_once __DIR__ . '/Engine.php';
+require_once __DIR__ . '/Auth.php';
+require_once __DIR__ . '/Workshop.php';

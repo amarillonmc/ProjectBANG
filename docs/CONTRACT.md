@@ -32,7 +32,7 @@
 
 ## 构筑与验证
 
-`Rules::validateBuild(array $build): array` 返回规范化构筑，非法数据抛出 `InvalidArgumentException`。未知字段、错误类型、数组形状、目标、数值、费用、版本和预算都由服务端校验。用户文本仅用于显示，不作为脚本、普通牌类型或规则名称执行。
+`Rules::validateBuild(array $build, bool $enforceBudget = true, ?array $budgetLimits = null): array` 返回规范化构筑，非法数据抛出 `InvalidArgumentException`。默认严格检查预算。保存草稿和版本时将 enforceBudget 设为 false，仍验证未知字段、类型、形状、目标、数值、费用、版本及运行资源上限。入场和开局传入房间的三项 budgetLimits，不修改全局 RuleConfig。用户文本不作为脚本执行。
 
 ```text
 Build {
@@ -72,7 +72,7 @@ DeckEntry {
 
 13 个点数必须完整且唯一，`deck` 数组次序从牌顶到牌底，验证不会按点数排序。普通心象只能采用该点数的 `mindOptions`；允许 13 张均为限定牌，各自效果树遵守 `maxEffects` 与最多 12 层嵌套的资源上限。限定牌的 fallback 可选任何已定义普通牌类型。非限定条目不得携带 custom。`maturityTurns` 仅用于延时基本牌及延时心象；拳击默认 1，其余当前延时牌默认 0，按持有者自身回合计数。
 
-`character.art` 的字符串形状为 `[a-z][a-z0-9_]{0,63}`，不是 URL。客户端按它查询 `catalog.arts`，例如 `kf3_0042` 对应 `assets/characters/kf3_0042.png`；没有目录匹配时回退到通用图。数字 0～3 继续表示原图集四象限。人物 ID、显示名称和立绘 ID 是独立字段。
+`character.art` 的字符串形状为 `[a-z][a-z0-9_]{0,63}`，不是 URL。`upload_<32 位十六进制 ID>` 对应 portrait.php，保存时检查图片存在；其他字符串查询 catalog.arts，例如 kf3_0042 对应内置立绘。没有匹配时回退通用图；数字 0～3 继续表示原图集四象限。人物 ID、显示名称和立绘 ID 独立。
 
 `custom.series` 匹配当前使用者系列，且可选 `custom.characterId` 匹配其人物 ID 时，自定义效果才生效；否则应用 fallback。角色编号是可编辑创作标识，不是身份授权。实体卡的普通/心象来源、UID 和原心象所有者不因失配、赠送、偷取、转化或装备而丢失。
 
@@ -80,7 +80,7 @@ DeckEntry {
 
 新对局自身也持久化 `rulesVersion`。缺省版本或 0.1～0.5 的游戏状态由 act/tick 显式迁移，补齐新增字段，保留实体牌、伤害、次数与构筑快照，记录 `migratedFromRulesVersion` 和单次日志；非法动作连同迁移一起回滚。0.4 及更早的延时基本牌未携带明确成熟参数且不是拳击时，迁移减去原来额外的一回合等待；0.5 状态保持原成熟进度，重复迁移不再改动。只读 view 返回存档的真实 `rulesVersion`、当前 `engineRulesVersion` 和布尔 `rulesUpgradePending`，不在读取时暗改状态。未知对局版本统一拒绝。
 
-`Rules::budget()` 返回 `used,max,character,characterMax,custom,customMax,cards,warnings`。默认上限为人物 18、限定合计 24、单张 12，均可配置。技能成本包含效果、自动触发加价、费用折减、次数乘数；转化基础成本依据来源，任意手牌转化高于指定牌型。无色 `damage`/`attack` 每点另计预算。明确强制的自身负面可计负预算，可选负面、可能为零的动态负面不能刷预算；限定牌的负面只抵扣同一张牌的收益，不抵扣其他牌。动态获得的完整技能也参与计价。详见 [SKILLS.md](SKILLS.md)。
+`Rules::budget()` 返回 `used,max,character,characterMax,custom,customMax,cards,cardMax,warnings`。默认上限为人物 18、限定合计 24、单张 12，均可配置。技能成本包含效果、自动触发加价、费用折减、次数乘数；转化基础成本依据来源，任意手牌转化高于指定牌型。无色 `damage`/`attack` 每点另计预算。明确强制的自身负面可计负预算，可选负面、可能为零的动态负面不能刷预算；限定牌的负面只抵扣同一张牌的收益，不抵扣其他牌。动态获得的完整技能也参与计价。详见 [SKILLS.md](SKILLS.md)。
 
 ## 技能词汇与结算
 
@@ -144,7 +144,7 @@ conversion 只接受整数技能下标且仅用于 play/respond。scry 响应为
 
 ## HTTP API 与持久化
 
-相关文件：`src/Store.php`、`src/bootstrap.php`、`public/api.php`、`config.example.php`、`var/.htaccess`。JSON POST 到 `api.php?action=...`；认证为 `Authorization: Bearer <guest token>`，不用 cookie。GET 只用于读取，JSON 请求不超过 128 KiB。
+相关文件：`src/Store.php`、`src/Auth.php`、`src/Workshop.php`、`src/bootstrap.php`、`public/api.php`、`config.example.php`、`var/.htaccess`。JSON POST 到 `api.php?action=...`；认证为 `Authorization: Bearer <token>`，访客令牌或账号会话均可，不用 cookie。GET 只用于读取；普通 JSON 请求不超过 128 KiB，角色图片上传有单独上限。
 
 响应为 `{ok:true,data:{...}}` 或 `{ok:false,error:string}`。SQLite 默认位于 `var/game.sqlite`，支持 MySQL 配置与自动建表。服务器只存令牌哈希；写入检查所有者和房主权限，不提供公开用户/房间目录。房间六位码与访客身份共同使用。大厅不泄露其他人的有序心象，对局通过 Engine::view。事务/行锁串行化游戏更新；act 使用预期 revision 与 requestId 实现并发检查、幂等请求，异常回滚。
 
@@ -152,12 +152,13 @@ conversion 只接受整数技能下标且仅用于 play/respond。scry 响应为
 | --- | --- |
 | guest | `{name}` → `{token,user:{id,name}}` |
 | catalog | → Catalog::all() |
-| me | → `{user,builds}` |
-| save_build / validate_build | `{build}` → `{build,budget}` |
+| me | → `{user:{id,name,handle},builds,rooms}`，访客 handle 为 null |
+| save_build | `{build,expectedVersion?}` → `{build,budget,version}`，允许超预算；新建传 null，更新传当前版本 ID；旧客户端省略则保留兼容 |
+| validate_build | `{build,draft?:true}` → `{build,budget,tier}`，draft 仅跳过预算准入，默认严格 |
 | creation_test | `{answers:[16 个 0～3 整数]}` → `{build,budget,profile}`；需访客身份，只生成，不自动保存 |
 | tutorial | `{command:"resume"\|"restart"\|"act"\|"next"\|"lesson",revision?,action?,step?}` → 教学房间安全视角；写操作必须带当前 revision |
 | delete_build | `{id}` → 空结果 |
-| create_room | `{name,mode,buildId?,presetId?,allowCustom,turnSeconds?,bots?:[{buildId?,presetId?}],requestId?}` → 房间；提供 bots 时须为 1～5 项列表，逐项验证并原子创建 |
+| create_room | `{name,mode,buildId?,presetId?,versionId?,budgetLimits?,allowCustom,turnSeconds?,bots?:[构筑选择],requestId?}` → 房间；bots 为 1～5 项，逐项验证并原子创建；budgetLimits 只允许 characterBudget / customBudget / customCardBudget（1～100000） |
 | join_room | `{code,buildId?,presetId?}` → 房间 |
 | room | `{code}` → 房间，并推进有界自动行动 |
 | choose_build | `{code,buildId?,presetId?}` → 房间，仅开局前 |
@@ -168,7 +169,38 @@ conversion 只接受整数技能下标且仅用于 play/respond。scry 响应为
 | feedback | `{code?,text}` → 空结果 |
 | export | `{code}` → 房间/事件记录，仅参与者；未结束时隐藏秘密 |
 
-房间快照为 `{code,name,mode,hostId,status,allowCustom,revision,players,game}`；status 为 lobby/playing/finished，game 为 null 或安全视角。HTTP 错误采用 400/401/403/404/409/429 等。刷新重连需要原访客令牌。
+房间快照为 `{code,name,mode,hostId,status,allowCustom,revision,players,game}`；status 为 lobby/playing/finished，game 为 null 或安全视角。HTTP 错误采用 400/401/403/404/409/429 等。刷新重连需要对应身份的有效令牌。
+
+房间快照另含三项 `budgetLimits`。所有构筑选择入口（建房、加入、切换、添加机器人）都支持 `versionId`：可选自己的私有版本，或他人开放链接/投稿的版本。buildId 仍只能读取自己的作品，并锁定当时最新版。房间玩家保存 versionId 和完整构筑；开局再次按房间预算验证，运行上限仍读服务器配置。旧房间缺失 budgetLimits 时沿用服务器默认值。
+
+## 账号、作品与投稿接口（B / alpha）
+
+| action | 请求与结果 |
+| --- | --- |
+| register_account | 已认证访客 `{handle,password}` → `{token,user,recoveryCode}`，原身份直接绑定；账号名 3～24 位字母数字下划线，统一小写 |
+| login | 匿名 `{handle,password}` → `{token,user}` |
+| recover_account | 匿名 `{handle,recoveryCode,password}` → `{token,user,recoveryCode}`，密码至少 10 字符、最多 72 字节；轮换恢复码并撤销旧会话 |
+| logout | 撤销当前账号会话，访客身份仍通过备份管理 |
+| portfolio | 当前作者 `{works,collections,shares}`；旧 builds 按需初始化版本 |
+| work_history | `{id:buildId}` → 作者的 `{versions}`，最新在前 |
+| shared_work | `{id:versionId}` → `{version}`，含完整 build；私有版本仅作者可读，开放版本可匿名读 |
+| set_visibility | 作者 `{id:versionId,visibility:private\|link\|published}`；published 必须有当前规则的完成对局记录；每作品同时投稿一个版本，旧投稿降为 link |
+| gallery | 匿名 `{tier:standard\|extended,cursor?}` → `{versions,cursor,tier}`；每批扫描 50 条投稿，只返回有当前有效证明的对应预算类；空页但 cursor 非空时可继续 |
+| save_collection | `{id?,name,description,buildIds}` → `{collection}`；仅自己的作品，分组不修改规则中的 character.series |
+| share_collection | `{id}` → 分享 `{id}`；固定收录当前版本，私有版本同时开放为 link；相同组合复用原链接 |
+| shared_collection | 匿名 `{id}` → `{name,description,versions,unavailable}`；撤回或删除的版本只计入 unavailable |
+| delete_collection / revoke_collection_share | `{id}` 删除分组及其链接 / 撤销一个链接；角色仍保留 |
+| upload_portrait | `{image:"data:image/png;base64,..."}` 或 JPEG → `{art:"upload_<id>"}`；需认证、GD；解码并重新编码后存入数据库 |
+
+上述公开读取接口同时支持 GET。上传的 HTTP JSON 上限为 2,900,000 字节，其余仍为 128 KiB。账号登录/恢复按 IP 与账号双重限流，上传按身份限流。服务器只存令牌和恢复码摘要、密码哈希；日志、对局证据和公开作品不包含凭证。GD 图片限制、会话和备份要求见 DEPLOYMENT.md。
+
+versions 保存不可变的规范化构筑、版本号、作者与 gameplay fingerprint。保存相同内容不增版；乐观版本检查防止新客户端跨窗口覆盖。fingerprint 忽略构筑 ID/名称及人物名称/称号/图片，保留系列、角色 ID、技能名称/稳定标识、限定牌名与牌序。trials 仅在服务器将真实房间置为 finished 时写入，对应作者本人占用的非机器人席位；不接受客户端提交结果，不从教学或他人的席位认证。证据记录房间、模式、胜者、时间、预算和是否含机器人；绑定规则版本与全部 RuleConfig 的签名。作者相同规则内容的显示性新版本可复用，其他修改或配置变化需重测。机器人单独使用作品不能为作者认证。删除作品撤销其全部版本链接；已经开局的完整房间快照仍保留。
+
+默认配额：每身份 30 件作品，每作品 200 版，30 个系列，每系列 20 个分享快照，100 张去重图片。图片保留以保证旧版本、复制件和对局立绘可用；调整配额由管理员修改配置。收藏发现的排序、评分、评论、推荐与审核后台留待 beta。
+
+## C 方向：已确认、尚未实现的人狼规则
+
+设计者于 2026-10-04 确认：人狼模式的冷暖色只参与技能判定，类似武将的性别属性；人物死亡不翻面。新增普通回复牌（只能用于自己）与延时回复牌（可从自身挂置区卸下，用于其他角色）。该模式要重新分配攻击、防御和回复牌数量；具体数量、回复量、成熟时机与可用窗口尚待敲定。当前 B 实现不改变冷暖/系列模式的 104 张牌池、颜色伤害或死亡翻面逻辑。
 
 `CreationTest.php` 用现有拼图组装完整构筑，再经 `Rules::validateBuild` 校验。前十二题累积主、副倾向，后四题直接影响颜色/翻面、身体/费用、心象顺序和第二张限定牌；同答案输出稳定，可编辑保存，没有额外的专用执行机制。预算不足时返回明确错误。
 

@@ -47,7 +47,7 @@ final class Store
 
     public function table(string $name): string
     {
-        if (!in_array($name, ['users', 'builds', 'rooms', 'members', 'requests', 'events', 'feedback', 'rate_limits', 'tutorials'], true)) {
+        if (!in_array($name, ['users', 'builds', 'rooms', 'members', 'requests', 'events', 'feedback', 'rate_limits', 'tutorials', 'accounts', 'sessions', 'versions', 'collections', 'collection_shares', 'trials', 'portraits'], true)) {
             throw new \InvalidArgumentException('Unknown database table.');
         }
         return '`' . $this->prefix . $name . '`';
@@ -139,6 +139,13 @@ final class Store
         $text = $this->driver === 'mysql' ? 'LONGTEXT' : 'TEXT';
         $suffix = $this->driver === 'mysql' ? ' ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin' : '';
         $definitions = [
+            'accounts' => 'user_id VARCHAR(32) PRIMARY KEY, handle VARCHAR(24) NOT NULL UNIQUE, password_hash VARCHAR(255) NOT NULL, recovery_hash VARCHAR(64) NOT NULL, created_at BIGINT NOT NULL',
+            'sessions' => 'token_hash VARCHAR(64) PRIMARY KEY, user_id VARCHAR(32) NOT NULL, created_at BIGINT NOT NULL, expires_at BIGINT NOT NULL',
+            'versions' => "id VARCHAR(32) PRIMARY KEY, build_id VARCHAR(32) NOT NULL, user_id VARCHAR(32) NOT NULL, number INT NOT NULL, data $text NOT NULL, fingerprint VARCHAR(64) NOT NULL, visibility VARCHAR(12) NOT NULL, created_at BIGINT NOT NULL, UNIQUE (build_id, number)",
+            'collections' => "id VARCHAR(32) PRIMARY KEY, user_id VARCHAR(32) NOT NULL, data $text NOT NULL, updated_at BIGINT NOT NULL",
+            'collection_shares' => "id VARCHAR(32) PRIMARY KEY, collection_id VARCHAR(32) NOT NULL, user_id VARCHAR(32) NOT NULL, data $text NOT NULL, created_at BIGINT NOT NULL",
+            'trials' => "id VARCHAR(32) PRIMARY KEY, user_id VARCHAR(32) NOT NULL, version_id VARCHAR(32) NOT NULL, fingerprint VARCHAR(64) NOT NULL, rules_signature VARCHAR(64) NOT NULL, room_code VARCHAR(6) NOT NULL, data $text NOT NULL, created_at BIGINT NOT NULL, UNIQUE (room_code, version_id)",
+            'portraits' => "id VARCHAR(32) PRIMARY KEY, user_id VARCHAR(32) NOT NULL, mime VARCHAR(32) NOT NULL, data $text NOT NULL, digest VARCHAR(64) NOT NULL, created_at BIGINT NOT NULL",
             'users' => 'id VARCHAR(32) PRIMARY KEY, name VARCHAR(80) NOT NULL, token_hash VARCHAR(64) NOT NULL UNIQUE, created_at BIGINT NOT NULL',
             'builds' => "id VARCHAR(32) PRIMARY KEY, user_id VARCHAR(32) NOT NULL, data $text NOT NULL, updated_at BIGINT NOT NULL",
             'tutorials' => "user_id VARCHAR(32) PRIMARY KEY, data $text NOT NULL",
@@ -153,6 +160,13 @@ final class Store
             $this->pdo->exec('CREATE TABLE IF NOT EXISTS ' . $this->table($name) . " ($definition)" . $suffix);
         }
         $indexes = [
+            'sessions_owner' => ['sessions', 'user_id'],
+            'versions_owner' => ['versions', 'user_id, build_id, number'],
+            'versions_public' => ['versions', 'visibility, created_at'],
+            'collections_owner' => ['collections', 'user_id'],
+            'collection_shares_owner' => ['collection_shares', 'user_id, collection_id'],
+            'trials_proof' => ['trials', 'user_id, fingerprint, rules_signature'],
+            'portraits_owner' => ['portraits', 'user_id'],
             'builds_owner' => ['builds', 'user_id'],
             'rooms_host' => ['rooms', 'host_id, status'],
             'members_user' => ['members', 'user_id'],

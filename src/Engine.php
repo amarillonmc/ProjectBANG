@@ -168,14 +168,14 @@ final class Engine
         $g['equipmentLosses'][]=['player'=>$id,'source'=>$source??$id];
         if($c['type']==='treasure') self::damage($g,null,$id,2,'neutral',false); return $c;
     }
-    public static function create(array $players,string $mode): array
+    public static function create(array $players,string $mode, ?array $budgetLimits = null): array
     {
         self::check(in_array($mode,['color','series'],true),'模式不支持'); self::check(count($players)>=2&&count($players)<=6,'对局需要 2～6 人');
         $g=['rulesVersion'=>SkillBlocks::VERSION,'status'=>'playing','mode'=>$mode,'players'=>[],'order'=>[],'deck'=>Catalog::ordinary(),'discard'=>[],'turnNumber'=>0,'turn'=>'','phase'=>'draw','resumePhase'=>'draw','pending'=>null,'queue'=>[],'log'=>[],'winner'=>null,'turnSeconds'=>120,'deadline'=>time()+120,'eventCount'=>0];
         self::shuffleCards($g['deck']); $teams=[];
         foreach($players as $p) {
             self::check(is_string($p['id']??null)&&!isset($g['players'][$p['id']]),'玩家编号重复或无效');
-            $b=Rules::validateBuild($p['build']); $c=$b['character']; $id=$p['id']; $mind=[];
+            $b=Rules::validateBuild($p['build'], true, $budgetLimits); $c=$b['character']; $id=$p['id']; $mind=[];
             foreach($b['deck'] as $i=>$d) {
                 $def=$d['type']==='custom'?['name'=>$d['custom']['name'],'kind'=>$d['custom']['kind']??'event','tags'=>[],'description'=>'限定系列：'.$d['custom']['series'].'；'.Rules::describeEffects($d['custom']['effects']).'。不符合系列或角色绑定时视为 '.Catalog::cards()[$d['custom']['fallback']]['name'].'。']:Catalog::cards()[$d['type']];
                 $mind[]=array_merge($def,$d,['uid'=>'m_'.$id.'_'.$i,'origin'=>'mind','owner'=>$id]);

@@ -16,6 +16,12 @@ if (!in_array('sqlite', $drivers, true) && !in_array('mysql', $drivers, true)) {
     $failed = true;
 }
 $root = dirname(__DIR__);
+echo 'GD portrait uploads: '.(function_exists('imagecreatefromstring') ? 'OK' : 'UNAVAILABLE (enable gd for character image uploads)')."\n";
+foreach (['src/Auth.php','src/Workshop.php','public/portrait.php','public/assets/portfolio.js','public/assets/portfolio.css'] as $file) {
+    $ok = is_file($root.'/'.$file) && filesize($root.'/'.$file) > 0;
+    echo $file.': '.($ok ? 'OK' : 'MISSING/EMPTY')."\n";
+    $failed = $failed || !$ok;
+}
 foreach (['src/CreationTest.php','src/Tutorial.php','public/assets/learn.js','public/assets/table-ui.js','public/assets/onboarding.css'] as $file) {
     $ok = is_file($root . '/' . $file) && filesize($root . '/' . $file) > 0;
     echo $file . ': ' . ($ok ? 'OK' : 'MISSING/EMPTY') . "\n";

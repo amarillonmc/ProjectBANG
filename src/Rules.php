@@ -127,7 +127,7 @@ final class Rules
         }
         return $normalized;
     }
-    public static function validateBuild(array $b): array
+    public static function validateBuild(array $b, bool $enforceBudget = true, ?array $budgetLimits = null): array
     {
         self::keys($b,['id','name','character','deck','budget','createdAt','updatedAt','rulesVersion']);
         if(array_key_exists('rulesVersion',$b)) self::choice($b['rulesVersion'],['0.1.0-alpha','0.2.0-alpha','0.3.0-alpha','0.4.0-alpha','0.5.0-alpha',SkillBlocks::VERSION],'规则版本');
@@ -178,10 +178,12 @@ final class Rules
         }
         $result=['rulesVersion'=>SkillBlocks::VERSION,'name'=>self::text($b['name']??null,'构筑名称'),'character'=>$nc,'deck'=>$deck];
         if(isset($b['id'])) $result['id']=self::text($b['id'],'构筑编号');
-        $budget=self::budget($result);
-        if($budget['character']>$budget['characterMax']) self::fail('人物预算超限：'.$budget['character'].' / '.$budget['characterMax']);
-        if($budget['custom']>$budget['customMax']) self::fail('限定牌总预算超限：'.$budget['custom'].' / '.$budget['customMax']);
-        foreach($budget['cards'] as $v) if($v>RuleConfig::get('customCardBudget')) self::fail('单张限定牌预算超过 '.RuleConfig::get('customCardBudget'));
+        $budget=self::budget($result, $budgetLimits);
+        if ($enforceBudget) {
+            if($budget['character']>$budget['characterMax']) self::fail('人物预算超限：'.$budget['character'].' / '.$budget['characterMax']);
+            if($budget['custom']>$budget['customMax']) self::fail('限定牌总预算超限：'.$budget['custom'].' / '.$budget['customMax']);
+            foreach($budget['cards'] as $v) if($v>$budget['cardMax']) self::fail('单张限定牌预算超过 '.$budget['cardMax']);
+        }
         return $result;
     }
     public static function effectCost(array $e): int
@@ -201,7 +203,7 @@ final class Rules
     {
         foreach($effects as $e){if(strpos($e['op'],'event_')===0)return true;foreach(['then','else','effects'] as $key)if(isset($e[$key])&&self::hasEventModifier($e[$key]))return true;foreach($e['options']??[] as $option)if(self::hasEventModifier($option['effects']))return true;}return false;
     }
-    public static function budget(array $b): array
+    public static function budget(array $b, ?array $budgetLimits = null): array
     {
         $c=$b['character']; $sum=($c['hp']-4)*2+($c['flipColor']!==null?2:0); $cardCosts=[];
         $negative=0;
@@ -216,9 +218,9 @@ final class Rules
         }
         $sum+=max(RuleConfig::get('negativeBudgetFloor'),$negative);
         foreach($b['deck'] as $d) if($d['type']==='custom') $cardCosts[]=max(0,array_sum(array_map([self::class,'effectCost'],$d['custom']['effects'])));
-        $limits=RuleConfig::all();
+        $limits=array_replace(RuleConfig::all(), $budgetLimits ?? []);
         return ['used'=>$sum+array_sum($cardCosts),'max'=>$limits['characterBudget']+$limits['customBudget'],'character'=>$sum,'characterMax'=>$limits['characterBudget'],'custom'=>array_sum($cardCosts),'customMax'=>$limits['customBudget'],'cards'=>$cardCosts,
-            'warnings'=>['无限制按服务器配置计价并设运行保险上限。强制、无费用的自身负面技能可返还预算；可不发动的纯负面技能不返还预算。心象负面只抵扣同张牌的正面效果。预算不代表强度相等。']];
+            'cardMax'=>$limits['customCardBudget'], 'warnings'=>['无限制按服务器配置计价并设运行保险上限。强制、无费用的自身负面技能可返还预算；可不发动的纯负面技能不返还预算。心象负面只抵扣同张牌的正面效果。预算不代表强度相等。']];
     }
     public static function describeSkill(array $s,bool $technical=false): string
     {
