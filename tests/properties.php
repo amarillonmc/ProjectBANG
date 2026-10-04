@@ -56,6 +56,7 @@ function checkGame(array $game, int $initialCount, int $run): void {
 $presets = Catalog::presets();
 foreach ($presets as $preset) { Rules::validateBuild($preset); }
 $games = 0; $stepsTotal = 0;
+$simulationLimit=(\Imaginary\RuleConfig::get('maxTurns')+1)*(\Imaginary\RuleConfig::get('maxActionsPerTurn')+1)*8;
 for ($run = 0; $run < 24; $run++) {
     $seats = 2 + ($run % 5); $players = [];
     for ($seat = 0; $seat < $seats; $seat++) {
@@ -63,7 +64,7 @@ for ($run = 0; $run < 24; $run++) {
     }
     $game = Engine::create($players, $run % 2 ? 'series' : 'color');
     $expected = 104 + 13 * $seats;
-    for ($step = 0; $step < 8000 && $game['status'] === 'playing'; $step++) {
+    for ($step = 0; $step < $simulationLimit && $game['status'] === 'playing'; $step++) {
         checkGame($game, $expected, $run);
         if ($step % 11 === 0) {
             $before = json_encode($game);
@@ -78,6 +79,7 @@ for ($run = 0; $run < 24; $run++) {
         $stepsTotal++;
     }
     checkGame($game, $expected, $run);
+    if($game['status']!=='finished') file_put_contents(__DIR__.'/../var/property-failure.json',json_encode(['run'=>$run,'steps'=>$step,'game'=>$game],JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT));
     expectProperty($game['status'] === 'finished', 'Game did not terminate: run '.$run.', turn '.$game['turnNumber'].', phase '.$game['phase']);
     expectProperty(is_string($game['winner']) && $game['winner'] !== '', 'Missing winner');
     $games++;

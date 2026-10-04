@@ -16,6 +16,11 @@ if (!in_array('sqlite', $drivers, true) && !in_array('mysql', $drivers, true)) {
     $failed = true;
 }
 $root = dirname(__DIR__);
+foreach (['src/CreationTest.php','src/Tutorial.php','public/assets/learn.js','public/assets/table-ui.js','public/assets/onboarding.css'] as $file) {
+    $ok = is_file($root . '/' . $file) && filesize($root . '/' . $file) > 0;
+    echo $file . ': ' . ($ok ? 'OK' : 'MISSING/EMPTY') . "\n";
+    $failed = $failed || !$ok;
+}
 foreach (['src/Engine.php','src/Rules.php','src/SkillBlocks.php','src/Catalog.php','src/ContentPack.php','src/content/kf3-classics.json','src/content/magireco-expansions.json','src/content/adventure-king.json','src/content/vtuber-summons.json','src/Store.php','public/api.php','public/index.html','public/assets/app.js','public/assets/style.css','public/assets/mind-atlas.png','public/assets/mindscape.png'] as $file) {
     $ok = is_file($root . '/' . $file) && filesize($root . '/' . $file) > 0;
     echo $file . ': ' . ($ok ? 'OK' : 'MISSING/EMPTY') . "\n";

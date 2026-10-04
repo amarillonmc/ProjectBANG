@@ -4,6 +4,7 @@ namespace Imaginary;
 require_once __DIR__ . '/SkillBlocks.php';
 require_once __DIR__ . '/ContentPack.php';
 require_once __DIR__ . '/SkillPuzzles.php';
+require_once __DIR__ . '/CreationTest.php';
 
 /** The ordinary pool and mode rules are server-owned, never part of a submitted build. */
 final class Catalog
@@ -11,18 +12,18 @@ final class Catalog
     public static function cards(): array
     {
         $rows = [
-            ['attack_neutral','无色攻击','basic',['attack'],'对攻击范围内另一名角色造成 1 点无色伤害。每回合通常限一次攻击。'],
+            ['attack_neutral','无色攻击','basic',['attack'],'对攻击范围内另一名角色造成 1 点无色伤害。冷暖对抗中削减身体上限，系列对抗中减少精神。每回合通常限一次攻击。'],
             ['defense','防御','basic',['defense'],'响应攻击时使用，取消攻击。属于「防守」属性。'],
-            ['attack_cool','冷色攻击','basic',['attack'],'对范围内非冷色角色造成 1 点冷色伤害；冷色角色可对自己使用以回复 1 点体力。'],
-            ['attack_warm','暖色攻击','basic',['attack'],'对范围内非暖色角色造成 1 点暖色伤害；暖色角色可对自己使用以回复 1 点体力。'],
+            ['attack_cool','冷色攻击','basic',['attack'],'冷暖对抗中，对范围内非冷色角色造成 1 点冷色伤害，减少精神；冷色角色可对自己使用以回复 1 点精神，不消耗攻击次数。系列对抗中对其他角色造成精神伤害，不能自疗。'],
+            ['attack_warm','暖色攻击','basic',['attack'],'冷暖对抗中，对范围内非暖色角色造成 1 点暖色伤害，减少精神；暖色角色可对自己使用以回复 1 点精神，不消耗攻击次数。系列对抗中对其他角色造成精神伤害，不能自疗。'],
             ['surprise','出其不意','event',[],'弃掉目标心象区以外的一张牌；或额外弃一张手牌，弃掉目标心象顶牌。'],
             ['exchange','你来我往','event',[],'额外弃一张手牌，随机获得目标心象区以外的一张牌；或摸一张牌，随后可将一张手牌置于自己心象底。'],
             ['alliance','攻守同盟','event',[],'目标摸一张牌，然后自己摸三张；回合外可响应事件，来源摸一张并取消对自己的效果。'],
             ['potential','潜能爆发','event',[],'其他角色依次选择：打出攻击、弃心象顶牌、受到来源同色的 1 点伤害、交给来源一张手牌。'],
-            ['life','生命之泉','event',[],'所有角色依次回复 1 点体力。'],
+            ['life','生命之泉','event',[],'所有角色依次回复 1 点精神，不能恢复身体上限；心坏时普通回复无效。'],
             ['mana','法力之泉','event',[],'展示等同于存活人数的普通牌，从自己起依次选一张；或自己摸两张。'],
             ['amplify','潜能增幅','event',[],'弃一张心象顶牌，本回合攻击范围无限且攻击伤害 +1。'],
-            ['energy','能量爆发','event',[],'弃一张心象顶牌，其他角色依次打出防守/躲避牌，或受到 1 点无色伤害。'],
+            ['energy','能量爆发','event',[],'弃一张心象顶牌，其他角色依次打出防守/躲避牌，或受到 1 点无色伤害（冷暖对抗中削减身体上限，系列对抗中减少精神）。'],
             ['recover','精神回复','event',[],'摸等同于已耗心象数量的牌，然后将相同数量手牌置于心象底；心坏时也可按选定顺序重置已耗心象。'],
             ['punch','拳击','persistent',['attack'],'从下个自己的回合起可卸除：对距离 1 的目标使用无色攻击，只能用「躲避」取消。'],
             ['evade','回避','persistent',['defense','evade'],'具有「防守」与「躲避」属性：可从手牌打出以防御通常攻击或能量爆发（不摸牌）；也可装备，从下个自己的回合起卸除以防御并摸一张牌，可取消拳击。'],
@@ -39,6 +40,8 @@ final class Catalog
             if(in_array($r[2],['persistent','delayed'],true)) $out[$r[0]]['maturityTurns']=$r[0]==='punch'?1:0;
         }
         foreach(['evade','haste','automaton'] as $type) $out[$type]['description']=str_replace('从下个自己的回合起','装备后立即',$out[$type]['description']);
+        foreach($out as &$card) if($card['kind']==='persistent') $card['description'].=' 同类可挂置多张，各自成熟与消耗。';
+        unset($card);
         return $out;
     }
 
@@ -117,7 +120,8 @@ final class Catalog
     {
         $p=self::presets();
         $content=ContentPack::all();
-        return ['rulesVersion'=>SkillBlocks::VERSION,'supportedRulesVersions'=>['0.1.0-alpha','0.2.0-alpha','0.3.0-alpha','0.4.0-alpha',SkillBlocks::VERSION],'cards'=>self::cards(),'mindOptions'=>self::mindOptions(),'characters'=>array_column($p,'character'),'presets'=>$p,
+        return ['rulesVersion'=>SkillBlocks::VERSION,'supportedRulesVersions'=>['0.1.0-alpha','0.2.0-alpha','0.3.0-alpha','0.4.0-alpha','0.5.0-alpha',SkillBlocks::VERSION],'cards'=>self::cards(),'mindOptions'=>self::mindOptions(),'characters'=>array_column($p,'character'),'presets'=>$p,
+            'creationTest'=>['version'=>1,'questions'=>CreationTest::questions(),'profiles'=>CreationTest::profiles()],
             'blocks'=>SkillBlocks::metadata(),
             'contentPacks'=>$content['contentPacks'],'skillTemplates'=>array_merge(SkillPuzzles::all(),$content['skillTemplates']),
             'mindTemplates'=>$content['mindTemplates'],'arts'=>$content['arts'],'characterNotes'=>$content['characterNotes'],

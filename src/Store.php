@@ -47,7 +47,7 @@ final class Store
 
     public function table(string $name): string
     {
-        if (!in_array($name, ['users', 'builds', 'rooms', 'members', 'requests', 'events', 'feedback', 'rate_limits'], true)) {
+        if (!in_array($name, ['users', 'builds', 'rooms', 'members', 'requests', 'events', 'feedback', 'rate_limits', 'tutorials'], true)) {
             throw new \InvalidArgumentException('Unknown database table.');
         }
         return '`' . $this->prefix . $name . '`';
@@ -141,6 +141,7 @@ final class Store
         $definitions = [
             'users' => 'id VARCHAR(32) PRIMARY KEY, name VARCHAR(80) NOT NULL, token_hash VARCHAR(64) NOT NULL UNIQUE, created_at BIGINT NOT NULL',
             'builds' => "id VARCHAR(32) PRIMARY KEY, user_id VARCHAR(32) NOT NULL, data $text NOT NULL, updated_at BIGINT NOT NULL",
+            'tutorials' => "user_id VARCHAR(32) PRIMARY KEY, data $text NOT NULL",
             'rooms' => "code VARCHAR(6) PRIMARY KEY, host_id VARCHAR(32) NOT NULL, status VARCHAR(12) NOT NULL, revision BIGINT NOT NULL, data $text NOT NULL, updated_at BIGINT NOT NULL",
             'members' => 'room_code VARCHAR(6) NOT NULL, user_id VARCHAR(32) NOT NULL, PRIMARY KEY (room_code, user_id)',
             'requests' => "user_id VARCHAR(32) NOT NULL, request_id VARCHAR(80) NOT NULL, payload_hash VARCHAR(64) NOT NULL, response $text NOT NULL, created_at BIGINT NOT NULL, PRIMARY KEY (user_id, request_id)",

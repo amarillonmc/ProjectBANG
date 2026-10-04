@@ -1,6 +1,6 @@
 # 实现契约
 
-当前规则版本：`0.5.0-alpha`。运行环境兼容 PHP 7.4+，部署建议 PHP 8.2+；无 Composer、Node 或常驻后台服务要求。网站根目录为 `public/`，`src/`、`var/`、`config.php` 不公开。界面使用 UTF-8 中文，PHP 命名空间为 `Imaginary`。
+当前规则版本：`0.6.0-alpha`。运行环境兼容 PHP 7.4+，部署建议 PHP 8.2+；无 Composer、Node 或常驻后台服务要求。网站根目录为 `public/`，`src/`、`var/`、`config.php` 不公开。界面使用 UTF-8 中文，PHP 命名空间为 `Imaginary`。
 
 ## 目录、词表与内容包
 
@@ -22,6 +22,7 @@
 | `mindTemplates` | 命名心象模板，实际限定牌定义在 `card` 字段 |
 | `arts` | `{id,name,url}` 独立人物图片目录 |
 | `characterNotes` | 以 character.id 索引的人设摘要、搭配原因和来源 |
+| `creationTest` | 问答版本、16 道题及 8 种主打法；实际组合由服务端生成 |
 
 `src/content/kf3-classics.json` 包含本次 38 个预设、76 张心象、35 组命名技能拼图和 38 张独立图片引用，与原有 4 个通用预设合并。每位新人物两项技能、两张主题心象，其中 8 张心象额外绑定角色。白虎（kf3_0100）与朱雀（kf3_0101）加入后四神齐备，继续复用已有模板。玩法差异见 [内容手册](content/KF3_CLASSICS.md)。内容由 `tools/build-kf3-content.mjs` 生成，运行网站只读取随项目发布的 JSON，不依赖 ProjectK。
 
@@ -75,9 +76,9 @@ DeckEntry {
 
 `custom.series` 匹配当前使用者系列，且可选 `custom.characterId` 匹配其人物 ID 时，自定义效果才生效；否则应用 fallback。角色编号是可编辑创作标识，不是身份授权。实体卡的普通/心象来源、UID 和原心象所有者不因失配、赠送、偷取、转化或装备而丢失。
 
-缺少版本或携带 `0.1.0-alpha` 至 `0.4.0-alpha` 的旧构筑可进入当前校验；规范化结果统一写 `0.5.0-alpha`。已有显式次数保留，缺省次数为 0（不限）。未知版本拒绝，旧图集编号兼容。保存/导入是校验与规范化，不是按卡名重新解释或静默排序；已开局游戏保留当时的构筑快照。旧房间每技能“已用回合号”的整数存档由引擎读取为该回合已使用一次。
+缺少版本或携带 `0.1.0-alpha` 至 `0.5.0-alpha` 的旧构筑可进入当前校验；规范化结果统一写 `0.6.0-alpha`。已有显式次数保留，缺省次数为 0（不限）。未知版本拒绝，旧图集编号兼容。保存/导入是校验与规范化，不是按卡名重新解释或静默排序；已开局游戏保留当时的构筑快照。旧房间每技能“已用回合号”的整数存档由引擎读取为该回合已使用一次。
 
-新对局自身也持久化 `rulesVersion`。缺省版本或 0.1～0.4 的游戏状态由 act/tick 显式迁移，补齐新增字段，保留实体牌、伤害、次数与构筑快照，记录 `migratedFromRulesVersion` 和单次日志；非法动作连同迁移一起回滚。旧延时基本牌未携带明确成熟参数且不是拳击时，迁移减去原来额外的一回合等待，重复迁移不再改动。只读 view 返回存档的真实 `rulesVersion`、当前 `engineRulesVersion` 和布尔 `rulesUpgradePending`，不在读取时暗改状态。未知对局版本统一拒绝。
+新对局自身也持久化 `rulesVersion`。缺省版本或 0.1～0.5 的游戏状态由 act/tick 显式迁移，补齐新增字段，保留实体牌、伤害、次数与构筑快照，记录 `migratedFromRulesVersion` 和单次日志；非法动作连同迁移一起回滚。0.4 及更早的延时基本牌未携带明确成熟参数且不是拳击时，迁移减去原来额外的一回合等待；0.5 状态保持原成熟进度，重复迁移不再改动。只读 view 返回存档的真实 `rulesVersion`、当前 `engineRulesVersion` 和布尔 `rulesUpgradePending`，不在读取时暗改状态。未知对局版本统一拒绝。
 
 `Rules::budget()` 返回 `used,max,character,characterMax,custom,customMax,cards,warnings`。默认上限为人物 18、限定合计 24、单张 12，均可配置。技能成本包含效果、自动触发加价、费用折减、次数乘数；转化基础成本依据来源，任意手牌转化高于指定牌型。无色 `damage`/`attack` 每点另计预算。明确强制的自身负面可计负预算，可选负面、可能为零的动态负面不能刷预算；限定牌的负面只抵扣同一张牌的收益，不抵扣其他牌。动态获得的完整技能也参与计价。详见 [SKILLS.md](SKILLS.md)。
 
@@ -153,6 +154,8 @@ conversion 只接受整数技能下标且仅用于 play/respond。scry 响应为
 | catalog | → Catalog::all() |
 | me | → `{user,builds}` |
 | save_build / validate_build | `{build}` → `{build,budget}` |
+| creation_test | `{answers:[16 个 0～3 整数]}` → `{build,budget,profile}`；需访客身份，只生成，不自动保存 |
+| tutorial | `{command:"resume"\|"restart"\|"act"\|"next"\|"lesson",revision?,action?,step?}` → 教学房间安全视角；写操作必须带当前 revision |
 | delete_build | `{id}` → 空结果 |
 | create_room | `{name,mode,buildId?,presetId?,allowCustom,turnSeconds?,bots?:[{buildId?,presetId?}],requestId?}` → 房间；提供 bots 时须为 1～5 项列表，逐项验证并原子创建 |
 | join_room | `{code,buildId?,presetId?}` → 房间 |
@@ -167,9 +170,15 @@ conversion 只接受整数技能下标且仅用于 play/respond。scry 响应为
 
 房间快照为 `{code,name,mode,hostId,status,allowCustom,revision,players,game}`；status 为 lobby/playing/finished，game 为 null 或安全视角。HTTP 错误采用 400/401/403/404/409/429 等。刷新重连需要原访客令牌。
 
+`CreationTest.php` 用现有拼图组装完整构筑，再经 `Rules::validateBuild` 校验。前十二题累积主、副倾向，后四题直接影响颜色/翻面、身体/费用、心象顺序和第二张限定牌；同答案输出稳定，可编辑保存，没有额外的专用执行机制。预算不足时返回明确错误。
+
+`Tutorial.php` 提供九节独立情境，使用实际 `Engine::act/view` 和合法动作。`tutorials` 表以 user_id 为主键保存 `{revision,step,stage,done,game}`，只允许当前身份访问。写操作在事务中锁定用户行，检查 revision，冲突返回 409；服务器构造情境并验证本课所需动作，不接受客户端上传游戏状态。教学无机器人/超时自动推进，与真人房间及其 revision 分离。
+
+安全游戏视角新增 `actionHints`，以 `play:uid`、`equip_use:uid`、`skill:index` 或 `convert:index` 索引，对应 `{reasons,targets}`。原因来自引擎对克隆状态的动作验证，不改变原状态；目标映射只用于解释能否选择，实际提交仍重新校验。挂置牌包含 `turnsUntilReady`，响应窗口公开 color、amount、punch、defenses，方便显示伤害与防御需求。
+
 ## 前端与创作拼图
 
-前端为 `public/index.html`、`public/assets/app.js`、`public/assets/style.css`，无框架/构建器。视图包含大厅、房间、工坊、角色库、规则和反馈；2 秒轮询，处理旧 revision、重连与服务端期限。用户内容通过安全文本/转义显示。
+前端为 `public/index.html`、`public/assets/app.js`、`public/assets/style.css`，无框架/构建器。`table-ui.js` 负责牌桌呈现，`learn.js` 负责教学、问答和工坊引导，`onboarding.css` 提供相应布局。视图包含大厅、房间、工坊、角色库、规则、教学、问答和反馈；2 秒轮询，处理旧 revision、重连与服务端期限。用户内容通过安全文本/转义显示。问答答案存在本机 `imaginary.virtue.v1`，教学进度存在服务器。
 
 角色库可分页搜索并按系列过滤；仅载入角色会保留当前有序心象。工坊从服务端 blocks 绘制触发、条件、次数、转化和效果字段，从 arts 绘制立绘库；支持编辑嵌套分支与获得技能定义。角色库/牌桌可切换人话与结构说明并保存本地偏好，工坊同时展示两种说明。`skill-text.js` 负责客户端说明，服务端 `describeSkill/describeEffects` 仍提供安全视角描述。普通用户可选择、修改、收藏并复用模板；角色与 IP 心象可以分开创作。赠牌与技能费用分别选牌，scry 显示按点击次序形成的私密回顶顺序。
 
@@ -178,7 +187,7 @@ conversion 只接受整数技能下标且仅用于 play/respond。scry 响应为
 ```json
 {
   "format": "imaginary-puzzles-v1",
-  "rulesVersion": "0.5.0-alpha",
+  "rulesVersion": "0.6.0-alpha",
   "skillTemplates": [],
   "mindTemplates": []
 }

@@ -5,6 +5,7 @@ namespace Imaginary;
 
 ini_set('display_errors', '0');
 require_once dirname(__DIR__) . '/src/bootstrap.php';
+require_once dirname(__DIR__) . '/src/Tutorial.php';
 
 final class Api
 {
@@ -57,6 +58,35 @@ final class Api
         if ($action === 'validate_build') {
             $build = Rules::validateBuild($this->object($input['build'] ?? null, '构筑'));
             return ['build' => $build, 'budget' => Rules::budget($build)];
+        }
+        if ($action === 'creation_test') {
+            if (!is_array($input['answers'] ?? null)) throw new ApiError('请完成全部 16 道心象问答。');
+            return CreationTest::compose($input['answers']);
+        }
+        if ($action === 'tutorial') {
+            return $this->store->transaction(function () use ($input) {
+                $id=$this->user['id']; $table=$this->store->table('tutorials');
+                $this->store->one('SELECT id FROM '.$this->store->table('users').' WHERE id = ?'.$this->store->lockSuffix(),[$id]);
+                $row=$this->store->one("SELECT data FROM $table WHERE user_id = ?",[$id]);
+                $state=$row?decode($row['data']):Tutorial::start($id,$this->user['name']);
+                $command=$input['command']??'resume';
+                if (!in_array($command,['resume','restart','act','next','lesson'],true)) throw new ApiError('教学操作不存在。');
+                if (in_array($command,['act','next','restart','lesson'],true)&&($input['revision']??null)!==$state['revision']) throw new ApiError('教学进度已更新，请重新进入这一课。',409);
+                if ($command==='restart') $state=Tutorial::start($id,$this->user['name'],$state['step'],$state['revision']+1);
+                if ($command==='lesson') {
+                    $step=$input['step']??null;
+                    if (!is_int($step)||$step<0||$step>=count(Tutorial::lessons())) throw new ApiError('请选择有效的课程。');
+                    $state=Tutorial::start($id,$this->user['name'],$step,$state['revision']+1);
+                }
+                if ($command==='act') $state=Tutorial::act($state,$id,$this->object($input['action']??null,'教学行动'));
+                if ($command==='next') {
+                    if (!$state['done']) throw new ApiError('请先完成当前教学目标。');
+                    $state=Tutorial::start($id,$this->user['name'],$state['step']+1,$state['revision']+1);
+                }
+                if ($row) $this->store->execute("UPDATE $table SET data = ? WHERE user_id = ?",[encode($state),$id]);
+                else $this->store->execute("INSERT INTO $table (user_id,data) VALUES (?,?)",[$id,encode($state)]);
+                return Tutorial::view($state,$id);
+            });
         }
         $allowed = ['save_build', 'delete_build', 'create_room', 'join_room', 'choose_build', 'add_bot', 'leave_room', 'start', 'room', 'act', 'feedback', 'export'];
         if (!in_array($action, $allowed, true)) {

@@ -130,7 +130,7 @@ final class Rules
     public static function validateBuild(array $b): array
     {
         self::keys($b,['id','name','character','deck','budget','createdAt','updatedAt','rulesVersion']);
-        if(array_key_exists('rulesVersion',$b)) self::choice($b['rulesVersion'],['0.1.0-alpha','0.2.0-alpha','0.3.0-alpha','0.4.0-alpha',SkillBlocks::VERSION],'规则版本');
+        if(array_key_exists('rulesVersion',$b)) self::choice($b['rulesVersion'],['0.1.0-alpha','0.2.0-alpha','0.3.0-alpha','0.4.0-alpha','0.5.0-alpha',SkillBlocks::VERSION],'规则版本');
         if(!is_array($b['character']??null)) self::fail('缺少人物'); $c=$b['character'];
         self::keys($c,['id','name','title','series','color','hp','art','flipColor','skills']);
         $skills=$c['skills']??[];
