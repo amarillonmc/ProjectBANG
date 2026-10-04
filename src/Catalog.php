@@ -14,6 +14,8 @@ final class Catalog
         $rows = [
             ['attack_neutral','无色攻击','basic',['attack'],'对攻击范围内另一名角色造成 1 点无色伤害。冷暖对抗中削减身体上限，系列对抗中减少精神。每回合通常限一次攻击。'],
             ['defense','防御','basic',['defense'],'响应攻击时使用，取消攻击。属于「防守」属性。'],
+            ['heal','休养','basic',[],'仅对自己使用，回复 1 点体力。人狼模式濒死时可打出自救，心坏时仍可自救；不能治疗他人或恢复体力上限。'],
+            ['medicine','援药','persistent',[],'挂置在自己面前，到下个自己的回合成熟。出牌阶段或人狼模式濒死救援时，可卸除以令任意一名角色回复 1 点体力；心坏时仍可救援，不能恢复体力上限。'],
             ['attack_cool','冷色攻击','basic',['attack'],'冷暖对抗中，对范围内非冷色角色造成 1 点冷色伤害，减少精神；冷色角色可对自己使用以回复 1 点精神，不消耗攻击次数。系列对抗中对其他角色造成精神伤害，不能自疗。'],
             ['attack_warm','暖色攻击','basic',['attack'],'冷暖对抗中，对范围内非暖色角色造成 1 点暖色伤害，减少精神；暖色角色可对自己使用以回复 1 点精神，不消耗攻击次数。系列对抗中对其他角色造成精神伤害，不能自疗。'],
             ['surprise','出其不意','event',[],'弃掉目标心象区以外的一张牌；或额外弃一张手牌，弃掉目标心象顶牌。'],
@@ -37,7 +39,7 @@ final class Catalog
         $out=[];
         foreach ($rows as $r) {
             $out[$r[0]]=['id'=>$r[0],'name'=>$r[1],'kind'=>$r[2],'tags'=>$r[3],'description'=>$r[4]];
-            if(in_array($r[2],['persistent','delayed'],true)) $out[$r[0]]['maturityTurns']=$r[0]==='punch'?1:0;
+            if(in_array($r[2],['persistent','delayed'],true)) $out[$r[0]]['maturityTurns']=in_array($r[0],['punch','medicine'],true)?1:0;
         }
         foreach(['evade','haste','automaton'] as $type) $out[$type]['description']=str_replace('从下个自己的回合起','装备后立即',$out[$type]['description']);
         foreach($out as &$card) if($card['kind']==='persistent') $card['description'].=' 同类可挂置多张，各自成熟与消耗。';
@@ -45,7 +47,7 @@ final class Catalog
         return $out;
     }
 
-    public static function ordinary(): array
+    public static function ordinary(string $mode='color'): array
     {
         $grid=[
             ['recover','punch','automaton','evade'],['attack_warm','attack_cool','attack_neutral','attack_neutral'],
@@ -56,11 +58,36 @@ final class Catalog
             ['alliance','treasure','haste','alliance'],['life','potential','mana','amplify'],
             ['fortune','calamity','surprise','exchange'],
         ];
+        // Same 104 physical slots and rank/suit distribution, with a separate identity pool.
+        if($mode==='identity') {
+            $grid[0][2]='medicine'; $grid[2][2]='heal'; $grid[4][1]='heal';
+            $grid[5][1]='heal'; $grid[6][1]='medicine'; $grid[7][1]='heal';
+            $grid[9][3]='attack_neutral';
+        }
         $cards=self::cards(); $deck=[]; $suits=['♥','♠','♣','♦'];
         for($copy=0;$copy<2;$copy++) foreach($grid as $i=>$row) foreach($row as $j=>$type) {
             $deck[]=array_merge($cards[$type],['uid'=>'n'.$copy.'_'.$i.'_'.$j,'type'=>$type,'rank'=>$i+1,'suit'=>$suits[$j],'origin'=>'normal']);
         }
         return $deck;
+    }
+    public static function modeRules(string $mode): array
+    {
+        return $mode==='identity'?['minPlayers'=>4,'maxPlayers'=>7]:['minPlayers'=>2,'maxPlayers'=>6];
+    }
+    public static function identityRoles(): array
+    {
+        return [
+            'mayor'=>['name'=>'村长','goal'=>'消灭所有狼人和妖狐，保护村庄。'],
+            'villager'=>['name'=>'村民','goal'=>'保护村长，消灭所有狼人和妖狐；阵亡后仍可随村庄获胜。'],
+            'wolf'=>['name'=>'狼人','goal'=>'令村长阵亡；若妖狐成为唯一幸存者，则由妖狐获胜。'],
+            'fox'=>['name'=>'妖狐','goal'=>'先消灭其他所有人，最后击败村长，成为唯一幸存者。'],
+        ];
+    }
+    public static function identityCounts(int $players): array
+    {
+        $rows=[4=>[1,0,2,1],5=>[1,1,2,1],6=>[1,1,3,1],7=>[1,2,3,1]];
+        if(!isset($rows[$players])) throw new \InvalidArgumentException('人狼身份模式需要 4～7 人');
+        return array_combine(['mayor','villager','wolf','fox'],$rows[$players]);
     }
     public static function mindOptions(): array
     {
@@ -120,13 +147,15 @@ final class Catalog
     {
         $p=self::presets();
         $content=ContentPack::all();
-        return ['rulesVersion'=>SkillBlocks::VERSION,'supportedRulesVersions'=>['0.1.0-alpha','0.2.0-alpha','0.3.0-alpha','0.4.0-alpha','0.5.0-alpha',SkillBlocks::VERSION],'cards'=>self::cards(),'mindOptions'=>self::mindOptions(),'characters'=>array_column($p,'character'),'presets'=>$p,
+        return ['rulesVersion'=>SkillBlocks::VERSION,'supportedRulesVersions'=>['0.1.0-alpha','0.2.0-alpha','0.3.0-alpha','0.4.0-alpha','0.5.0-alpha','0.6.0-alpha',SkillBlocks::VERSION],'cards'=>self::cards(),'mindOptions'=>self::mindOptions(),'characters'=>array_column($p,'character'),'presets'=>$p,
             'creationTest'=>['version'=>1,'questions'=>CreationTest::questions(),'profiles'=>CreationTest::profiles()],
             'blocks'=>SkillBlocks::metadata(),
             'contentPacks'=>$content['contentPacks'],'skillTemplates'=>array_merge(SkillPuzzles::all(),$content['skillTemplates']),
             'mindTemplates'=>$content['mindTemplates'],'arts'=>$content['arts'],'characterNotes'=>$content['characterNotes'],
             'limits'=>array_merge(RuleConfig::all(),['skills'=>RuleConfig::get('maxSkills'),'effects'=>RuleConfig::get('maxEffects'),'customCards'=>13]),
-            'modes'=>['color'=>'冷暖对抗','series'=>'系列对抗'],
+            'modes'=>['color'=>'冷暖对抗','series'=>'系列对抗','identity'=>'人狼身份'],
+            'modeRules'=>['color'=>self::modeRules('color'),'series'=>self::modeRules('series'),'identity'=>self::modeRules('identity')],
+            'identity'=>['roles'=>self::identityRoles(),'counts'=>[4=>self::identityCounts(4),5=>self::identityCounts(5),6=>self::identityCounts(6),7=>self::identityCounts(7)]],
         ];
     }
 }

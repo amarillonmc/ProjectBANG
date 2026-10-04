@@ -105,15 +105,20 @@ trait Events
                 self::queueEventStep($g,$key,'rescue');
                 self::queueEventSkills($g,$key,[['trigger'=>'dying','players'=>[$target],'related'=>$source],['trigger'=>'any_dying','players'=>self::eventOrder($g),'related'=>$target]]);
             } elseif($job['stage']==='rescue') {
+                if($g['mode']==='identity') { self::identityRescueStep($g,$key); return; }
                 self::miracleRescue($g,$target);self::tryColorFlip($g,$target);
                 if(self::hp($g,$target)>0)self::queueEventStep($g,$key,'close');
-                else {
-                    $g['eventFrames'][$key]['deathCommitted']=true;
-                    self::queueEventStep($g,$key,'eliminate');
-                    self::queueEventSkills($g,$key,[['trigger'=>'death','players'=>[$target],'related'=>$source]]);
-                }
+                else self::queueEventStep($g,$key,'death');
+            } elseif($job['stage']==='identity_rescue') {
+                self::identityRescueStep($g,$key);
+            } elseif($job['stage']==='death') {
+                $g['eventFrames'][$key]['deathCommitted']=true;
+                self::queueEventStep($g,$key,'eliminate');
+                self::queueEventSkills($g,$key,[['trigger'=>'death','players'=>[$target],'related'=>$source]]);
             } elseif($job['stage']==='eliminate') {
-                self::eliminate($g,$target);self::queueEventStep($g,$key,'close');
+                self::eliminate($g,$target,$source);
+                if($g['status']==='finished') return;
+                self::queueEventStep($g,$key,'close');
                 self::queueEventSkills($g,$key,[['trigger'=>'any_death','players'=>self::eventOrder($g),'related'=>$target]]);
             }
         }

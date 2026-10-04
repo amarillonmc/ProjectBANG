@@ -5,7 +5,7 @@ require_once __DIR__.'/RuleConfig.php';
 /** One server-owned vocabulary for validation, documentation and the visual editor. */
 final class SkillBlocks
 {
-    public const VERSION = '0.6.0-alpha';
+    public const VERSION = '0.7.0-alpha';
 
     public static function metadata(): array
     {

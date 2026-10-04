@@ -13,7 +13,10 @@ trait Mechanics
         $g['draft']=[];$g['queue']=[];$g['pending']=null;$g['reservedJudgments']=[];
         if(empty($g['resolutionStopped']))self::log($g,'达到服务器结算保险上限，结束此次效果链；已支付的费用与已完成的效果保留。');
         $g['resolutionStopped']=true;$g['eventStack']=[];$g['eventFrames']=[];
-        foreach(self::alive($g) as $id)if(self::hp($g,$id)<=0)self::dying($g,$id);
+        foreach(self::alive($g) as $id) {
+            if($g['status']!=='playing') break;
+            if(self::hp($g,$id)<=0) self::dying($g,$id);
+        }
         self::victory($g);
     }
     private static function takeUnreserved(array $g,array &$cards,bool $last=false): ?array

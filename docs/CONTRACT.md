@@ -1,6 +1,6 @@
 # 实现契约
 
-当前规则版本：`0.6.0-alpha`。运行环境兼容 PHP 7.4+，部署建议 PHP 8.2+；无 Composer、Node 或常驻后台服务要求。网站根目录为 `public/`，`src/`、`var/`、`config.php` 不公开。界面使用 UTF-8 中文，PHP 命名空间为 `Imaginary`。
+当前规则版本：`0.7.0-alpha`。运行环境兼容 PHP 7.4+，部署建议 PHP 8.2+；无 Composer、Node 或常驻后台服务要求。网站根目录为 `public/`，`src/`、`var/`、`config.php` 不公开。界面使用 UTF-8 中文，PHP 命名空间为 `Imaginary`。
 
 ## 目录、词表与内容包
 
@@ -16,7 +16,8 @@
 | `characters` / `presets` | 人物列表 / 可直接使用的完整构筑 |
 | `blocks` | triggers、conditions、effects、effectMeta、equipmentSlots、equipmentEffects、targets、conversions、limits |
 | `limits` | 技能数、效果数、限定牌数和各项预算 |
-| `modes` | color / series 两个对局模式 |
+| `modes` | color / series / identity 三个对局模式 |
+| `modeRules` / `identity` | 各模式 minPlayers / maxPlayers；身份名称、目标及 4～7 人配置 |
 | `contentPacks` | 内容包名称、说明、characterIds、来源列表 |
 | `skillTemplates` | 命名技能模板，实际技能在 `skill` 字段 |
 | `mindTemplates` | 命名心象模板，实际限定牌定义在 `card` 字段 |
@@ -76,7 +77,7 @@ DeckEntry {
 
 `custom.series` 匹配当前使用者系列，且可选 `custom.characterId` 匹配其人物 ID 时，自定义效果才生效；否则应用 fallback。角色编号是可编辑创作标识，不是身份授权。实体卡的普通/心象来源、UID 和原心象所有者不因失配、赠送、偷取、转化或装备而丢失。
 
-缺少版本或携带 `0.1.0-alpha` 至 `0.5.0-alpha` 的旧构筑可进入当前校验；规范化结果统一写 `0.6.0-alpha`。已有显式次数保留，缺省次数为 0（不限）。未知版本拒绝，旧图集编号兼容。保存/导入是校验与规范化，不是按卡名重新解释或静默排序；已开局游戏保留当时的构筑快照。旧房间每技能“已用回合号”的整数存档由引擎读取为该回合已使用一次。
+缺少版本或携带 `0.1.0-alpha` 至 `0.6.0-alpha` 的旧构筑可进入当前校验；规范化结果统一写 `0.7.0-alpha`。已有显式次数保留，缺省次数为 0（不限）。未知版本拒绝，旧图集编号兼容。保存/导入是校验与规范化，不是按卡名重新解释或静默排序；已开局游戏保留当时的构筑快照。旧房间每技能“已用回合号”的整数存档由引擎读取为该回合已使用一次。
 
 新对局自身也持久化 `rulesVersion`。缺省版本或 0.1～0.5 的游戏状态由 act/tick 显式迁移，补齐新增字段，保留实体牌、伤害、次数与构筑快照，记录 `migratedFromRulesVersion` 和单次日志；非法动作连同迁移一起回滚。0.4 及更早的延时基本牌未携带明确成熟参数且不是拳击时，迁移减去原来额外的一回合等待；0.5 状态保持原成熟进度，重复迁移不再改动。只读 view 返回存档的真实 `rulesVersion`、当前 `engineRulesVersion` 和布尔 `rulesUpgradePending`，不在读取时暗改状态。未知对局版本统一拒绝。
 
@@ -114,7 +115,7 @@ inspect_hand / scry_mind 的 pending.cards 是私密快照，实体留在手牌/
 
 ## 引擎调用与安全视角
 
-- `Engine::create(array $players,string $mode): array`：2～6 个玩家，每项为 `{id,name,build,bot}`；mode 为 color 或 series。
+- `Engine::create(array $players,string $mode,?array $budgetLimits=null): array`：每项为 `{id,name,build,bot}`；color / series 需要 2～6 人，identity 需要 4～7 人。
 - `Engine::act(array &$game,string $playerId,array $action): void`：检查席位、时机、期限、合法目标、次数、费用和牌序；失败恢复动作前状态。
 - `Engine::view(array $game,string $playerId): array`：只接受参与者，返回安全视角。
 - `Engine::tick(array &$game): bool`：推进过期等待/回合与有界机器人行动；`botStep()` 也使用合法动作。
@@ -158,7 +159,7 @@ conversion 只接受整数技能下标且仅用于 play/respond。scry 响应为
 | creation_test | `{answers:[16 个 0～3 整数]}` → `{build,budget,profile}`；需访客身份，只生成，不自动保存 |
 | tutorial | `{command:"resume"\|"restart"\|"act"\|"next"\|"lesson",revision?,action?,step?}` → 教学房间安全视角；写操作必须带当前 revision |
 | delete_build | `{id}` → 空结果 |
-| create_room | `{name,mode,buildId?,presetId?,versionId?,budgetLimits?,allowCustom,turnSeconds?,bots?:[构筑选择],requestId?}` → 房间；bots 为 1～5 项，逐项验证并原子创建；budgetLimits 只允许 characterBudget / customBudget / customCardBudget（1～100000） |
+| create_room | `{name,mode,buildId?,presetId?,versionId?,budgetLimits?,allowCustom,turnSeconds?,bots?:[构筑选择],requestId?}` → 房间；bots 为 1～5 项（identity 最多 6 项），逐项验证并原子创建；budgetLimits 只允许 characterBudget / customBudget / customCardBudget（1～100000） |
 | join_room | `{code,buildId?,presetId?}` → 房间 |
 | room | `{code}` → 房间，并推进有界自动行动 |
 | choose_build | `{code,buildId?,presetId?}` → 房间，仅开局前 |
@@ -198,9 +199,15 @@ versions 保存不可变的规范化构筑、版本号、作者与 gameplay fing
 
 默认配额：每身份 30 件作品，每作品 200 版，30 个系列，每系列 20 个分享快照，100 张去重图片。图片保留以保证旧版本、复制件和对局立绘可用；调整配额由管理员修改配置。收藏发现的排序、评分、评论、推荐与审核后台留待 beta。
 
-## C 方向：已确认、尚未实现的人狼规则
+## C 方向：基础人狼身份
 
-设计者于 2026-10-04 确认：人狼模式的冷暖色只参与技能判定，类似武将的性别属性；人物死亡不翻面。新增普通回复牌（只能用于自己）与延时回复牌（可从自身挂置区卸下，用于其他角色）。该模式要重新分配攻击、防御和回复牌数量；具体数量、回复量、成熟时机与可用窗口尚待敲定。当前 B 实现不改变冷暖/系列模式的 104 张牌池、颜色伤害或死亡翻面逻辑。
+模式 ID 为 `identity`，`Identity.php` 负责随机身份、胜负、救援及机器人公开信息策略。身份值 mayor / villager / wolf / fox 对应村长／村民／狼人／妖狐。人数采用 BANG 的 4～7 人配置，村长上限 +1、先行动，其余身份保密。精确人数、胜负与牌池配比见 [RULES.md](RULES.md)。
+
+引擎内部在 players 中保存 role；对外 view.players[].role 仅在该席位是自己、公开村长、已阵亡或游戏结束时返回，否则为 null。view.identity 包含自己的 role、公开 mayor、角色目标、初始人数分布；winningIds / winningTeam 仅结算后填入。大厅 players 不包含 role，未完成导出不含完整 replay。机器人不读取其他人的秘密 role；技能的 allies / enemies 仍按公开颜色关系判定，不能充当身份探测器。
+
+所有伤害计入 neutral 损伤而不减上限，不发生死亡冷暖翻面。新增 heal（休养）与 medicine（援药），仅人狼普通牌池收录，原通用心象点数选项不变。援药 maturityTurns=1，可叠放。identity_rescue 使用事件帧保存当前濒死者、座次与进度，操作为 respond + pass / rescue_hand / rescue_equipment。休养只允许自救；援药和奇迹必须已挂置且成熟。普通新回复不恢复零上限，奇迹保留例外。所有活人均获得询问窗口，真人超时放弃；序列化重连后继续同一窗口。
+
+死亡前技能完成并实际退场后检查身份胜负，结束时清理后续队列与事件帧；无结局时才发击杀奖励或误杀惩罚。人狼完成局也按 B 的作者本人及版本快照规则记录试用证明。规则升级为 0.7；0.5 / 0.6 房间迁移不再次调整成熟回合，旧构筑可规范化导入。规则签名变化后，旧版本作品仍可访问，但当前规则投稿资格需要重新完成对局。
 
 `CreationTest.php` 用现有拼图组装完整构筑，再经 `Rules::validateBuild` 校验。前十二题累积主、副倾向，后四题直接影响颜色/翻面、身体/费用、心象顺序和第二张限定牌；同答案输出稳定，可编辑保存，没有额外的专用执行机制。预算不足时返回明确错误。
 
@@ -219,7 +226,7 @@ versions 保存不可变的规范化构筑、版本号、作者与 gameplay fing
 ```json
 {
   "format": "imaginary-puzzles-v1",
-  "rulesVersion": "0.6.0-alpha",
+  "rulesVersion": "0.7.0-alpha",
   "skillTemplates": [],
   "mindTemplates": []
 }
@@ -229,4 +236,4 @@ versions 保存不可变的规范化构筑、版本号、作者与 gameplay fing
 
 ## 规则范围
 
-普通牌池固定 104 张；默认开局 5 张普通手牌、标准摸 2 张且可替换至多 2 张心象、默认每回合一次攻击/范围 1，新增额度按解释器增减。延时牌按 maturityTurns 成熟。防御属于防守，回避同时属于防守与躲避：可从手牌防御通常攻击（不摸牌），或卸除成熟装备防御并摸一张；拳击仍要求成熟装备回避。机器人按当前颜色过滤有害目标及会波及伙伴的群体行动，系列模式还避开同系列目标；真人动作和模式胜利条件不变。冷暖与系列两模式、心坏、翻面、体力、心象归属等基础裁定见 [RULES.md](RULES.md)。本轮按用户确认保留基础规则、尽量等价还原技能机制；不是完整三国杀模式。当前 OL 来源、能力与缺口见 [覆盖审计](content/SGS_OL_COVERAGE.md)。
+普通牌池固定 104 张；默认开局 5 张普通手牌、标准摸 2 张且可替换至多 2 张心象、默认每回合一次攻击/范围 1，新增额度按解释器增减。延时牌按 maturityTurns 成熟。防御属于防守，回避同时属于防守与躲避：可从手牌防御通常攻击（不摸牌），或卸除成熟装备防御并摸一张；拳击仍要求成熟装备回避。机器人按当前颜色过滤有害目标及会波及伙伴的群体行动，系列模式还避开同系列目标；真人动作和模式胜利条件不变。冷暖、系列、人狼三模式、心坏、翻面、体力、心象归属等基础裁定见 [RULES.md](RULES.md)。本轮按用户确认保留基础规则、尽量等价还原技能机制；不是完整三国杀模式。当前 OL 来源、能力与缺口见 [覆盖审计](content/SGS_OL_COVERAGE.md)。

@@ -9,3 +9,10 @@
 .table-command .panel-title{align-items:flex-start}.table-command .panel-title h3{flex:1;margin:0;overflow-wrap:anywhere}.table-side .table-command .panel-title .btn{width:auto;flex-shrink:0}.lesson-controls{min-width:240px;max-width:350px}.lesson-controls .button-row{margin-top:8px}.lesson-controls select{font-size:12px;padding:7px}.table-command{scroll-margin-bottom:76px}
 
 .virtue-test> .btn{margin-bottom:16px}
+/* Identity mode communicates allegiance with text, independent of character color. */
+.identity-banner{display:flex;align-items:center;gap:24px;padding:18px 22px;margin:0 0 20px;border:1px solid #c2a56a;border-radius:14px;background:#f7efdd;color:#403725}
+.identity-banner h2{margin:4px 0;font-size:26px;white-space:nowrap}.identity-banner p{margin:4px 0}.identity-banner small{color:#645a46}
+.identity-role{display:inline-block;margin:5px 0;padding:3px 9px;border:1px solid currentColor;border-radius:5px;font-size:12px;font-weight:700;background:#fff8ed;color:#745f2d}
+.identity-role.hidden{color:#77736b;background:#eeebe5}.identity-role.wolf{color:#963e44;background:#faecec}.identity-role.fox{color:#77558e;background:#f3edf8}.identity-role.villager{color:#3d746b;background:#edf7f3}
+.healing-card .damage-label{background:#d9ebe2;color:#275743}.healing-card .card-extra{color:#275743}
+@media(max-width:600px){.identity-banner{align-items:flex-start;gap:12px;padding:14px;flex-direction:column}.identity-banner h2{font-size:23px}.identity-banner small{line-height:1.7}.self-title>.identity-role{flex-shrink:0}}

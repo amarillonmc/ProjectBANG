@@ -207,8 +207,8 @@ final class Api
                 $this->persistRoom($room, 'add_bot', []);
             } elseif ($action === 'start') {
                 $this->host($room);
-                if (count($room['players']) < 2) {
-                    throw new ApiError('至少需要两位玩家，可以加入练习机器人。');
+                if (count($room['players']) < Catalog::modeRules($room['mode'])['minPlayers']) {
+                    throw new ApiError('此模式至少需要 '.Catalog::modeRules($room['mode'])['minPlayers'].' 位玩家，可以加入练习机器人。');
                 }
                 $room['rulesSignature'] = Workshop::signature();
                 $room['game'] = Engine::create($room['players'], $room['mode'], $room['budgetLimits'] ?? null);
@@ -232,8 +232,8 @@ final class Api
     {
         $name = $this->label($input['name'] ?? '心象内测室', 40, '房间名称');
         $mode = $input['mode'] ?? 'color';
-        if (!in_array($mode, ['color', 'series'], true)) {
-            throw new ApiError('请选择已锁定的颜色模式或系列模式。');
+        if (!in_array($mode, ['color', 'series', 'identity'], true)) {
+            throw new ApiError('请选择冷暖对抗、系列对抗或人狼身份模式。');
         }
         $table = $this->store->table('rooms');
         $active = $this->store->one("SELECT COUNT(*) AS total FROM $table WHERE host_id = ? AND status <> 'finished'", [$this->user['id']]);
@@ -267,8 +267,8 @@ final class Api
         $this->customAllowed($room, $selected);
         if (array_key_exists('bots', $input)) {
             $bots = $input['bots'];
-            if (!is_array($bots) || count($bots) < 1 || count($bots) > 5 || array_keys($bots) !== range(0, count($bots) - 1)) {
-                throw new ApiError('请选择 1～5 名机器人，并逐一指定构筑。');
+            if (!is_array($bots) || count($bots) < 1 || count($bots) >= Catalog::modeRules($mode)['maxPlayers'] || array_keys($bots) !== range(0, count($bots) - 1)) {
+                throw new ApiError('请选择 1～'.(Catalog::modeRules($mode)['maxPlayers']-1).' 名机器人，并逐一指定构筑。');
             }
             foreach ($bots as $bot) {
                 $this->addBot($room, $this->object($bot, '机器人的构筑选择'));
@@ -288,8 +288,8 @@ final class Api
             }
         }
         $this->lobby($room);
-        if (count($room['players']) >= 6) {
-            throw new ApiError('房间已满（最多 6 人）。');
+        if (count($room['players']) >= Catalog::modeRules($room['mode'])['maxPlayers']) {
+            throw new ApiError('房间已满（最多 '.Catalog::modeRules($room['mode'])['maxPlayers'].' 人）。');
         }
         $selected = $this->selectedBuild($input);
         $this->customAllowed($room, $selected);
@@ -393,6 +393,7 @@ final class Api
             'code' => $room['code'], 'name' => $room['name'], 'mode' => $room['mode'],
             'hostId' => $room['hostId'], 'status' => $room['status'], 'allowCustom' => $room['allowCustom'],
             'budgetLimits' => $room['budgetLimits'] ?? Workshop::limits(),
+            'modeRules' => Catalog::modeRules($room['mode']),
             'turnSeconds' => $room['turnSeconds'], 'revision' => $room['revision'],
             'players' => array_map(function ($player) {
                 return ['id' => $player['id'], 'name' => $player['name'], 'bot' => $player['bot'], 'custom' => $player['custom'] ?? false, 'character' => $player['build']['character']];
@@ -436,7 +437,7 @@ final class Api
         $presets = Catalog::all()['presets'];
         foreach ($presets as $preset) {
             $other = $preset['character'];
-            if ($other['color'] !== $first['color'] && ($room['mode'] !== 'series' || $other['series'] !== $first['series'])) {
+            if ($room['mode'] === 'identity' || ($other['color'] !== $first['color'] && ($room['mode'] !== 'series' || $other['series'] !== $first['series']))) {
                 return $preset['id'];
             }
         }
@@ -445,8 +446,8 @@ final class Api
 
     private function addBot(array &$room, array $input): void
     {
-        if (count($room['players']) >= 6) {
-            throw new ApiError('房间已满（最多 6 人）。');
+        if (count($room['players']) >= Catalog::modeRules($room['mode'])['maxPlayers']) {
+            throw new ApiError('房间已满（最多 '.Catalog::modeRules($room['mode'])['maxPlayers'].' 人）。');
         }
         if (empty($input['versionId']) && (!isset($input['buildId']) || $input['buildId'] === '') && (!isset($input['presetId']) || $input['presetId'] === '')) {
             $input = ['presetId' => $this->opponentPreset($room)];

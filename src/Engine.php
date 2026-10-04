@@ -6,6 +6,7 @@ use Throwable;
 require_once __DIR__.'/Mechanics.php';
 require_once __DIR__.'/Events.php';
 require_once __DIR__.'/DynamicSkills.php';
+require_once __DIR__.'/Identity.php';
 
 /** A serialized, authoritative state machine; each action is atomic even outside a DB transaction. */
 final class Engine
@@ -13,6 +14,7 @@ final class Engine
     use Mechanics;
     use Events;
     use DynamicSkills;
+    use Identity;
     private static function check(bool $ok,string $message): void { if(!$ok) throw new InvalidArgumentException($message); }
     private static function shuffleCards(array &$cards): void
     {
@@ -26,7 +28,7 @@ final class Engine
     private static function stateVersion(array $g): string
     {
         $version=array_key_exists('rulesVersion',$g)?$g['rulesVersion']:'0.1.0-alpha';
-        self::check(is_string($version)&&in_array($version,['0.1.0-alpha','0.2.0-alpha','0.3.0-alpha','0.4.0-alpha','0.5.0-alpha',SkillBlocks::VERSION],true),'此对局的规则版本不受当前服务端支持，请使用匹配版本的服务端继续对局');
+        self::check(is_string($version)&&in_array($version,['0.1.0-alpha','0.2.0-alpha','0.3.0-alpha','0.4.0-alpha','0.5.0-alpha','0.6.0-alpha',SkillBlocks::VERSION],true),'此对局的规则版本不受当前服务端支持，请使用匹配版本的服务端继续对局');
         return $version;
     }
     /** Older rooms use the same physical cards and damage model; migrate additive fields explicitly. */
@@ -40,7 +42,7 @@ final class Engine
             foreach($p['usedSkills'] as &$used) if(is_int($used)) $used=['turn'=>$used,'count'=>1]; unset($used);
             foreach(['equipment','delayed'] as $zone) foreach($p[$zone] as &$card) {
                 // Historical readyAt was installation turn + 1. Preserve elapsed time and custom overrides.
-                if($version!=='0.5.0-alpha'&&isset($card['readyAt'])&&!isset($card['maturityTurns'])&&!isset($card['custom']['maturityTurns'])&&$card['type']!=='punch'&&!self::trueEquipment($card)) $card['readyAt']=max(0,$card['readyAt']-1);
+                if(!in_array($version,['0.5.0-alpha','0.6.0-alpha'],true)&&isset($card['readyAt'])&&!isset($card['maturityTurns'])&&!isset($card['custom']['maturityTurns'])&&$card['type']!=='punch'&&!self::trueEquipment($card)) $card['readyAt']=max(0,$card['readyAt']-1);
             } unset($card);
             $g['handBoundary'][$id]=count($p['hand']);
         }
@@ -54,7 +56,7 @@ final class Engine
     private static function hp(array $g,string $id): int
     {
         $p=$g['players'][$id];
-        if($g['mode']==='series') $loss=$p['marks']['neutral'];
+        if($g['mode']!=='color') $loss=$p['marks']['neutral'];
         elseif($p['color']==='neutral') $loss=$p['marks']['cool']+$p['marks']['warm'];
         else $loss=$p['marks'][$p['color']==='cool'?'warm':'cool'];
         return max(0,$p['maxHp']-$loss);
@@ -142,7 +144,7 @@ final class Engine
         $g['players'][$id]['mind'][]=$c;
     }
     private static function mature(array $g,string $id,array $c): bool { return ($c['readyAt']??PHP_INT_MAX)<=$g['players'][$id]['turns']; }
-    private static function maturity(array $card): int { return $card['maturityTurns']??$card['custom']['maturityTurns']??($card['type']==='punch'?1:0); }
+    private static function maturity(array $card): int { return $card['maturityTurns']??$card['custom']['maturityTurns']??(in_array($card['type'],['punch','medicine'],true)?1:0); }
     private static function hasEquipment(array $g,string $id,string $type): ?array
     {
         foreach($g['players'][$id]['equipment'] as $c) if($c['type']===$type&&self::mature($g,$id,$c)) return $c; return null;
@@ -170,8 +172,10 @@ final class Engine
     }
     public static function create(array $players,string $mode, ?array $budgetLimits = null): array
     {
-        self::check(in_array($mode,['color','series'],true),'模式不支持'); self::check(count($players)>=2&&count($players)<=6,'对局需要 2～6 人');
-        $g=['rulesVersion'=>SkillBlocks::VERSION,'status'=>'playing','mode'=>$mode,'players'=>[],'order'=>[],'deck'=>Catalog::ordinary(),'discard'=>[],'turnNumber'=>0,'turn'=>'','phase'=>'draw','resumePhase'=>'draw','pending'=>null,'queue'=>[],'log'=>[],'winner'=>null,'turnSeconds'=>120,'deadline'=>time()+120,'eventCount'=>0];
+        self::check(in_array($mode,['color','series','identity'],true),'模式不支持');
+        $limits=Catalog::modeRules($mode);
+        self::check(count($players)>=$limits['minPlayers']&&count($players)<=$limits['maxPlayers'],'此模式需要 '.$limits['minPlayers'].'～'.$limits['maxPlayers'].' 人');
+        $g=['rulesVersion'=>SkillBlocks::VERSION,'status'=>'playing','mode'=>$mode,'players'=>[],'order'=>[],'deck'=>Catalog::ordinary($mode),'discard'=>[],'turnNumber'=>0,'turn'=>'','phase'=>'draw','resumePhase'=>'draw','pending'=>null,'queue'=>[],'log'=>[],'winner'=>null,'turnSeconds'=>120,'deadline'=>time()+120,'eventCount'=>0];
         self::shuffleCards($g['deck']); $teams=[];
         foreach($players as $p) {
             self::check(is_string($p['id']??null)&&!isset($g['players'][$p['id']]),'玩家编号重复或无效');
@@ -184,26 +188,35 @@ final class Engine
             $g['players'][$id]+=['sequestered'=>[],'handLockedUntil'=>0,'damageGuard'=>0,'playedThisTurn'=>0,'damageThisTurn'=>0,'lastPlayed'=>null,'sameRankOrSuit'=>false];
             $g['order'][]=$id; $teams[]=$mode==='series'?$c['series']:($c['color']==='neutral'?'neutral_'.$id:$c['color']);
         }
-        self::check(count(array_unique($teams))>=2,'需要至少两个互为对手的颜色或系列');
+        if($mode!=='identity') self::check(count(array_unique($teams))>=2,'需要至少两个互为对手的颜色或系列');
+        $first=$mode==='identity'?self::dealIdentities($g):$g['order'][0];
         foreach($g['order'] as $id) self::draw($g,$id,5);
         self::log($g,'对局开始：固定 104 张普通牌，首轮各摸 5 张。');
-        self::beginTurn($g,$g['order'][0]); return $g;
+        self::beginTurn($g,$first); return $g;
     }
     public static function finished(array $g): bool { return $g['status']==='finished'; }
     private static function victory(array &$g): void
     {
         if($g['status']!=='playing')return;
-        if(!empty($g['eventStack']))return;
-        foreach($g['queue'] as $job)if($job['kind']==='frame_open')return;
+        if($g['mode']!=='identity') {
+            if(!empty($g['eventStack']))return;
+            foreach($g['queue'] as $job)if($job['kind']==='frame_open')return;
+        }
         $alive=self::alive($g); $teams=[];
         foreach($alive as $id) $teams[]=$g['mode']==='series'?$g['players'][$id]['series']:($g['players'][$id]['color']==='neutral'?'neutral_'.$id:$g['players'][$id]['color']);
-        if(count(array_unique($teams))<=1) {
+        $identity=$g['mode']==='identity'?self::identityOutcome($g):null;
+        if($g['mode']==='identity'?$identity!==null:count(array_unique($teams))<=1) {
             self::returnSequestered($g);
             if(($g['pending']['kind']??'')==='scry') $g['deck']=array_merge($g['pending']['cards'],$g['deck']);
             if(($g['pending']['event']['effect']??'')==='delayed') self::spend($g,$g['pending']['event']['card']);
             foreach($g['queue'] as $event) if(($event['effect']??'')==='delayed') self::spend($g,$event['card']);
             $g['status']='finished'; $g['pending']=null; $g['queue']=[];
             $g['winner']=!$alive?'平局':($g['mode']==='series'?$teams[0].' 系列':(strpos($teams[0],'neutral_')===0?$g['players'][$alive[0]]['name']:['cool'=>'冷色阵营','warm'=>'暖色阵营'][$teams[0]]));
+            if($identity!==null) {
+                $g['winner']=$identity['name']; $g['winningTeam']=$identity['team']; $g['winningIds']=$identity['players'];
+                $g['eventFrames']=[]; $g['eventStack']=[]; $g['reservedJudgments']=[];
+                foreach($g['draft']??[] as $card) self::spend($g,$card); $g['draft']=[];
+            }
             self::log($g,'对局结束，'.($g['winner']==='平局'?'平局':$g['winner'].'胜利').'。');
         }
     }
@@ -213,9 +226,9 @@ final class Engine
         $before=self::hp($g,$id); $body=$g['players'][$id]['maxHp'];
         $p=&$g['players'][$id];
         if($rescue&&$p['maxHp']<=0) $p['maxHp']=min($p['character']['hp'],$n);
-        if($g['mode']==='series') $keys=['neutral']; elseif($p['color']==='neutral') $keys=['cool','warm']; else $keys=[$p['color']==='cool'?'warm':'cool'];
+        if($g['mode']!=='color') $keys=['neutral']; elseif($p['color']==='neutral') $keys=['cool','warm']; else $keys=[$p['color']==='cool'?'warm':'cool'];
         foreach($keys as $k) { $take=min($n,$p['marks'][$k]); $p['marks'][$k]-=$take; $n-=$take; }
-        if(self::hp($g,$id)!==$before||$p['maxHp']!==$body) self::log($g,$p['name'].'回复：精神 '.$before.' → '.self::hp($g,$id).'；身体上限 '.$body.' → '.$p['maxHp'].'。');
+        if(self::hp($g,$id)!==$before||$p['maxHp']!==$body) self::log($g,$p['name'].($g['mode']==='identity'?'回复：体力 ':'回复：精神 ').$before.' → '.self::hp($g,$id).($g['mode']==='identity'?'；体力上限 ':'；身体上限 ').$body.' → '.$p['maxHp'].'。');
     }
     private static function damage(array &$g,?string $source,string $target,int $n,string $color,bool $attack=false): void
     {
@@ -226,7 +239,7 @@ final class Engine
             $bonus=self::equipmentValue($g,$source,'equip_damage');
             if($bonus>0) { $n+=min(RuleConfig::get('maxAmount'),$bonus); $g['players'][$source]['equipmentDamageTurn']=$g['players'][$source]['turns']; }
         }
-        if(self::eventRulesPresent($g,'damage')||self::eventRulesPresent($g,'dying')) {
+        if($g['mode']==='identity'||self::eventRulesPresent($g,'damage')||self::eventRulesPresent($g,'dying')) {
             self::damageEvent($g,$source,$target,$n,$color,$attack);return;
         }
         $n=self::applyDamage($g,$source,$target,$n,$color);
@@ -243,10 +256,11 @@ final class Engine
         if($n<=0) { self::log($g,$g['players'][$target]['name'].'的减伤或护盾抵消了伤害。'); return 0; }
         $g['players'][$target]['damageThisTurn']=($g['players'][$target]['damageThisTurn']??0)+1;
         $before=self::hp($g,$target); $body=$g['players'][$target]['maxHp'];
-        if($g['mode']==='series') $g['players'][$target]['marks']['neutral']+=$n;
+        self::identitySignal($g,$source,$target,-1);
+        if($g['mode']!=='color') $g['players'][$target]['marks']['neutral']+=$n;
         elseif($color==='neutral') $g['players'][$target]['maxHp']=max(0,$g['players'][$target]['maxHp']-$n);
         else $g['players'][$target]['marks'][$color]+=$n;
-        self::log($g,$g['players'][$target]['name'].'受到 '.$n.' 点'.['cool'=>'冷色','warm'=>'暖色','neutral'=>'无色'][$color].'伤害：精神 '.$before.' → '.self::hp($g,$target).'；身体上限 '.$body.' → '.$g['players'][$target]['maxHp'].'。');
+        self::log($g,$g['players'][$target]['name'].'受到 '.$n.' 点'.['cool'=>'冷色','warm'=>'暖色','neutral'=>'无色'][$color].'伤害：'.($g['mode']==='identity'?'体力 ':'精神 ').$before.' → '.self::hp($g,$target).($g['mode']==='identity'?'；体力上限 ':'；身体上限 ').$body.' → '.$g['players'][$target]['maxHp'].'。');
         return $n;
     }
     /** Shared rescue/flip/elimination path; losing health is deliberately not damage. */
@@ -254,11 +268,12 @@ final class Engine
     {
         if(!$g['players'][$target]['alive']||self::hp($g,$target)>0)return;
         foreach($g['eventFrames']??[] as $frame)if($frame['type']==='dying'&&$frame['target']===$target)return;
-        if(self::eventRulesPresent($g,'dying')) {
+        if($g['mode']==='identity'&&!empty($g['resolutionStopped'])) { self::eliminate($g,$target,$source); return; }
+        if($g['mode']==='identity'||self::eventRulesPresent($g,'dying')) {
             self::openEvent($g,['type'=>'dying','target'=>$target,'source'=>$source]);return;
         }
         self::miracleRescue($g,$target);self::tryColorFlip($g,$target);
-        if(self::hp($g,$target)<=0)self::eliminate($g,$target);
+        if(self::hp($g,$target)<=0)self::eliminate($g,$target,$source);
     }
     private static function miracleRescue(array &$g,string $target): void
     {
@@ -282,12 +297,13 @@ final class Engine
             self::log($g,$p['name'].'翻面为'.($p['color']==='cool'?'冷色':'暖色').'；保留所有伤害指示物。');
         }
     }
-    private static function eliminate(array &$g,string $target): void
+    private static function eliminate(array &$g,string $target,?string $source=null): void
     {
         $p=&$g['players'][$target];$p['alive']=false;self::log($g,$p['name'].'出局。');
         foreach(['hand','equipment','delayed'] as $zone) { $cards=$p[$zone];$p[$zone]=[];foreach($cards as $c)self::spend($g,$c); }
         $piles=$p['piles']??[];$p['piles']=[];foreach($piles as $pile)foreach($pile['cards'] as $card)self::spend($g,$card);
         self::returnSequestered($g,$target);
+        if($g['mode']==='identity') { self::identityDeath($g,$target,$source); self::victory($g); }
     }
     private static function condition(array $g,string $id,array $s): bool
     {
@@ -547,9 +563,10 @@ final class Engine
                     self::eventEffect($g,$id,$target,$e);break;
                 case 'lose_max_hp': case 'gain_max_hp':
                     $oldHp=self::hp($g,$to);
-                    $g['players'][$to]['maxHp']=max(0,min(RuleConfig::get('maxHp'),$g['players'][$to]['maxHp']+($e['op']==='gain_max_hp'?$n:-$n)));
+                    $maxHpLimit=RuleConfig::get('maxHp')+($g['mode']==='identity'&&$to===$g['mayor']?1:0);
+                    $g['players'][$to]['maxHp']=max(0,min($maxHpLimit,$g['players'][$to]['maxHp']+($e['op']==='gain_max_hp'?$n:-$n)));
                     $p=&$g['players'][$to]; $loss=max(0,$p['maxHp']-min($oldHp,$p['maxHp']));
-                    if($g['mode']==='series') $p['marks']['neutral']=$loss;
+                    if($g['mode']!=='color') $p['marks']['neutral']=$loss;
                     elseif($p['color']==='neutral') { $p['marks']['cool']=$loss; $p['marks']['warm']=0; }
                     else $p['marks'][$p['color']==='cool'?'warm':'cool']=$loss;
                     unset($p);
@@ -604,7 +621,7 @@ final class Engine
                     for($j=0;$j<$give;$j++) $g['players'][$to]['hand'][]=self::take($g['players'][$id]['hand'],$selection[$j]??$g['players'][$id]['hand'][0]['uid']);
                     $selection=array_slice($selection,$give); break;
                 case 'lose_health':
-                    $key=$g['mode']==='series'?'neutral':($g['players'][$to]['color']==='warm'?'cool':'warm');
+                    $key=$g['mode']!=='color'?'neutral':($g['players'][$to]['color']==='warm'?'cool':'warm');
                     $g['players'][$to]['marks'][$key]+=$n; self::log($g,$g['players'][$to]['name'].'失去 '.$n.' 点体力。');
                     self::dying($g,$to); self::victory($g); break;
                 case 'attack':
@@ -730,6 +747,7 @@ final class Engine
                 else self::applyEvent($g,$e);
             } elseif($e['kind']==='attack') {
                 if(empty($e['announced'])) {
+                    self::identitySignal($g,$e['source'],$id,-1);
                     $e['announced']=true; array_unshift($g['queue'],$e);
                     self::trigger($g,$id,'on_targeted',$e['source']);
                     if($g['players'][$id]['alive']) foreach(self::alive($g) as $ally) if($ally!==$id&&!self::enemy($g,$ally,$id)&&self::distance($g,$ally,$id)<=1) self::trigger($g,$ally,'ally_targeted',$id);
@@ -976,7 +994,7 @@ final class Engine
             self::log($g,$g['players'][$id]['name'].'装备「'.$c['name'].'」至'.SkillBlocks::metadata()['equipmentSlots'][$c['custom']['slot']].'槽；持续效果立即生效。');
             return 'equipment';
         }
-        if(in_array($type,['punch','evade','haste','miracle','treasure','automaton'],true)) {
+        if(in_array($type,['punch','evade','haste','miracle','treasure','automaton','medicine'],true)) {
             if($card['type']!==$type) $card['printedType']=$card['type']; $card['type']=$type; $card['readyAt']=$g['players'][$id]['turns']+self::maturity($c); $g['players'][$id]['equipment'][]=$card;
             self::log($g,$g['players'][$id]['name'].'装备「'.$c['name'].'」，'.(self::maturity($c)===0?'立即成熟':'在第 '.self::maturity($c).' 个自己的回合成熟').'。'); return $type;
         }
@@ -992,10 +1010,14 @@ final class Engine
             self::check($g['players'][$id]['attacks']<self::attackLimit($g,$id),'本回合已用完攻击次数');
             self::check(self::passiveValue($g,$target,'passive_no_attack_target')===0,'该角色不能成为攻击目标');
             self::check(self::attackDistance($g,$id,$target)<=self::range($g,$id),'目标不在攻击范围内（含防具距离，心坏时范围为 0）');
-            self::check($g['mode']==='series'||$color==='neutral'||$g['players'][$target]['color']!==$color,'有色攻击不能攻击同色角色');
+            self::check($g['mode']!=='color'||$color==='neutral'||$g['players'][$target]['color']!==$color,'有色攻击不能攻击同色角色');
             $g['players'][$id]['attacks']++; $g['queue'][]=['kind'=>'attack','player'=>$target,'source'=>$id,'color'=>$color,'amount'=>1,'punch'=>false,'defenses'=>self::defenseCount($g,$id)]; return $type;
         }
         switch($type) {
+            case 'heal':
+                self::check($target===$id,'休养只能对自己使用');
+                self::check(!self::broken($g,$id)&&self::hp($g,$id)<$g['players'][$id]['maxHp'],'休养需要自己已受伤且未心坏');
+                self::heal($g,$id,1); break;
             case 'surprise':
                 $target=self::target($g,$target); self::check(in_array($mode,['','outside','mind'],true),'出其不意模式无效');
                 if($mode==='mind') self::extraHandCost($g,$id,$a);
@@ -1043,8 +1065,12 @@ final class Engine
             $target=self::target($g,$a['target']??$id); self::check(self::effectTargetsValid($g,$id,$target,$c['custom']['effects']),'目标不合法');
             self::removeEquipment($g,$id,$c['uid']); self::effects($g,$id,$target,$c['custom']['effects'],$a['selection']??[],true); return;
         }
-        self::check(in_array($c['type'],['punch','haste','automaton'],true),'该永续牌当前不能主动卸除');
-        if($c['type']==='punch') {
+        self::check(in_array($c['type'],['punch','haste','automaton','medicine'],true),'该永续牌当前不能主动卸除');
+        if($c['type']==='medicine') {
+            $target=self::target($g,$a['target']??$id);
+            self::check(!self::broken($g,$target)&&self::hp($g,$target)<$g['players'][$target]['maxHp'],'目标须已受伤且未心坏');
+            self::removeEquipment($g,$id,$c['uid']); self::heal($g,$target,1); self::identitySignal($g,$id,$target,1);
+        } elseif($c['type']==='punch') {
             $target=self::target($g,$a['target']??null,false); self::check(!self::broken($g,$id)&&self::attackDistance($g,$id,$target)===1,'拳击需要攻击距离 1 且未心坏');
             self::check(self::passiveValue($g,$target,'passive_no_attack_target')===0,'该角色不能成为攻击目标');
             self::check($g['players'][$id]['attacks']<self::attackLimit($g,$id),'本回合已用完攻击次数'); $g['players'][$id]['attacks']++;
@@ -1069,6 +1095,7 @@ final class Engine
         $choice=$a['choice']??''; self::check(is_string($choice),'响应格式不正确'); $kind=$p['kind']; $g['pending']=null;
         if(in_array($choice,['defend','attack','alliance'],true)) self::check(!self::handLocked($g,$id),'本回合不能使用或打出手牌');
         if(isset($a['conversion'])) self::check((in_array($kind,['attack','energy'],true)&&$choice==='defend')||(in_array($kind,['potential','mechanic_duel'],true)&&$choice==='attack'),'此响应不支持转化');
+        if($kind==='identity_rescue'){self::identityRescueRespond($g,$id,$p,$a);return;}
         if(strpos($kind,'mechanic_')===0){self::mechanicRespond($g,$id,$p,$a);return;}
         elseif($kind==='skill_offer') {
             self::check(in_array($choice,['accept','pass'],true),'请选择发动或放弃');
@@ -1172,6 +1199,7 @@ final class Engine
     private static function responseActions(array $g,string $id): array
     {
         $p=$g['pending']; if(!$p||$p['player']!==$id) return []; $out=[];
+        if($p['kind']==='identity_rescue') return self::identityRescueActions($g,$id,$p);
         if(strpos($p['kind'],'mechanic_')===0)return self::mechanicActions($g,$id,$p);
         $add=function(string $label,string $choice,array $extra=[])use(&$out){$out[]=['label'=>$label,'action'=>array_merge(['type'=>'respond','choice'=>$choice],$extra)];};
         switch($p['kind']) {
@@ -1252,11 +1280,13 @@ final class Engine
             } elseif($t==='recover') {
                 $add($label.'：按已耗数摸牌后置底',array_merge($base,['mode'=>'rebuild']));
                 if(self::broken($g,$id)) $add($label.'：心坏重置',array_merge($base,['mode'=>'reset']));
-            } else $add($label.'：使用 / 装备',$base);
+            } elseif($t==='heal') $add('休养：回复自己 1 点体力',$base);
+            elseif($t==='medicine') $add('挂置援药：下个自己的回合成熟',$base);
+            else $add($label.'：使用 / 装备',$base);
         }
         foreach($p['equipment'] as $c) {
             $base=['type'=>'equip_use','card'=>$c['uid']];
-            if($c['type']==='punch') foreach($alive as $to) $add('卸除拳击 → '.$g['players'][$to]['name'],array_merge($base,['target'=>$to]));
+            if(in_array($c['type'],['punch','medicine'],true)) foreach($alive as $to) $add('卸除'.$c['name'].' → '.$g['players'][$to]['name'],array_merge($base,['target'=>$to]));
             elseif(in_array($c['type'],['haste','automaton'],true)) $add('卸除 '.$c['name'],$base);
             elseif($c['type']==='custom'&&($c['custom']['kind']??'event')==='persistent') foreach($alive as $to) $add('卸除 '.$c['name'].' → '.$g['players'][$to]['name'],array_merge($base,['target'=>$to]));
         }
@@ -1303,7 +1333,7 @@ final class Engine
             foreach($p['equipment'] as $c) { $c['ready']=self::mature($g,$pid,$c); $c['turnsUntilReady']=max(0,($c['readyAt']??$p['turns'])-$p['turns']); $equipment[]=$c; }
             foreach($p['delayed'] as $c) { $c['ready']=!isset($c['readyAt'])||self::mature($g,$pid,$c); $delayed[]=$c; }
             $piles=[];foreach($p['piles']??[] as $key=>$pile)$piles[$key]=['count'=>count($pile['cards']),'visibility'=>$pile['visibility'],'cards'=>$pile['visibility']==='public'||$id===$pid?$pile['cards']:[]];
-            $players[]=['id'=>$pid,'name'=>$p['name'],'bot'=>$p['bot'],'character'=>$p['character'],'hp'=>self::hp($g,$pid),'maxHp'=>$p['maxHp'],'color'=>$p['color'],'series'=>$p['series'],'alive'=>$p['alive'],'flipped'=>$p['flipped'],'broken'=>self::broken($g,$pid),'marks'=>$p['marks'],'mindCount'=>count($p['mind']),'spentCount'=>count($p['spent']),'spent'=>$p['spent'],'handCount'=>count($p['hand']),'sequesteredCount'=>count($p['sequestered']??[]),'damageGuard'=>$p['damageGuard']??0,'handLocked'=>self::handLocked($g,$pid),'equipment'=>$equipment,'delayed'=>$delayed,'shield'=>$p['shield'],'range'=>self::range($g,$pid),'attackBonus'=>$p['attackBonus'],'attacksRemaining'=>max(0,self::attackLimit($g,$pid)-$p['attacks']),'handLimit'=>self::handLimit($g,$pid),'faceDown'=>!empty($p['faceDown']),'skillMarks'=>$p['skillMarks']??[],'piles'=>$piles];
+            $players[]=['id'=>$pid,'name'=>$p['name'],'bot'=>$p['bot'],'character'=>$p['character'],'hp'=>self::hp($g,$pid),'maxHp'=>$p['maxHp'],'color'=>$p['color'],'series'=>$p['series'],'alive'=>$p['alive'],'flipped'=>$p['flipped'],'broken'=>self::broken($g,$pid),'marks'=>$p['marks'],'mindCount'=>count($p['mind']),'spentCount'=>count($p['spent']),'spent'=>$p['spent'],'handCount'=>count($p['hand']),'sequesteredCount'=>count($p['sequestered']??[]),'damageGuard'=>$p['damageGuard']??0,'handLocked'=>self::handLocked($g,$pid),'equipment'=>$equipment,'delayed'=>$delayed,'shield'=>$p['shield'],'range'=>self::range($g,$pid),'attackBonus'=>$p['attackBonus'],'attacksRemaining'=>max(0,self::attackLimit($g,$pid)-$p['attacks']),'handLimit'=>self::handLimit($g,$pid),'faceDown'=>!empty($p['faceDown']),'skillMarks'=>$p['skillMarks']??[],'piles'=>$piles,'role'=>$g['mode']==='identity'&&($pid===$id||$pid===$g['mayor']||!$p['alive']||$g['status']==='finished')?$p['role']:null];
         }
         $p=$g['players'][$id]; $skills=[];
         foreach($p['character']['skills'] as $i=>$s) $skills[]=array_merge($s,['index'=>$i,'description'=>Rules::describeSkill($s),'disabled'=>!self::skillEnabled($g,$id,$i),'available'=>self::skillUsable($g,$id,$i),'usesRemaining'=>max(0,RuleConfig::uses($s)-self::skillUses($g,$id,$i))]);
@@ -1311,6 +1341,7 @@ final class Engine
         if($g['pending']) {
             $raw=$g['pending']; $pending=['kind'=>$raw['kind'],'player'=>$raw['player'],'source'=>$raw['source']??null,'prompt'=>$raw['prompt'],'options'=>[]];
             foreach(['color','amount','punch','defenses'] as $key) if(isset($raw[$key])) $pending[$key]=$raw[$key];
+            if($raw['kind']==='identity_rescue') $pending['target']=$raw['target'];
             if(isset($raw['revealed'])) $pending['revealed']=$raw['revealed'];
             if($raw['player']===$id) {
                 foreach(self::responseActions($g,$id) as $option) $pending['options'][]=array_merge(['label'=>$option['label']],$option['action']);
@@ -1329,6 +1360,7 @@ final class Engine
         $hints=[]; $legal=self::legalActions($g,$id,$hints);
         return ['rulesVersion'=>$version,'engineRulesVersion'=>SkillBlocks::VERSION,'rulesUpgradePending'=>$version!==SkillBlocks::VERSION,'status'=>$g['status'],'mode'=>$g['mode'],'turn'=>$g['turn'],'phase'=>$g['phase'],'turnNumber'=>$g['turnNumber'],'deadline'=>$g['deadline'],'serverTime'=>time(),'players'=>$players,
             'me'=>['id'=>$id,'hand'=>$p['hand'],'mind'=>$p['mind'],'spent'=>$p['spent'],'sequestered'=>array_column($p['sequestered']??[],'card'),'skills'=>$skills],
+            'identity'=>$g['mode']==='identity'?['mayor'=>$g['mayor'],'role'=>$p['role'],'roles'=>Catalog::identityRoles(),'counts'=>Catalog::identityCounts(count($g['order'])),'winningIds'=>$g['winningIds']??[],'winningTeam'=>$g['winningTeam']??null]:null,
             'pending'=>$pending,'legalActions'=>$legal,'actionHints'=>$hints,'log'=>$g['log'],'winner'=>$g['winner'],'deckCount'=>count($g['deck']),'discardCount'=>count($g['discard']),'draft'=>$g['draft']??[],
             'discardRequired'=>$g['turn']===$id&&$g['phase']==='discard'?max(0,count($p['hand'])-self::handLimit($g,$id)):0];
     }
@@ -1340,6 +1372,7 @@ final class Engine
     }
     private static function botOpponent(array $g,string $id,string $target): bool
     {
+        if($g['mode']==='identity') return self::identityBotOpponent($g,$id,$target);
         return $g['players'][$id]['color']!==$g['players'][$target]['color']&&self::enemy($g,$id,$target);
     }
     private static function offensiveEffect(array $effect): bool
@@ -1377,13 +1410,17 @@ final class Engine
         }
         return true;
     }
+    private static function botEnemy(array $g,string $id,string $target): bool
+    {
+        return $g['mode']==='identity'?self::identityBotOpponent($g,$id,$target):self::enemy($g,$id,$target);
+    }
     private static function effectPreference(array $g,string $id,string $target,array $effects): int
     {
         $score=0;
         foreach($effects as $e) {
             if($e['target']==='target') {
-                if(self::offensiveEffect($e)) $score+=self::enemy($g,$id,$target)?5:-25;
-                else $score+=self::enemy($g,$id,$target)?-15:3;
+                if(self::offensiveEffect($e)) $score+=self::botEnemy($g,$id,$target)?5:-25;
+                else $score+=self::botEnemy($g,$id,$target)?-15:3;
             }
             if($e['op']==='lose_health'&&self::hp($g,$id)<=$e['amount']) $score-=30;
         }
@@ -1397,7 +1434,7 @@ final class Engine
         }
         if($g['players'][$id]['bot']&&$g['pending']===null&&$g['phase']==='play') {
             $opponents=array_filter(self::alive($g),function($target)use($g,$id){return self::botOpponent($g,$id,$target);});
-            if(!$opponents) return ['type'=>'end'];
+            if(!$opponents&&$g['mode']!=='identity') return ['type'=>'end'];
         }
         $best=null; $bestScore=-99999;
         foreach($legal as $item) {
@@ -1406,31 +1443,39 @@ final class Engine
             if($a['type']==='respond') {
                 $scores=['damage'=>-10,'accept'=>1,'alliance'=>5,'defend'=>15,'evade'=>16,'haste'=>8,'attack'=>10,'mind'=>6,'give'=>2,'choose'=>4,'pass'=>1,'tuck'=>count($g['players'][$id]['mind'])<5?8:0,'confirm'=>5,'normal'=>3,'skip'=>10,'draw'=>7,'heal'=>self::hp($g,$id)<$g['players'][$id]['maxHp']-1?9:0];
                 $score=$scores[$a['choice']]??0;
+                if(($g['pending']['kind']??'')==='identity_rescue') $score=$a['choice']==='pass'?0:(!$timeout&&self::identityBotRescues($g,$id,$g['pending']['target'])?20:-20);
                 if(($g['pending']['kind']??'')==='skill_offer'&&$a['choice']==='accept') $score=4+self::effectPreference($g,$id,$g['pending']['target'],$g['players'][$id]['character']['skills'][$g['pending']['index']]['effects']);
                 if(($g['pending']['kind']??'')==='judge'&&$a['choice']==='mind') $score=2;
             } elseif($a['type']==='draw') $score=$a['mind']===(count($g['players'][$id]['mind'])>4?1:0)?10:0;
             elseif($a['type']==='end') $score=0;
             elseif($a['type']==='discard') $score=1;
-            elseif($a['type']==='equip_use') $score=8;
+            elseif($a['type']==='equip_use') {
+                $t=$g['players'][$id]['equipment'][self::cardIndex($g['players'][$id]['equipment'],$a['card'])]['type'];
+                $score=$t==='medicine'&&$g['mode']==='identity'?(self::identityBotRescues($g,$id,$a['target']??$id)?12:-20):8;
+            }
             elseif($a['type']==='skill') $score=9+self::effectPreference($g,$id,$a['target']??$id,$g['players'][$id]['character']['skills'][$a['index']]['effects']);
             elseif($a['type']==='play') {
                 $c=self::actionCard($g,$id,$a); $c=self::effective($g,$id,$c); $t=$c['type'];
                 if(isset($a['conversion'])) $t=$g['players'][$id]['character']['skills'][$a['conversion']]['conversion']['to'];
                 if(strpos($t,'attack_')===0) $score=($a['target']??$id)===$id?(self::hp($g,$id)<$g['players'][$id]['maxHp']?10:-5):12;
-                elseif(in_array($t,['punch','evade','haste','miracle','treasure','automaton'],true)) $score=8;
+                elseif(in_array($t,['punch','evade','haste','miracle','treasure','automaton','medicine'],true)) $score=8;
+                elseif($t==='heal') $score=14;
                 elseif($t==='recover') $score=($a['mode']??'')==='reset'?20:(count($g['players'][$id]['mind'])<5&&count($g['players'][$id]['spent'])>0?8:-5);
                 elseif($t==='amplify') $score=$g['players'][$id]['attacks']===0&&count($g['players'][$id]['hand'])>2?5:-3;
                 elseif($t==='life') $score=self::hp($g,$id)<$g['players'][$id]['maxHp']?4:-2;
                 elseif($t==='mana') $score=($a['mode']??'')==='draw'?9:2;
                 elseif($t==='exchange') $score=($a['mode']??'')==='cycle'?7:3;
                 else $score=6;
-                if($t==='fortune'&&isset($a['target'])) $score+=self::enemy($g,$id,$a['target'])?-20:3;
-                if($t==='alliance'&&isset($a['target'])) $score+=self::enemy($g,$id,$a['target'])?-2:3;
+                if($t==='fortune'&&isset($a['target'])) $score+=self::botEnemy($g,$id,$a['target'])?-20:3;
+                if($t==='alliance'&&isset($a['target'])) $score+=self::botEnemy($g,$id,$a['target'])?-2:3;
                 if($t==='custom') $score+=self::effectPreference($g,$id,$a['target']??$id,$c['custom']['effects']);
             }
             if(isset($a['target'])&&$a['target']!==$id) {
-                $offensive=($a['type']==='equip_use')||($a['type']==='play'&&isset($t)&&(strpos($t,'attack_')===0||in_array($t,['surprise','calamity'],true)));
-                if($offensive) $score+=self::enemy($g,$id,$a['target'])?4:-30;
+                $offensive=($a['type']==='equip_use'&&$t!=='medicine')||($a['type']==='play'&&isset($t)&&(strpos($t,'attack_')===0||in_array($t,['surprise','calamity'],true)));
+                if($offensive) {
+                    $score+=self::botEnemy($g,$id,$a['target'])?4:-30;
+                    if($g['mode']==='identity'&&$g['players'][$id]['role']==='wolf'&&$a['target']===$g['mayor']) $score+=10;
+                }
             }
             if($score>$bestScore) { $bestScore=$score; $best=$a; }
         }

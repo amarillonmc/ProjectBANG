@@ -349,6 +349,8 @@ try {
     check($lesson['tutorial']['step']===0&&!$lesson['tutorial']['done'],'Replay restarts selected lesson independently');
     require __DIR__.'/workshop-http.php';
     workshopHttpTests($store, $first, $opponent);
+    require __DIR__.'/identity-http.php';
+    identityHttpTests($store, $first);
     echo "PASS: $assertions API/store assertions (SQLite, real HTTP, isolated database).\n";
     echo "MySQL SQL path is implemented but requires a separate MySQL deployment smoke test.\n";
 } catch (Throwable $error) {
