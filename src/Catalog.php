@@ -147,7 +147,7 @@ final class Catalog
     {
         $p=self::presets();
         $content=ContentPack::all();
-        return ['rulesVersion'=>SkillBlocks::VERSION,'supportedRulesVersions'=>['0.1.0-alpha','0.2.0-alpha','0.3.0-alpha','0.4.0-alpha','0.5.0-alpha','0.6.0-alpha',SkillBlocks::VERSION],'cards'=>self::cards(),'mindOptions'=>self::mindOptions(),'characters'=>array_column($p,'character'),'presets'=>$p,
+        return ['rulesVersion'=>SkillBlocks::VERSION,'supportedRulesVersions'=>['0.1.0-alpha','0.2.0-alpha','0.3.0-alpha','0.4.0-alpha','0.5.0-alpha','0.6.0-alpha','0.7.0-alpha',SkillBlocks::VERSION],'cards'=>self::cards(),'mindOptions'=>self::mindOptions(),'mindSuits'=>['♠'=>'♠ 黑桃','♥'=>'♥ 红桃','♣'=>'♣ 梅花','♦'=>'♦ 方块'],'characters'=>array_column($p,'character'),'presets'=>$p,
             'creationTest'=>['version'=>1,'questions'=>CreationTest::questions(),'profiles'=>CreationTest::profiles()],
             'blocks'=>SkillBlocks::metadata(),
             'contentPacks'=>$content['contentPacks'],'skillTemplates'=>array_merge(SkillPuzzles::all(),$content['skillTemplates']),

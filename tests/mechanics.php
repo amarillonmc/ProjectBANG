@@ -39,8 +39,8 @@ $g=fg([fs('active',[$pindian],1)]);$a=fc($g,'a','defense');$b=fc($g,'b','defense
 checkFeedback($g['players']['b']['lastPindianWin']===false,'tie clears both previous pindian wins');
 
 $judge=fe('judge')+['filter'=>'black','then'=>[fe('add_mark')+['key'=>'黑']],'else'=>[fe('draw')],'repeat'=>true,'obtain'=>true];$g=fg([fs('active',[$judge],1)]);
-for($i=0;$i<3;$i++)$g['deck'][$i]['suit']='♠';RuleConfig::configure(['characterBudget'=>200,'unlimitedUses'=>3]);fa($g,'a',['type'=>'skill','index'=>0]);
-checkFeedback($g['pending']['kind']==='mechanic_judge_repeat'&&count($g['players']['a']['hand'])===1,'successful judgment obtained before repeat choice');completeMechanic($g,'a','again');completeMechanic($g,'a','again');
+for($i=0;$i<3;$i++)$g['deck'][$i]['suit']='♠';RuleConfig::configure(['characterBudget'=>200,'unlimitedUses'=>3]);fa($g,'a',['type'=>'skill','index'=>0]);completeMechanic($g,'a','normal');
+checkFeedback($g['pending']['kind']==='mechanic_judge_repeat'&&count($g['players']['a']['hand'])===1,'successful judgment obtained before repeat choice');completeMechanic($g,'a','again');completeMechanic($g,'a','normal');completeMechanic($g,'a','again');completeMechanic($g,'a','normal');
 checkFeedback($g['pending']===null&&count($g['players']['a']['hand'])===3&&$g['players']['a']['skillMarks']['黑']===3,'repeated judgment respects configurable safety limit');checkFeedback(countMechanicCards($g)===[143,143],'judgment cards conserved');
 RuleConfig::configure(['characterBudget'=>200]);
 $g=fg([fs('active',[fe('duel',1,'target'),fe('draw')],1)]);$a=fc($g,'a','attack_neutral');$b=fc($g,'b','attack_cool');fa($g,'a',['type'=>'skill','index'=>0,'target'=>'b']);completeMechanic($g,'b','attack',['card'=>$b]);completeMechanic($g,'a','attack',['card'=>$a]);completeMechanic($g,'b','damage');
@@ -63,7 +63,7 @@ $convert['conversion']=['from'=>'hand','to'=>'attack_neutral','zone'=>'pile','pi
 
 $judge=fe('judge')+['filter'=>'red','then'=>[fe('draw')],'else'=>[fe('add_mark',1,'target')+['key'=>'失败']],'repeat'=>false,'obtain'=>true];$g=fg([fs('active',[$judge],1)]);
 $g['players']['b']['character']['skills']=[fs('passive',[fe('passive_retrial')+['filter'=>'black','zone'=>'hand_equipment','exchange'=>true]])];$uid=fc($g,'b','treasure');$g['players']['b']['hand'][0]['suit']='♠';$g['deck'][0]['suit']='♥';$original=$g['deck'][0]['uid'];
-fa($g,'a',['type'=>'skill','index'=>0]);checkFeedback($g['pending']['kind']==='mechanic_retrial'&&$g['pending']['revealed']['uid']===$original,'judgment waits before taking success branch');
+fa($g,'a',['type'=>'skill','index'=>0]);completeMechanic($g,'a','normal');checkFeedback($g['pending']['kind']==='mechanic_retrial'&&$g['pending']['revealed']['uid']===$original,'judgment waits before taking success branch');
 $g=json_decode(json_encode($g),true);completeMechanic($g,'b','replace',['card'=>$uid]);checkFeedback($g['players']['a']['skillMarks']['失败']===1&&!$g['players']['a']['hand'],'replacement decides actual judgment result');checkFeedback(in_array($original,array_column($g['players']['b']['hand'],'uid'),true)&&callEngine('hp',$g,'b')===4,'retrial exchanges old judgment; hand treasure does not trigger equipment penalty');checkFeedback(countMechanicCards($g)===[143,143],'retrial conservation');
 $g=fg();$g['players']['b']['character']['skills']=[fs('passive',[fe('passive_retrial')+['filter'=>'any','zone'=>'hand','exchange'=>false]])];$calamity=fc($g,'a','calamity');$replacement=fc($g,'b','punch');$g['players']['b']['hand'][0]['rank']=1;fa($g,'a',['type'=>'play','card'=>$calamity,'target'=>'a']);$g['pending']=['kind'=>'judge','player'=>'a','card'=>$g['players']['a']['delayed'][0],'prompt'=>'test'];$g['phase']='response';$g['deck'][0]['rank']=13;completeMechanic($g,'a','normal');checkFeedback($g['pending']['kind']==='mechanic_retrial','ordinary delayed judgments also allow retrial');completeMechanic($g,'b','replace',['card'=>$replacement]);checkFeedback($g['pending']===null&&count($g['players']['a']['delayed'])===1,'retrial can prevent calamity from resolving');
 
@@ -96,15 +96,15 @@ $g=fg([fs('active',[$nested],1)]);$uid=fc($g,'b','defense');
 checkFeedback((bool)array_filter(Engine::legalActions($g,'a'),function($a){return $a['action']['type']==='skill'&&($a['action']['target']??'')==='b';}),'nested choice exposes external targets');
 fa($g,'a',['type'=>'skill','index'=>0,'target'=>'b']);completeMechanic($g,'a','0');
 checkFeedback(array_column($g['players']['a']['hand'],'uid')===[$uid],'nested target resolves to chosen other player');
-$g=fg([fs('active',[fe('choose_targets',2)+['pool'=>'others','effects'=>[fe('damage',1,'target')]]],1)]);$g['players']['a']['bot']=true;$g['players']['b']['color']='cool';
-fa($g,'a',['type'=>'skill','index'=>0]);checkFeedback($g['pending']['candidates']===['c'],'bot target selection excludes same-color partner inside nested effects');
+$g=fg([fs('active',[fe('choose_targets',2)+['pool'=>'others','effects'=>[fe('damage',1,'target')]]],1)]);$g['players']['a']['bot']=true;$g['players']['b']['series']='a';
+fa($g,'a',['type'=>'skill','index'=>0]);checkFeedback($g['pending']['candidates']===['c'],'bot target selection excludes same-series partner inside nested effects');
 // While a second player may still retrial, equipment-loss draw must not recycle the live judgment.
 $judge=fe('judge')+['filter'=>'red','then'=>[],'else'=>[],'obtain'=>true,'repeat'=>false];
 $g=fg([fs('active',[$judge],1)]);$replacement=fc($g,'b','haste');$g['players']['b']['hand'][0]['suit']='♥';callEngine('play',$g,'b',['card'=>$replacement]);
 $retrial=fs('passive',[fe('passive_retrial')+['filter'=>'any','zone'=>'hand_equipment','exchange'=>false]]);
 $g['players']['b']['character']['skills']=[$retrial,fs('after_lose_equipment',[fe('draw',98)],0)];$g['players']['c']['character']['skills']=[$retrial];
 $original=array_shift($g['deck']);$original['suit']='♥';$g['players']['c']['hand']=array_merge($g['players']['c']['hand'],$g['deck']);$g['deck']=[$original];
-fa($g,'a',['type'=>'skill','index'=>0]);completeMechanic($g,'b','replace',['card'=>$replacement]);
+fa($g,'a',['type'=>'skill','index'=>0]);completeMechanic($g,'a','normal');completeMechanic($g,'b','replace',['card'=>$replacement]);
 checkFeedback($g['pending']['player']==='c'&&array_column($g['players']['b']['hand'],'uid')===[$original['uid']],'only released old judgment can be recycled by equipment-loss draw');
 $g=json_decode(json_encode($g),true);completeMechanic($g,'c','pass');
 checkFeedback(array_column($g['players']['a']['hand'],'uid')===[$replacement]&&empty($g['reservedJudgments']),'final judgment is obtained once after retrial reconnect');
@@ -114,7 +114,7 @@ $inner=fe('judge')+['filter'=>'black','then'=>[],'else'=>[],'repeat'=>true,'obta
 $outer=fe('judge')+['filter'=>'black','then'=>[$inner],'else'=>[],'repeat'=>true,'obtain'=>false];
 $g=fg([fs('active',[$outer])]);foreach($g['deck'] as &$card)$card['suit']='♠';unset($card);
 fa($g,'a',['type'=>'skill','index'=>0]);
-for($responses=0;$responses<30&&$g['pending'];$responses++){$g=json_decode(json_encode($g),true);completeMechanic($g,'a','again');}
+for($responses=0;$responses<30&&$g['pending'];$responses++){$g=json_decode(json_encode($g),true);completeMechanic($g,'a',$g['pending']['kind']==='judge'?'normal':'again');}
 checkFeedback($responses<30&&$g['pending']===null&&!$g['queue']&&$g['phase']==='play','one resolution budget spans nested response windows and reconnects');
 checkFeedback(!empty($g['resolutionStopped'])&&countMechanicCards($g)===[143,143],'resolution insurance cleans pending cards without duplication');
 fa($g,'a',['type'=>'skill','index'=>0]);checkFeedback($g['pending']!==null&&empty($g['resolutionStopped']),'next deliberate action receives a fresh resolution budget');

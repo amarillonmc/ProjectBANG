@@ -100,7 +100,7 @@ checkPractice($g['pending']===null&&count($g['players']['p1']['hand'])===1&&!$g[
 // Select an enemy rather than the earlier seat, including colorless and flipped characters.
 foreach([['cool','cool','warm'],['neutral','neutral','warm'],['warm','warm','cool']] as $colors) {
     $g=practiceGame($colors); $hit=practiceCard($g,'p0','attack_neutral');
-    checkPractice(Engine::botStep($g)&&$g['pending']['player']==='p2','Bot attacks different color, including neutral');
+    checkPractice(Engine::botStep($g)&&$g['pending']['player']===($colors[0]==='neutral'?'p1':'p2'),'Bot respects color teams; colorless characters are independent');
 }
 $g=practiceGame(); $g['players']['p1']['color']='warm'; $g['players']['p1']['flipped']=true; $g['players']['p2']['color']='cool';
 practiceCard($g,'p0','attack_neutral'); Engine::botStep($g);
@@ -111,10 +111,10 @@ checkPractice($g['turn']==='p1'&&$g['players']['p0']['hand'][0]['uid']===$hit,'B
 
 $g=practiceGame(['cool','warm','cool'],'series'); $g['players']['p1']['series']=$g['players']['p0']['series'];
 $hit=practiceCard($g,'p0','attack_neutral'); Engine::botStep($g);
-checkPractice($g['turn']==='p1'&&$g['players']['p0']['hand'][0]['uid']===$hit,'Series bots avoid both same-series and same-color characters');
+checkPractice($g['pending']['player']==='p2','Series bots attack same-color rivals while avoiding their own series');
 
 $g=practiceGame(['cool','cool'],'series'); $mana=practiceCard($g,'p0','mana'); Engine::botStep($g);
-checkPractice($g['turn']==='p1'&&$g['players']['p0']['hand'][0]['uid']===$mana,'Bot ends immediately when no differently colored opponents remain');
+checkPractice($g['turn']==='p0'&&count($g['players']['p0']['hand'])===2,'Series bot uses resources against same-color rival series');
 
 $g=practiceGame(); $g['players']['p0']['character']['skills']=[['name'=>'Convert','trigger'=>'convert','condition'=>'always','cost'=>['hand'=>0,'mind'=>0],'limit'=>1,'effects'=>[],'conversion'=>['from'=>'defense','to'=>'attack_neutral']]];
 practiceCard($g,'p0','defense'); Engine::botStep($g);

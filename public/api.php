@@ -74,7 +74,7 @@ final class Api
             $rooms = $this->store->all('SELECT r.data FROM ' . $this->store->table('rooms') . ' r INNER JOIN ' . $this->store->table('members') . ' m ON m.room_code = r.code WHERE m.user_id = ? ORDER BY r.updated_at DESC, r.code LIMIT 100', [$this->user['id']]);
             $history = array_map(function ($row) {
                 $room = decode($row['data']);
-                return ['code' => $room['code'], 'name' => $room['name'], 'status' => $room['status'], 'mode' => $room['mode'], 'revision' => $room['revision']];
+                return ['code' => $room['code'], 'name' => $room['name'], 'status' => $room['status'], 'mode' => $room['mode'], 'arena' => !empty($room['arena']), 'revision' => $room['revision']];
             }, $rooms);
             return ['user' => $this->user, 'builds' => array_map(function ($row) { return decode($row['data']); }, $rows), 'rooms' => $history];
         }
@@ -111,7 +111,7 @@ final class Api
                 return Tutorial::view($state,$id);
             });
         }
-        $allowed = ['portfolio', 'work_history', 'set_visibility', 'save_collection', 'share_collection', 'delete_collection', 'revoke_collection_share', 'upload_portrait', 'save_build', 'delete_build', 'create_room', 'join_room', 'choose_build', 'add_bot', 'leave_room', 'start', 'room', 'act', 'feedback', 'export'];
+        $allowed = ['portfolio', 'work_history', 'set_visibility', 'save_collection', 'share_collection', 'delete_collection', 'revoke_collection_share', 'upload_portrait', 'save_build', 'delete_build', 'create_room', 'join_room', 'choose_build', 'add_bot', 'leave_room', 'start', 'room', 'arena_control', 'act', 'feedback', 'export'];
         if (!in_array($action, $allowed, true)) {
             throw new ApiError('未知接口。', 404);
         }
@@ -158,9 +158,19 @@ final class Api
                 return $this->joinRoom($room, $input);
             }
             if ($action === 'room') {
-                if ($room['status'] === 'playing' && Engine::tick($room['game'])) {
+                if ($room['status'] === 'playing' && (!empty($room['arena']) ? Engine::advanceArena($room['game'], $room['arenaSpeed']) : Engine::tick($room['game']))) {
                     $this->persistRoom($room, 'tick', []);
                 }
+                return $this->snapshot($room);
+            }
+            if ($action === 'arena_control') {
+                $this->host($room);
+                if (empty($room['arena']) || $room['status'] !== 'playing') throw new ApiError('当前没有进行中的斗蛐蛐对局。', 409);
+                if (($input['revision'] ?? null) !== $room['revision']) throw new ApiError('观战状态已更新，请重试。', 409);
+                $speed = $input['speed'] ?? null;
+                if (!in_array($speed, ['paused', 'normal', 'fast'], true)) throw new ApiError('请选择暂停、正常观战或快速结算。');
+                $room['arenaSpeed'] = $speed;
+                $this->persistRoom($room, 'arena_control', ['speed'=>$speed]);
                 return $this->snapshot($room);
             }
             if ($action === 'export') {
@@ -240,7 +250,9 @@ final class Api
         if ((int) $active['total'] >= (int) $this->config['max_rooms_per_host']) {
             throw new ApiError('进行中的房间过多，请先关闭旧大厅或完成对局。');
         }
-        $selected = $this->selectedBuild($input);
+        $arena = $input['arena'] ?? false;
+        if (!is_bool($arena)) throw new ApiError('arena 必须是布尔值。');
+        $selected = $arena ? null : $this->selectedBuild($input);
         $allowCustom = $input['allowCustom'] ?? true;
         if (!is_bool($allowCustom)) {
             throw new ApiError('allowCustom 必须是布尔值。');
@@ -258,23 +270,34 @@ final class Api
         } while ($this->store->one("SELECT code FROM $table WHERE code = ?", [$code]));
         $room = [
             'code' => $code, 'name' => $name, 'mode' => $mode, 'hostId' => $this->user['id'],
+            'arena' => $arena, 'arenaSpeed' => 'normal',
             'budgetLimits' => Workshop::limits($input['budgetLimits'] ?? null),
             'status' => 'lobby', 'allowCustom' => $allowCustom, 'turnSeconds' => $seconds,
             'revision' => 1, 'createdAt' => time(), 'updatedAt' => time(),
-            'players' => [['id' => $this->user['id'], 'name' => $this->user['name'], 'bot' => false, 'custom' => $selected['custom'], 'build' => $selected['build'], 'versionId' => $selected['versionId'] ?? null]],
+            'players' => $arena ? [] : [['id' => $this->user['id'], 'name' => $this->user['name'], 'bot' => false, 'custom' => $selected['custom'], 'build' => $selected['build'], 'versionId' => $selected['versionId'] ?? null]],
             'game' => null,
         ];
-        $this->customAllowed($room, $selected);
+        if (!$arena) $this->customAllowed($room, $selected);
         if (array_key_exists('bots', $input)) {
             $bots = $input['bots'];
-            if (!is_array($bots) || count($bots) < 1 || count($bots) >= Catalog::modeRules($mode)['maxPlayers'] || array_keys($bots) !== range(0, count($bots) - 1)) {
-                throw new ApiError('请选择 1～'.(Catalog::modeRules($mode)['maxPlayers']-1).' 名机器人，并逐一指定构筑。');
+            $min = $arena ? Catalog::modeRules($mode)['minPlayers'] : 1;
+            $max = Catalog::modeRules($mode)['maxPlayers'] - ($arena ? 0 : 1);
+            if (!is_array($bots) || count($bots) < $min || count($bots) > $max || array_keys($bots) !== range(0, count($bots) - 1)) {
+                throw new ApiError('请选择 '.$min.'～'.$max.' 名机器人，并逐一指定构筑。');
             }
             foreach ($bots as $bot) {
+                if ($arena && (!is_array($bot) || (empty($bot['presetId']) && empty($bot['buildId']) && empty($bot['versionId'])))) throw new ApiError('请逐一选择斗蛐蛐机器人的构筑。');
                 $this->addBot($room, $this->object($bot, '机器人的构筑选择'));
             }
         }
-        $this->store->execute("INSERT INTO $table (code, host_id, status, revision, data, updated_at) VALUES (?, ?, ?, ?, ?, ?)", [$code, $room['hostId'], 'lobby', 1, encode($room), time()]);
+        if ($arena) {
+            // Validate every seat and start atomically: a failed setup leaves no orphan lobby.
+            $room['rulesSignature'] = Workshop::signature();
+            $room['game'] = Engine::create($room['players'], $mode, $room['budgetLimits']);
+            $room['game']['turnSeconds'] = $seconds;
+            $room['status'] = 'playing';
+        }
+        $this->store->execute("INSERT INTO $table (code, host_id, status, revision, data, updated_at) VALUES (?, ?, ?, ?, ?, ?)", [$code, $room['hostId'], $room['status'], 1, encode($room), time()]);
         $this->store->execute('INSERT INTO ' . $this->store->table('members') . ' (room_code, user_id) VALUES (?, ?)', [$code, $this->user['id']]);
         $this->event($room, 'create_room', []);
         return $this->snapshot($room);
@@ -282,6 +305,10 @@ final class Api
 
     private function joinRoom(array &$room, array $input): array
     {
+        if (!empty($room['arena'])) {
+            $this->host($room);
+            return $this->snapshot($room);
+        }
         foreach ($room['players'] as $player) {
             if ($player['id'] === $this->user['id']) {
                 return $this->snapshot($room); // Reconnect even after the game started.
@@ -301,6 +328,7 @@ final class Api
 
     private function act(array &$room, array $input): array
     {
+        if (!empty($room['arena'])) throw new ApiError('斗蛐蛐仅供观战，不能代替机器人操作。', 403);
         $requestId = $this->requestId($input['requestId'] ?? '');
         $command = $this->object($input['action'] ?? null, '操作');
         if (!isset($input['revision']) || !is_int($input['revision'])) {
@@ -391,6 +419,7 @@ final class Api
     {
         return [
             'code' => $room['code'], 'name' => $room['name'], 'mode' => $room['mode'],
+            'arena' => !empty($room['arena']), 'arenaSpeed' => $room['arenaSpeed'] ?? null,
             'hostId' => $room['hostId'], 'status' => $room['status'], 'allowCustom' => $room['allowCustom'],
             'budgetLimits' => $room['budgetLimits'] ?? Workshop::limits(),
             'modeRules' => Catalog::modeRules($room['mode']),
@@ -398,7 +427,7 @@ final class Api
             'players' => array_map(function ($player) {
                 return ['id' => $player['id'], 'name' => $player['name'], 'bot' => $player['bot'], 'custom' => $player['custom'] ?? false, 'character' => $player['build']['character']];
             }, $room['players']),
-            'game' => $room['game'] ? Engine::view($room['game'], $this->user['id']) : null,
+            'game' => $room['game'] ? (!empty($room['arena']) ? Engine::spectatorView($room['game']) : Engine::view($room['game'], $this->user['id'])) : null,
         ];
     }
 
@@ -456,7 +485,7 @@ final class Api
         $this->customAllowed($room, $selected);
         $room['players'][] = [
             'id' => 'bot_' . substr(identifier(), 0, 12),
-            'name' => '练习机 ' . (count(array_filter($room['players'], function ($player) { return $player['bot']; })) + 1),
+            'name' => (!empty($room['arena']) ? '机器人 ' : '练习机 ') . (count(array_filter($room['players'], function ($player) { return $player['bot']; })) + 1),
             'bot' => true, 'custom' => $selected['custom'], 'build' => $selected['build'], 'versionId' => $selected['versionId'] ?? null,
         ];
     }
@@ -471,6 +500,7 @@ final class Api
 
     private function member(array $room): void
     {
+        if (!empty($room['arena']) && $room['hostId'] === $this->user['id']) return;
         foreach ($room['players'] as $player) {
             if ($player['id'] === $this->user['id']) {
                 return;

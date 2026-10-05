@@ -28,7 +28,7 @@ final class Engine
     private static function stateVersion(array $g): string
     {
         $version=array_key_exists('rulesVersion',$g)?$g['rulesVersion']:'0.1.0-alpha';
-        self::check(is_string($version)&&in_array($version,['0.1.0-alpha','0.2.0-alpha','0.3.0-alpha','0.4.0-alpha','0.5.0-alpha','0.6.0-alpha',SkillBlocks::VERSION],true),'此对局的规则版本不受当前服务端支持，请使用匹配版本的服务端继续对局');
+        self::check(is_string($version)&&in_array($version,['0.1.0-alpha','0.2.0-alpha','0.3.0-alpha','0.4.0-alpha','0.5.0-alpha','0.6.0-alpha','0.7.0-alpha',SkillBlocks::VERSION],true),'此对局的规则版本不受当前服务端支持，请使用匹配版本的服务端继续对局');
         return $version;
     }
     /** Older rooms use the same physical cards and damage model; migrate additive fields explicitly. */
@@ -42,7 +42,7 @@ final class Engine
             foreach($p['usedSkills'] as &$used) if(is_int($used)) $used=['turn'=>$used,'count'=>1]; unset($used);
             foreach(['equipment','delayed'] as $zone) foreach($p[$zone] as &$card) {
                 // Historical readyAt was installation turn + 1. Preserve elapsed time and custom overrides.
-                if(!in_array($version,['0.5.0-alpha','0.6.0-alpha'],true)&&isset($card['readyAt'])&&!isset($card['maturityTurns'])&&!isset($card['custom']['maturityTurns'])&&$card['type']!=='punch'&&!self::trueEquipment($card)) $card['readyAt']=max(0,$card['readyAt']-1);
+                if(!in_array($version,['0.5.0-alpha','0.6.0-alpha','0.7.0-alpha'],true)&&isset($card['readyAt'])&&!isset($card['maturityTurns'])&&!isset($card['custom']['maturityTurns'])&&$card['type']!=='punch'&&!self::trueEquipment($card)) $card['readyAt']=max(0,$card['readyAt']-1);
             } unset($card);
             $g['handBoundary'][$id]=count($p['hand']);
         }
@@ -1181,7 +1181,7 @@ final class Engine
             if($choice==='mind') { self::check(count($g['players'][$id]['mind'])>0,'心象为空'); $c=array_shift($g['players'][$id]['mind']); }
             else $c=self::normal($g);
             if($c===null) { self::log($g,'普通牌池与弃牌区为空，此次判定不成立。'); return; }
-            self::spend($g,$c); self::judgmentWindow($g,$c,['mode'=>'delayed','event'=>$p]);
+            self::spend($g,$c); self::judgmentWindow($g,$c,['mode'=>$p['judgmentMode']??'delayed','event'=>$p['judgmentEvent']??$p]);
             return;
         }
         if($kind==='calamity') {
@@ -1325,9 +1325,20 @@ final class Engine
     }
     public static function view(array $g,string $id): array
     {
+        self::check(isset($g['players'][$id]),'仅对局参与者可查看');
+        return self::viewFor($g,$id);
+    }
+    /** Public information only. Room authorization belongs to the API, never to a bot identity. */
+    public static function spectatorView(array $g): array
+    {
+        foreach($g['players'] as $p) self::check(!empty($p['bot']),'仅全机器人对局提供观战视图');
+        return self::viewFor($g,null);
+    }
+    private static function viewFor(array $g,?string $id): array
+    {
         $version=self::stateVersion($g);
         self::upgradeState($g);
-        self::check(isset($g['players'][$id]),'仅对局参与者可查看'); $players=[];
+        $players=[];
         foreach($g['order'] as $pid) {
             $p=$g['players'][$pid]; $equipment=[];$delayed=[];
             foreach($p['equipment'] as $c) { $c['ready']=self::mature($g,$pid,$c); $c['turnsUntilReady']=max(0,($c['readyAt']??$p['turns'])-$p['turns']); $equipment[]=$c; }
@@ -1335,8 +1346,8 @@ final class Engine
             $piles=[];foreach($p['piles']??[] as $key=>$pile)$piles[$key]=['count'=>count($pile['cards']),'visibility'=>$pile['visibility'],'cards'=>$pile['visibility']==='public'||$id===$pid?$pile['cards']:[]];
             $players[]=['id'=>$pid,'name'=>$p['name'],'bot'=>$p['bot'],'character'=>$p['character'],'hp'=>self::hp($g,$pid),'maxHp'=>$p['maxHp'],'color'=>$p['color'],'series'=>$p['series'],'alive'=>$p['alive'],'flipped'=>$p['flipped'],'broken'=>self::broken($g,$pid),'marks'=>$p['marks'],'mindCount'=>count($p['mind']),'spentCount'=>count($p['spent']),'spent'=>$p['spent'],'handCount'=>count($p['hand']),'sequesteredCount'=>count($p['sequestered']??[]),'damageGuard'=>$p['damageGuard']??0,'handLocked'=>self::handLocked($g,$pid),'equipment'=>$equipment,'delayed'=>$delayed,'shield'=>$p['shield'],'range'=>self::range($g,$pid),'attackBonus'=>$p['attackBonus'],'attacksRemaining'=>max(0,self::attackLimit($g,$pid)-$p['attacks']),'handLimit'=>self::handLimit($g,$pid),'faceDown'=>!empty($p['faceDown']),'skillMarks'=>$p['skillMarks']??[],'piles'=>$piles,'role'=>$g['mode']==='identity'&&($pid===$id||$pid===$g['mayor']||!$p['alive']||$g['status']==='finished')?$p['role']:null];
         }
-        $p=$g['players'][$id]; $skills=[];
-        foreach($p['character']['skills'] as $i=>$s) $skills[]=array_merge($s,['index'=>$i,'description'=>Rules::describeSkill($s),'disabled'=>!self::skillEnabled($g,$id,$i),'available'=>self::skillUsable($g,$id,$i),'usesRemaining'=>max(0,RuleConfig::uses($s)-self::skillUses($g,$id,$i))]);
+        $p=$id===null?null:$g['players'][$id]; $skills=[];
+        foreach($p['character']['skills']??[] as $i=>$s) $skills[]=array_merge($s,['index'=>$i,'description'=>Rules::describeSkill($s),'disabled'=>!self::skillEnabled($g,$id,$i),'available'=>self::skillUsable($g,$id,$i),'usesRemaining'=>max(0,RuleConfig::uses($s)-self::skillUses($g,$id,$i))]);
         $pending=null;
         if($g['pending']) {
             $raw=$g['pending']; $pending=['kind'=>$raw['kind'],'player'=>$raw['player'],'source'=>$raw['source']??null,'prompt'=>$raw['prompt'],'options'=>[]];
@@ -1357,10 +1368,10 @@ final class Engine
             }
             if($raw['kind']==='draft') $pending['cards']=$g['draft'];
         }
-        $hints=[]; $legal=self::legalActions($g,$id,$hints);
+        $hints=[]; $legal=$id===null?[]:self::legalActions($g,$id,$hints);
         return ['rulesVersion'=>$version,'engineRulesVersion'=>SkillBlocks::VERSION,'rulesUpgradePending'=>$version!==SkillBlocks::VERSION,'status'=>$g['status'],'mode'=>$g['mode'],'turn'=>$g['turn'],'phase'=>$g['phase'],'turnNumber'=>$g['turnNumber'],'deadline'=>$g['deadline'],'serverTime'=>time(),'players'=>$players,
-            'me'=>['id'=>$id,'hand'=>$p['hand'],'mind'=>$p['mind'],'spent'=>$p['spent'],'sequestered'=>array_column($p['sequestered']??[],'card'),'skills'=>$skills],
-            'identity'=>$g['mode']==='identity'?['mayor'=>$g['mayor'],'role'=>$p['role'],'roles'=>Catalog::identityRoles(),'counts'=>Catalog::identityCounts(count($g['order'])),'winningIds'=>$g['winningIds']??[],'winningTeam'=>$g['winningTeam']??null]:null,
+            'spectator'=>$id===null,'me'=>$id===null?null:['id'=>$id,'hand'=>$p['hand'],'mind'=>$p['mind'],'spent'=>$p['spent'],'sequestered'=>array_column($p['sequestered']??[],'card'),'skills'=>$skills],
+            'identity'=>$g['mode']==='identity'?['mayor'=>$g['mayor'],'role'=>$p['role']??null,'roles'=>Catalog::identityRoles(),'counts'=>Catalog::identityCounts(count($g['order'])),'winningIds'=>$g['winningIds']??[],'winningTeam'=>$g['winningTeam']??null]:null,
             'pending'=>$pending,'legalActions'=>$legal,'actionHints'=>$hints,'log'=>$g['log'],'winner'=>$g['winner'],'deckCount'=>count($g['deck']),'discardCount'=>count($g['discard']),'draft'=>$g['draft']??[],
             'discardRequired'=>$g['turn']===$id&&$g['phase']==='discard'?max(0,count($p['hand'])-self::handLimit($g,$id)):0];
     }
@@ -1373,7 +1384,7 @@ final class Engine
     private static function botOpponent(array $g,string $id,string $target): bool
     {
         if($g['mode']==='identity') return self::identityBotOpponent($g,$id,$target);
-        return $g['players'][$id]['color']!==$g['players'][$target]['color']&&self::enemy($g,$id,$target);
+        return self::enemy($g,$id,$target);
     }
     private static function offensiveEffect(array $effect): bool
     {
@@ -1445,7 +1456,10 @@ final class Engine
                 $score=$scores[$a['choice']]??0;
                 if(($g['pending']['kind']??'')==='identity_rescue') $score=$a['choice']==='pass'?0:(!$timeout&&self::identityBotRescues($g,$id,$g['pending']['target'])?20:-20);
                 if(($g['pending']['kind']??'')==='skill_offer'&&$a['choice']==='accept') $score=4+self::effectPreference($g,$id,$g['pending']['target'],$g['players'][$id]['character']['skills'][$g['pending']['index']]['effects']);
-                if(($g['pending']['kind']??'')==='judge'&&$a['choice']==='mind') $score=2;
+                if(($g['pending']['kind']??'')==='judge'&&$a['choice']==='mind') {
+                    $score=2;
+                    if(($g['pending']['judgmentMode']??'')==='mechanic') $score=self::cardFilter($g['players'][$id]['mind'][0],$g['pending']['judgmentEvent']['definition']['filter'])?8:-2;
+                }
             } elseif($a['type']==='draw') $score=$a['mind']===(count($g['players'][$id]['mind'])>4?1:0)?10:0;
             elseif($a['type']==='end') $score=0;
             elseif($a['type']==='discard') $score=1;
@@ -1500,6 +1514,20 @@ final class Engine
                 // A timed-out draw moves straight to turn end; no unattended offensive play.
                 if($g['status']==='playing'&&$g['turn']===$id&&$g['phase']==='play'&&!$g['pending']) self::act($g,$id,['type'=>'end']);
             } else break;
+        }
+        return $changed;
+    }
+    /** Bounded work per request: continue from serialized state without tying up the server. */
+    public static function advanceArena(array &$g,string $speed): bool
+    {
+        self::check(in_array($speed,['paused','normal','fast'],true),'无效的观战速度');
+        foreach($g['players'] as $p) self::check(!empty($p['bot']),'斗蛐蛐对局必须全部由机器人参与');
+        if($speed==='paused'||$g['status']!=='playing') return false;
+        $changed=self::upgradeState($g); $until=microtime(true)+0.35;
+        $steps=$speed==='fast'?128:4;
+        for($i=0;$i<$steps&&microtime(true)<$until;$i++) {
+            if(!self::botStep($g)) break;
+            $changed=true;
         }
         return $changed;
     }

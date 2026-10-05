@@ -130,7 +130,7 @@ final class Rules
     public static function validateBuild(array $b, bool $enforceBudget = true, ?array $budgetLimits = null): array
     {
         self::keys($b,['id','name','character','deck','budget','createdAt','updatedAt','rulesVersion']);
-        if(array_key_exists('rulesVersion',$b)) self::choice($b['rulesVersion'],['0.1.0-alpha','0.2.0-alpha','0.3.0-alpha','0.4.0-alpha','0.5.0-alpha','0.6.0-alpha',SkillBlocks::VERSION],'规则版本');
+        if(array_key_exists('rulesVersion',$b)) self::choice($b['rulesVersion'],['0.1.0-alpha','0.2.0-alpha','0.3.0-alpha','0.4.0-alpha','0.5.0-alpha','0.6.0-alpha','0.7.0-alpha',SkillBlocks::VERSION],'规则版本');
         if(!is_array($b['character']??null)) self::fail('缺少人物'); $c=$b['character'];
         self::keys($c,['id','name','title','series','color','hp','art','flipColor','skills']);
         $skills=$c['skills']??[];
@@ -147,9 +147,11 @@ final class Rules
         if(!is_array($b['deck']??null)||count($b['deck'])!==13||array_keys($b['deck'])!==range(0,12)) self::fail('心象必须恰好 13 张，按列表顺序从顶到底');
         $deck=[]; $ranks=[]; $cards=Catalog::cards(); $customCount=0;
         foreach($b['deck'] as $entry) {
-            if(!is_array($entry)) self::fail('心象牌结构不正确'); self::keys($entry,['type','rank','custom','maturityTurns']);
+            if(!is_array($entry)) self::fail('心象牌结构不正确'); self::keys($entry,['type','rank','suit','custom','maturityTurns']);
             $r=self::number($entry['rank']??null,1,13,'点数'); if(isset($ranks[$r])) self::fail('心象点数 A～K 必须各一张'); $ranks[$r]=true;
             $type=self::choice($entry['type']??null,array_merge(Catalog::mindOptions()[$r],['custom']),'该点数心象牌类型'); $d=['type'=>$type,'rank'=>$r];
+            // Omission preserves legacy suitless cards without assigning them a new suit.
+            if(array_key_exists('suit',$entry)) $d['suit']=self::choice($entry['suit'],['♠','♥','♣','♦'],'心象花色');
             if($type==='custom') {
                 $customCount++; $x=$entry['custom']??null; if(!is_array($x)) self::fail('缺少限定牌定义'); self::keys($x,['name','series','fallback','effects','characterId','kind','slot','maturityTurns']);
                 $kind=self::choice($x['kind']??'event',['event','equipment','persistent','delayed'],'心象类别');

@@ -213,6 +213,7 @@ final class Workshop
     }
     public function recordTrials(array $room): void
     {
+        if(!empty($room['arena'])) return; // Watching AI cannot certify an author's play trial.
         if (($room['game']['status'] ?? '') !== 'finished' || ($room['rulesSignature'] ?? '') !== self::signature()) return;
         $s = $this->s; $table = $s->table('trials');
         foreach ($room['players'] as $p) {

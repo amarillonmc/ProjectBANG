@@ -351,6 +351,8 @@ try {
     workshopHttpTests($store, $first, $opponent);
     require __DIR__.'/identity-http.php';
     identityHttpTests($store, $first);
+    require __DIR__.'/arena-http.php';
+    arenaHttpTests($store, $first, $opponent);
     echo "PASS: $assertions API/store assertions (SQLite, real HTTP, isolated database).\n";
     echo "MySQL SQL path is implemented but requires a separate MySQL deployment smoke test.\n";
 } catch (Throwable $error) {

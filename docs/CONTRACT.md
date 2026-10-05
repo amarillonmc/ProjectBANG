@@ -1,6 +1,6 @@
 # 实现契约
 
-当前规则版本：`0.7.0-alpha`。运行环境兼容 PHP 7.4+，部署建议 PHP 8.2+；无 Composer、Node 或常驻后台服务要求。网站根目录为 `public/`，`src/`、`var/`、`config.php` 不公开。界面使用 UTF-8 中文，PHP 命名空间为 `Imaginary`。
+当前规则版本：`0.8.0-alpha`。运行环境兼容 PHP 7.4+，部署建议 PHP 8.2+；无 Composer、Node 或常驻后台服务要求。网站根目录为 `public/`，`src/`、`var/`、`config.php` 不公开。界面使用 UTF-8 中文，PHP 命名空间为 `Imaginary`。
 
 ## 目录、词表与内容包
 
@@ -13,6 +13,7 @@
 | `rulesVersion` | 当前规则版本 |
 | `cards` | 普通牌类型 ID → `{id,name,kind,tags,description}` |
 | `mindOptions` | 每个点数允许的普通心象类型 |
+| `mindSuits` | 心象可选的四种花色符号及名称，允许重复 |
 | `characters` / `presets` | 人物列表 / 可直接使用的完整构筑 |
 | `blocks` | triggers、conditions、effects、effectMeta、equipmentSlots、equipmentEffects、targets、conversions、limits |
 | `limits` | 技能数、效果数、限定牌数和各项预算 |
@@ -65,11 +66,14 @@ Effect {
 }
 DeckEntry {
   rank: integer 1..13,
+  suit?: "♠" | "♥" | "♣" | "♦",
   type: allowed normal type | custom,
   maturityTurns?: integer,
   custom?: {name, series, fallback, effects, characterId?, kind?, slot?, maturityTurns?}
 }
 ```
+
+`suit` 可省略以兼容旧无花色牌；存在时必须是四种符号之一，null、空串或其他值均拒绝。花色与顺序随构筑、不可变版本、实体牌和分享保留，并参与规则指纹；不因牌型替换或移动而丢失。
 
 13 个点数必须完整且唯一，`deck` 数组次序从牌顶到牌底，验证不会按点数排序。普通心象只能采用该点数的 `mindOptions`；允许 13 张均为限定牌，各自效果树遵守 `maxEffects` 与最多 12 层嵌套的资源上限。限定牌的 fallback 可选任何已定义普通牌类型。非限定条目不得携带 custom。`maturityTurns` 仅用于延时基本牌及延时心象；拳击默认 1，其余当前延时牌默认 0，按持有者自身回合计数。
 
@@ -77,9 +81,9 @@ DeckEntry {
 
 `custom.series` 匹配当前使用者系列，且可选 `custom.characterId` 匹配其人物 ID 时，自定义效果才生效；否则应用 fallback。角色编号是可编辑创作标识，不是身份授权。实体卡的普通/心象来源、UID 和原心象所有者不因失配、赠送、偷取、转化或装备而丢失。
 
-缺少版本或携带 `0.1.0-alpha` 至 `0.6.0-alpha` 的旧构筑可进入当前校验；规范化结果统一写 `0.7.0-alpha`。已有显式次数保留，缺省次数为 0（不限）。未知版本拒绝，旧图集编号兼容。保存/导入是校验与规范化，不是按卡名重新解释或静默排序；已开局游戏保留当时的构筑快照。旧房间每技能“已用回合号”的整数存档由引擎读取为该回合已使用一次。
+缺少版本或携带 `0.1.0-alpha` 至 `0.7.0-alpha` 的旧构筑可进入当前校验；规范化结果统一写 `0.8.0-alpha`。已有显式次数保留，缺省次数为 0（不限）。未知版本拒绝，旧图集编号兼容。保存/导入是校验与规范化，不是按卡名重新解释或静默排序；已开局游戏保留当时的构筑快照。旧房间每技能“已用回合号”的整数存档由引擎读取为该回合已使用一次。
 
-新对局自身也持久化 `rulesVersion`。缺省版本或 0.1～0.5 的游戏状态由 act/tick 显式迁移，补齐新增字段，保留实体牌、伤害、次数与构筑快照，记录 `migratedFromRulesVersion` 和单次日志；非法动作连同迁移一起回滚。0.4 及更早的延时基本牌未携带明确成熟参数且不是拳击时，迁移减去原来额外的一回合等待；0.5 状态保持原成熟进度，重复迁移不再改动。只读 view 返回存档的真实 `rulesVersion`、当前 `engineRulesVersion` 和布尔 `rulesUpgradePending`，不在读取时暗改状态。未知对局版本统一拒绝。
+新对局自身也持久化 `rulesVersion`。缺省版本或 0.1～0.7 的游戏状态由 act/tick 显式迁移，补齐新增字段，保留实体牌、伤害、次数与构筑快照，记录 `migratedFromRulesVersion` 和单次日志；非法动作连同迁移一起回滚。0.4 及更早的延时基本牌未携带明确成熟参数且不是拳击时，迁移减去原来额外的一回合等待；0.5～0.7 状态保持原成熟进度，重复迁移不再改动。只读 view 返回存档的真实 `rulesVersion`、当前 `engineRulesVersion` 和布尔 `rulesUpgradePending`，不在读取时暗改状态。未知对局版本统一拒绝。
 
 `Rules::budget()` 返回 `used,max,character,characterMax,custom,customMax,cards,cardMax,warnings`。默认上限为人物 18、限定合计 24、单张 12，均可配置。技能成本包含效果、自动触发加价、费用折减、次数乘数；转化基础成本依据来源，任意手牌转化高于指定牌型。无色 `damage`/`attack` 每点另计预算。明确强制的自身负面可计负预算，可选负面、可能为零的动态负面不能刷预算；限定牌的负面只抵扣同一张牌的收益，不抵扣其他牌。动态获得的完整技能也参与计价。详见 [SKILLS.md](SKILLS.md)。
 
@@ -119,6 +123,8 @@ inspect_hand / scry_mind 的 pending.cards 是私密快照，实体留在手牌/
 - `Engine::act(array &$game,string $playerId,array $action): void`：检查席位、时机、期限、合法目标、次数、费用和牌序；失败恢复动作前状态。
 - `Engine::view(array $game,string $playerId): array`：只接受参与者，返回安全视角。
 - `Engine::tick(array &$game): bool`：推进过期等待/回合与有界机器人行动；`botStep()` 也使用合法动作。
+- `Engine::spectatorView(array $game): array`：仅接受全机器人游戏，复用公开视图；`spectator:true`、`me:null`、`legalActions:[]`，无隐藏角色或私密卡牌泄漏。API 另验证房主权限。
+- `Engine::advanceArena(array &$game,string $speed): bool`：暂停不改变状态；正常最多 4 行动，快速最多 128 行动，每批在行动间检查 350 ms 时间预算。使用同一个 botStep，不采用近似结算。每个 room 请求在事务中推进并持久化，完成后停止。
 - 默认每条结算链 4096 步、每回合 512 次主动行动、300 回合平局；读 `rules.maxResolutionSteps/maxActionsPerTurn/maxTurns`。结算链预算跨响应与重连保留，达到上限会结束剩余效果、归还临时保管牌并记录原因，不能用连续选择重置保险。
 
 游戏视角包含 rulesVersion、status、mode、turn、phase、turnNumber、deadline、serverTime、players、me、pending、legalActions、log、winner、deckCount、discardCount、draft、discardRequired。
@@ -160,6 +166,8 @@ conversion 只接受整数技能下标且仅用于 play/respond。scry 响应为
 | tutorial | `{command:"resume"\|"restart"\|"act"\|"next"\|"lesson",revision?,action?,step?}` → 教学房间安全视角；写操作必须带当前 revision |
 | delete_build | `{id}` → 空结果 |
 | create_room | `{name,mode,buildId?,presetId?,versionId?,budgetLimits?,allowCustom,turnSeconds?,bots?:[构筑选择],requestId?}` → 房间；bots 为 1～5 项（identity 最多 6 项），逐项验证并原子创建；budgetLimits 只允许 characterBudget / customBudget / customCardBudget（1～100000） |
+| create_room（斗蛐蛐） | 额外 `arena:true`，`bots` 必须满足模式人数（color / series 2～6，identity 4～7），逐一明确选择构筑；无真人席位，校验并原子开局，返回公开观战视图；失败不会留下大厅 |
+| arena_control | `{code,revision,speed:paused|normal|fast}` → 房间，仅斗蛐蛐房主、进行中可用；版本冲突 409。客户端在自动轮询冲突时用 join_room 读取当前快照后重试相同速度 |
 | join_room | `{code,buildId?,presetId?}` → 房间 |
 | room | `{code}` → 房间，并推进有界自动行动 |
 | choose_build | `{code,buildId?,presetId?}` → 房间，仅开局前 |
@@ -237,3 +245,10 @@ versions 保存不可变的规范化构筑、版本号、作者与 gameplay fing
 ## 规则范围
 
 普通牌池固定 104 张；默认开局 5 张普通手牌、标准摸 2 张且可替换至多 2 张心象、默认每回合一次攻击/范围 1，新增额度按解释器增减。延时牌按 maturityTurns 成熟。防御属于防守，回避同时属于防守与躲避：可从手牌防御通常攻击（不摸牌），或卸除成熟装备防御并摸一张；拳击仍要求成熟装备回避。机器人按当前颜色过滤有害目标及会波及伙伴的群体行动，系列模式还避开同系列目标；真人动作和模式胜利条件不变。冷暖、系列、人狼三模式、心坏、翻面、体力、心象归属等基础裁定见 [RULES.md](RULES.md)。本轮按用户确认保留基础规则、尽量等价还原技能机制；不是完整三国杀模式。当前 OL 来源、能力与缺口见 [覆盖审计](content/SGS_OL_COVERAGE.md)。
+
+
+## 斗蛐蛐房间与判定来源（0.8）
+
+斗蛐蛐仍用原三种 mode，另存 arena / arenaSpeed 标记，不增加第四套规则。房主只登记 members，不写入 players；me 的房间历史保留 arena 标记。join_room 仅允许房主重连，其他身份不能加入或读取；act 一律拒绝观战者，控制接口不能伪造机器人行动。room 轮询正常每 2 秒、快速每 500 ms（客户端受请求进行中与错误保护），页面在后台仍会尝试轮询，浏览器可自行节流；没有页面请求时不推进，重连从持久化状态继续。只读 snapshot / export / join_room 不推进；暂停下 room 也不推进。结束后完整导出；Workshop::recordTrials 显式排除 arena，机器人代用版本不能生成作者证明。
+
+技能 judge 改为可序列化的 kind:judge 来源选择，judgmentMode:mechanic 与 judgmentEvent 仅存服务端。respond choice:normal|mind 取出实体牌后进入原改判窗口与成功／失败／重复分支；普通延时事件的旧 pending 仍默认按 delayed 结算。机器人只用自己的心象顶及成功条件判断是否选择心象，不查看普通牌池顶。客户端返回的公开 pending 不含内部判断定义或选择快照。

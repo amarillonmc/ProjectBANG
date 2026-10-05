@@ -77,7 +77,7 @@ $retrial=fs('passive',[fe('passive_retrial')+['filter'=>'any','zone'=>'hand_equi
 $g['players']['b']['character']['skills']=[$retrial,fs('before_take_damage',[fe('event_reduce_damage')],1,0,['optional'=>true])];
 $g['players']['c']['character']['skills']=[$retrial];
 $treasure=fc($g,'b','treasure');$g['players']['b']['hand'][0]['suit']='♠';callEngine('play',$g,'b',['card'=>$treasure]);fc($g,'c','defense');
-fa($g,'a',['type'=>'skill','index'=>0]);completeMechanic($g,'b','replace',['card'=>$treasure]);
+fa($g,'a',['type'=>'skill','index'=>0]);completeMechanic($g,'a','normal');completeMechanic($g,'b','replace',['card'=>$treasure]);
 checkFeedback($g['pending']['kind']==='skill_offer'&&$g['pending']['player']==='b','retrial equipment damage resolves before the next retrial prompt');
 checkFeedback(!empty($g['reservedJudgments'][$treasure])&&!$g['players']['a']['hand'],'current judgment remains reserved during nested damage');
 $g=json_decode(json_encode($g),true);completeMechanic($g,'b','accept');

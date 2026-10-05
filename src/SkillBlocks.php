@@ -5,7 +5,7 @@ require_once __DIR__.'/RuleConfig.php';
 /** One server-owned vocabulary for validation, documentation and the visual editor. */
 final class SkillBlocks
 {
-    public const VERSION = '0.7.0-alpha';
+    public const VERSION = '0.8.0-alpha';
 
     public static function metadata(): array
     {
@@ -23,7 +23,7 @@ final class SkillBlocks
             'choose'=>['选择效果分支',0,['self','target'],1,'由指定角色选择一个分支后结算。'],
             'branch'=>['按条件分支',0,['self'],1,'判断条件，只执行满足或不满足的一个分支。'],
             'choose_targets'=>['选择若干角色依次结算',0,['self'],98,'由发动者自由选择至多指定数量的角色，然后按选择顺序结算。'],
-            'judge'=>['按花色判定',1,['self','target'],1,'从普通牌顶判定，按成功 / 失败分支结算，可获得成功牌并重复。'],
+            'judge'=>['按花色判定',1,['self','target'],1,'选择普通牌顶或自己的心象顶判定，按成功 / 失败分支结算，可获得成功牌并重复。'],
             'pindian'=>['与目标拼点',2,['target'],1,'双方秘密选择手牌，同时揭示；点数严格大于才算赢，平局算未赢。'],
             'add_mark'=>['获得标记',1,['self','target'],98,'持久化的命名标记，可被条件和动态数量读取。'],
             'remove_mark'=>['移去标记',1,['self','target'],98,'移去指定数量的已有标记。'],

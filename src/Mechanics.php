@@ -86,9 +86,7 @@ trait Mechanics
         $id=$e['player']; $kind=$e['kind'];
         $prompts=['mechanic_choice'=>'选择一个效果分支。','mechanic_targets'=>'选择受益或受影响的角色，再确认。','mechanic_pindian'=>'选择一张手牌拼点，双方选好后同时公开。','mechanic_store'=>'选择要放到专属牌堆的手牌。','mechanic_take'=>'选择要从专属牌堆取回的牌。','mechanic_duel'=>'决斗：打出攻击牌，或承受伤害。','mechanic_judge_repeat'=>'判定成功，是否再次判定？'];
         if($kind==='mechanic_judge') {
-            $card=self::normal($g); if($card===null) return;
-            self::spend($g,$card);
-            self::judgmentWindow($g,$card,['mode'=>'mechanic','event'=>$e]); return;
+            self::pending($g,['kind'=>'judge','player'=>$id,'source'=>$e['source'],'judgmentMode'=>'mechanic','judgmentEvent'=>$e,'prompt'=>'技能判定：选择普通牌池或自己的心象顶。']); return;
         }
         self::pending($g,$e+['prompt'=>$prompts[$kind]??'选择机制的结算方式。']);
     }
